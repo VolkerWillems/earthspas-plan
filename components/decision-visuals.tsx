@@ -17,11 +17,11 @@ import {
   YAxis,
 } from "recharts";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 const tooltipStyle = {
   background: "#091017",
@@ -65,7 +65,7 @@ export function BudgetChart({ data, total }: { data: Array<{ name: string; value
           <Pie data={data} dataKey="value" nameKey="name" innerRadius={72} outerRadius={112} paddingAngle={2} stroke="#091017" strokeWidth={3}>
             {data.map((entry, index) => <Cell key={entry.name} fill={fills[index % fills.length]} />)}
           </Pie>
-          <Tooltip contentStyle={tooltipStyle} formatter={(value: number | string) => [`€${Number(value).toLocaleString("nl-NL")}`, "per maand"]} />
+          <Tooltip contentStyle={tooltipStyle} formatter={(value: unknown) => [`€${Number(value).toLocaleString("nl-NL")}`, "per maand"]} />
           <Legend verticalAlign="bottom" iconType="square" wrapperStyle={{ color: "#fff", fontSize: 14, fontWeight: 400 }} />
         </PieChart>
       </ResponsiveContainer>
@@ -84,8 +84,8 @@ export function RevenueScenarioChart({ data }: { data: Array<{ name: string; omz
         <BarChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 8 }}>
           <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
           <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#fff", fontSize: 13, fontWeight: 400 }} />
-          <YAxis tickLine={false} axisLine={false} tick={{ fill: "rgba(255,255,255,.75)", fontSize: 12, fontWeight: 400 }} tickFormatter={(value) => `€${Math.round(Number(value) / 1000)}k`} />
-          <Tooltip contentStyle={tooltipStyle} formatter={(value: number | string) => [`€${Number(value).toLocaleString("nl-NL")}`, "omzet"]} />
+          <YAxis tickLine={false} axisLine={false} tick={{ fill: "rgba(255,255,255,.75)", fontSize: 12, fontWeight: 400 }} tickFormatter={(value: unknown) => `€${Math.round(Number(value) / 1000)}k`} />
+          <Tooltip contentStyle={tooltipStyle} formatter={(value: unknown) => [`€${Number(value).toLocaleString("nl-NL")}`, "omzet"]} />
           <Bar dataKey="omzet" radius={[4, 4, 0, 0]} maxBarSize={58}>
             {data.map((entry, index) => <Cell key={entry.name} fill={fills[index % fills.length]} />)}
           </Bar>
@@ -103,7 +103,7 @@ export function SalesRampChart({ data }: { data: Array<{ maand: string; verkoop:
           <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
           <XAxis dataKey="maand" tickLine={false} axisLine={false} tick={{ fill: "#fff", fontSize: 12, fontWeight: 400 }} />
           <YAxis tickLine={false} axisLine={false} tick={{ fill: "rgba(255,255,255,.75)", fontSize: 12, fontWeight: 400 }} />
-          <Tooltip contentStyle={tooltipStyle} formatter={(value: number | string) => [Number(value).toLocaleString("nl-NL", { maximumFractionDigits: 1 }), "spa's"]} />
+          <Tooltip contentStyle={tooltipStyle} formatter={(value: unknown) => [Number(value).toLocaleString("nl-NL", { maximumFractionDigits: 1 }), "spa's"]} />
           <Line type="monotone" dataKey="verkoop" stroke="var(--primary)" strokeWidth={3} dot={{ r: 4, fill: "#091017", stroke: "var(--primary)", strokeWidth: 2 }} activeDot={{ r: 6 }} />
         </LineChart>
       </ResponsiveContainer>
