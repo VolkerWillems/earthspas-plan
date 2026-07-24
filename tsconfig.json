@@ -15,7 +15,6 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@phosphor-icons/react": ["./lib/phosphor-icons"],
       "@/*": ["./*"]
     }
   },
