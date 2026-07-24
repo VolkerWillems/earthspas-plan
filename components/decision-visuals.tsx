@@ -32,6 +32,7 @@ const tooltipStyle = {
   fontWeight: 400,
 };
 
+export const DecisionRow = Symbol("DecisionRow");
 export type DecisionRow = {
   item: string;
   month: string;
