@@ -42,7 +42,7 @@ export function SiteStateProvider({ children }: { children: React.ReactNode }) {
     if (mounted) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [mounted, state]);
 
-  const update = React.useCallback(<K extends keyof SiteState>(key: K, value: SiteState[K]) => {
+  const update = React.useCallback(<K extends keyof SiteState,>(key: K, value: SiteState[K]) => {
     setState((previous) => ({ ...previous, [key]: value }));
   }, []);
 
