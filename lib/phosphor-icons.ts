@@ -1,47 +1,49 @@
-export {
-  Pulse as Activity,
-  Archive as ArchiveBox,
-  ArrowClockwise,
-  ArrowRight,
-  Briefcase,
-  CalendarBlank,
-  CaretRight,
-  ChartBar,
-  ChartLine,
-  ChatText,
-  Check,
-  ClipboardText,
-  Cloud,
-  Code,
-  CreditCard,
-  CurrencyEur,
-  Database,
-  DownloadSimple,
-  EnvelopeSimple,
-  FileText,
-  FloppyDisk,
-  FlowArrow,
-  FadersHorizontal,
-  Gauge,
-  GitBranch,
-  Globe,
-  HardDrives as Server,
-  Headphones,
-  Image,
-  Info,
-  Key,
-  Layout,
-  List,
-  MagicWand,
-  Pause,
-  Robot,
-  RocketLaunch,
-  ShieldCheck,
-  Sparkle,
-  Target,
-  Users,
-  Video,
-  Wallet,
-  Warning,
-  X,
-} from "@phosphor-icons/react/ssr";
+import * as Icons from "@phosphor-icons/react/ssr";
+
+const phosphor = Icons as Record<string, any>;
+
+export const Activity = phosphor.PulseIcon ?? phosphor.Pulse;
+export const ArchiveBox = phosphor.ArchiveIcon ?? phosphor.Archive;
+export const ArrowClockwise = phosphor.ArrowClockwiseIcon ?? phosphor.ArrowClockwise;
+export const ArrowRight = phosphor.ArrowRightIcon ?? phosphor.ArrowRight;
+export const Briefcase = phosphor.BriefcaseIcon ?? phosphor.Briefcase;
+export const CalendarBlank = phosphor.CalendarBlankIcon ?? phosphor.CalendarBlank;
+export const CaretRight = phosphor.CaretRightIcon ?? phosphor.CaretRight;
+export const ChartBar = phosphor.ChartBarIcon ?? phosphor.ChartBar;
+export const ChartLine = phosphor.ChartLineIcon ?? phosphor.ChartLine;
+export const ChatText = phosphor.ChatTextIcon ?? phosphor.ChatText;
+export const Check = phosphor.CheckIcon ?? phosphor.Check;
+export const ClipboardText = phosphor.ClipboardTextIcon ?? phosphor.ClipboardText;
+export const Cloud = phosphor.CloudIcon ?? phosphor.Cloud;
+export const Code = phosphor.CodeIcon ?? phosphor.Code;
+export const CreditCard = phosphor.CreditCardIcon ?? phosphor.CreditCard;
+export const CurrencyEur = phosphor.CurrencyEurIcon ?? phosphor.CurrencyEur;
+export const Database = phosphor.DatabaseIcon ?? phosphor.Database;
+export const DownloadSimple = phosphor.DownloadSimpleIcon ?? phosphor.DownloadSimple;
+export const EnvelopeSimple = phosphor.EnvelopeSimpleIcon ?? phosphor.EnvelopeSimple;
+export const FileText = phosphor.FileTextIcon ?? phosphor.FileText;
+export const FloppyDisk = phosphor.FloppyDiskIcon ?? phosphor.FloppyDisk;
+export const FlowArrow = phosphor.FlowArrowIcon ?? phosphor.FlowArrow;
+export const FadersHorizontal = phosphor.FadersHorizontalIcon ?? phosphor.FadersHorizontal;
+export const Gauge = phosphor.GaugeIcon ?? phosphor.Gauge;
+export const GitBranch = phosphor.GitBranchIcon ?? phosphor.GitBranch;
+export const Globe = phosphor.GlobeIcon ?? phosphor.Globe;
+export const Server = phosphor.HardDrivesIcon ?? phosphor.HardDrives;
+export const Headphones = phosphor.HeadphonesIcon ?? phosphor.Headphones;
+export const Image = phosphor.ImageIcon ?? phosphor.Image;
+export const Info = phosphor.InfoIcon ?? phosphor.Info;
+export const Key = phosphor.KeyIcon ?? phosphor.Key;
+export const Layout = phosphor.LayoutIcon ?? phosphor.Layout;
+export const List = phosphor.ListIcon ?? phosphor.List;
+export const MagicWand = phosphor.MagicWandIcon ?? phosphor.MagicWand;
+export const Pause = phosphor.PauseIcon ?? phosphor.Pause;
+export const Robot = phosphor.RobotIcon ?? phosphor.Robot;
+export const RocketLaunch = phosphor.RocketLaunchIcon ?? phosphor.RocketLaunch;
+export const ShieldCheck = phosphor.ShieldCheckIcon ?? phosphor.ShieldCheck;
+export const Sparkle = phosphor.SparkleIcon ?? phosphor.Sparkle;
+export const Target = phosphor.TargetIcon ?? phosphor.Target;
+export const Users = phosphor.UsersIcon ?? phosphor.Users;
+export const Video = phosphor.VideoIcon ?? phosphor.Video;
+export const Wallet = phosphor.WalletIcon ?? phosphor.Wallet;
+export const Warning = phosphor.WarningIcon ?? phosphor.Warning;
+export const X = phosphor.XIcon ?? phosphor.X;
