@@ -29,6 +29,21 @@
 }
 
 @media (max-width: 700px) {
+  .page-intro h1 {
+    font-size: 1.7rem !important;
+    line-height: 1.06 !important;
+    letter-spacing: 0.018em;
+  }
+
+  .section-block h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .section-block h3 {
+    line-height: 1.18;
+  }
+
   .hero-mockup .hero-mockup-tab {
     flex-basis: calc(33.333% - .35rem);
     padding-inline: .4rem;
