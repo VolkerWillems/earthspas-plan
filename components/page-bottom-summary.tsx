@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Check, X } from "@/lib/phosphor-icons";
+import { ArrowRight, Check, CreditCard, X } from "@/lib/phosphor-icons";
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
 import { checklistItems } from "@/lib/choice-data";
 import { getBusinessOwnerLabel, getBusinessTaskTitle } from "@/lib/presentation-copy";
-import { taskExecutionPlans } from "@/lib/task-execution-plans";
+import { taskExecutionPlans } from "@/lib/detailed-task-execution-plans";
 import { euro, number } from "@/lib/utils";
 
 const checklistGroups = ["Eigenaarschap", "Techniek", "Marketing", "Afronding"] as const;
@@ -170,11 +170,23 @@ export function PageBottomSummary() {
               <div>
                 <p className="eyebrow">Compacte actielijst</p>
                 <h2 className="mt-3 max-w-5xl text-3xl uppercase leading-tight sm:text-4xl">Alle acties, voortgang en uitvoering in één overzicht</h2>
-                <p className="mt-4 max-w-5xl text-lg leading-8 text-white/76">Vink acties af of open direct het praktische stappenplan. Links brengen je naar de juiste beheerpagina of naar het relevante onderdeel van deze keuzehulp.</p>
+                <p className="mt-4 max-w-5xl text-lg leading-8 text-white/76">Vink acties af of open direct het praktische stappenplan. De knoppen gaan naar de echte account-, team-, billing- en beheerpagina's van de betreffende leverancier.</p>
               </div>
               <div className="summary-progress-card">
                 <span>{model.completedTasks}/{checklistItems.length}</span>
                 <small>{model.checklistProgress}% afgerond</small>
+              </div>
+            </div>
+
+            <div className="mt-7 grid gap-5 rounded-[5px] border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_8%,var(--card))] p-5 shadow-[inset_0_3px_0_color-mix(in_srgb,var(--section-accent)_48%,transparent)] sm:grid-cols-[auto_1fr] sm:p-7">
+              <span className="grid h-12 w-12 place-items-center rounded-[5px] border border-[var(--section-accent)]/45 bg-black/15 text-[var(--section-accent)]">
+                <CreditCard className="h-6 w-6" />
+              </span>
+              <div>
+                <p className="eyebrow">De prepaidkaart is de praktische startknop</p>
+                <h3 className="mt-2 max-w-5xl text-2xl uppercase text-[var(--section-accent)]">Met één Earth Spas-kaart kan Volker de volledige technische inrichting overnemen</h3>
+                <p className="mt-3 max-w-6xl text-base leading-7 text-white/76">Earth Spas levert één prepaid creditcard met een vooraf goedgekeurd saldo, de centrale billingmail en toestemming om de noodzakelijke accounts in te richten. Volker kan daarna namens Earth Spas accounts aanmaken, teams en organisaties opzetten, licenties kopen, betaalmethoden koppelen, beheerders uitnodigen, spend alerts instellen en migraties uitvoeren. Alle accounts, facturen en herstelroutes blijven eigendom van Earth Spas. Volker hoeft niets privé voor te schieten en kan geen hoger bedrag besteden dan het beschikbare saldo en de afgesproken limieten.</p>
+                <p className="mt-3 max-w-6xl text-sm leading-6 text-white/58">Open bij de taak <strong className="text-white/78">Prepaid creditcard regelen en koppelen</strong> het stappenplan. Daarna kunnen de platformtaken één voor één in de juiste volgorde worden uitgevoerd.</p>
               </div>
             </div>
 
