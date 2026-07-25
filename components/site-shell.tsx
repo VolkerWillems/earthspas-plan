@@ -18,6 +18,7 @@ import {
   PrepaidDelegationBanner,
   SoftwareFlowDiagram,
 } from "@/components/blocks";
+import { AgentFlowShowcase } from "@/components/motion";
 import { MotionController } from "@/components/motion-controller";
 import { PageBottomSummary } from "@/components/page-bottom-summary";
 import { useSiteState } from "@/components/site-state";
@@ -149,7 +150,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <div key={pathname} className="route-transition">
         {children}
-        {pathname === "/software" && <SoftwareFlowDiagram />}
+        {pathname === "/software" && (
+          <>
+            <SoftwareFlowDiagram />
+            <AgentFlowShowcase />
+          </>
+        )}
         {pathname === "/checklist" && <PrepaidDelegationBanner />}
         <PageBottomSummary />
       </div>
