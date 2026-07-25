@@ -139,6 +139,9 @@ export default function ChecklistPage() {
             <ol className="mt-8 space-y-3">
               {["Nieuwe eigenaar en tweede beheerder toevoegen", "Nieuwe betaalmethode en factuurgegevens testen", "Exports en back-ups maken", "Domeinen, mail, formulieren en workflows testen", "Herstelprocedure door tweede beheerder laten uitvoeren", "Pas daarna persoonlijke kaarten, tokens en toegang verwijderen"].map((step, index) => <li key={step} className="panel flex items-center gap-4 p-4"><span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)] text-[var(--section-accent)]">{index + 1}</span><span className="text-base text-white/78">{step}</span></li>)}
             </ol>
+            <div className="mt-6 overflow-hidden rounded-[5px] border border-[var(--section-accent)]/35 bg-card shadow-[0_18px_50px_rgba(0,0,0,.32)]">
+              <img src="/earth-spas-collage-a-starry-lake-1920x1080.jpg" alt="Earth Spas whirlpool in een premium avondsetting" className="h-56 w-full object-cover sm:h-72" />
+            </div>
           </div>
           <Panel className="h-fit p-6 sm:p-8">
             <p className="eyebrow">Vaste kosten na overdracht</p>
