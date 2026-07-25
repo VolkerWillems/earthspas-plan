@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/install-registry-components.mjs && node scripts/customize-registry-components.mjs",
+    "prebuild": "node scripts/install-registry-safe.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ui:sync": "node scripts/install-registry-safe.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
