@@ -3,6 +3,7 @@ import "./globals.css";
 import "./motion.css";
 import "./asset-polish.css";
 import "./targeted-fixes.css";
+import "./action-guidance.css";
 import "@/lib/choice-corrections";
 import { SiteShell } from "@/components/site-shell";
 import { SiteStateProvider } from "@/components/site-state";
