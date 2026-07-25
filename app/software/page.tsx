@@ -4,7 +4,6 @@ import {
   Briefcase,
   CalendarBlank,
   Check,
-  Code,
   Database,
   FlowArrow,
   Robot,
@@ -15,6 +14,7 @@ import {
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
 import { choiceGroups, features } from "@/lib/choice-data";
+import { getBusinessOptionDescription } from "@/lib/presentation-copy";
 import { euro } from "@/lib/utils";
 import {
   PageIntro,
@@ -47,8 +47,8 @@ export default function SoftwarePage() {
     <main>
       <PageIntro
         eyebrow="03 · softwareplan"
-        title="Eerst een zelfstandige digitale basis, daarna pas slimme agents"
-        text="Het softwareplan bestaat uit twee lagen: de accounts en infrastructuur die Earth Spas zelf moet bezitten, en de commerciële functies die daarop kunnen worden gebouwd. Agents zonder betrouwbare data en eigenaarschap zijn vooral dure improvisatietheaterstukken."
+        title="Eerst een zelfstandige digitale basis, daarna slimme automatisering"
+        text="Het softwareplan bestaat uit twee lagen: accounts en infrastructuur die aantoonbaar onder Earth Spas vallen, en commerciële functies die daarop modulair kunnen worden gebouwd. Betrouwbare data, eigenaarschap en herstelbaarheid vormen de noodzakelijke basis voor verantwoord gebruik van agents en automatiseringen."
         accent="secondary"
         image="/earth-spas-eco-smart-1920x1080.jpg"
         imageAlt="Earth Spas techniek en duurzame spa-opbouw"
@@ -57,19 +57,19 @@ export default function SoftwarePage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Architectuur" title="De aanbevolen technische opbouw" text="De voorkeur blijft een eigen Hetzner-server voor Directus, n8n, agents en backendservices. De frontend kan op Vercel blijven. Database en storage kunnen beheerd of self-hosted worden, zolang back-ups, eigenaarschap en toegangsbeheer aantoonbaar kloppen." />
+          <SectionHeader eyebrow="Architectuur" title="De aanbevolen technische opbouw" text="De voorkeursarchitectuur gebruikt een eigen productieserver voor Directus, n8n, agents en backendservices, met Vercel als frontendlaag. Database en storage kunnen beheerd of self-hosted worden, zolang back-ups, eigenaarschap en toegangsbeheer aantoonbaar zijn ingericht." />
           <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Panel className="p-6"><Server className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eigen kernserver</h3><p className="mt-3 leading-7 text-white/70">Directus, n8n, agents, monitoring en backend draaien onder Earth Spas-eigendom.</p></Panel>
-            <Panel className="p-6"><Database className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eén gegevensbron</h3><p className="mt-3 leading-7 text-white/70">Producten, content, leads, afspraken en supportinformatie worden centraal bruikbaar.</p></Panel>
-            <Panel className="p-6"><ShieldCheck className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Overdraagbare toegang</h3><p className="mt-3 leading-7 text-white/70">Minimaal twee beheerders, centrale secrets, herstelcodes en geen persoonlijke betaalroute als fundament.</p></Panel>
-            <Panel className="p-6"><FlowArrow className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Modulaire automatisering</h3><p className="mt-3 leading-7 text-white/70">Workflows en agents zijn losse modules. Ze kunnen groeien zonder de hele omgeving opnieuw te bouwen.</p></Panel>
+            <Panel className="p-6"><Database className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eén gegevensbron</h3><p className="mt-3 leading-7 text-white/70">Producten, content, leads, afspraken en supportinformatie worden centraal beheerd en hergebruikt.</p></Panel>
+            <Panel className="p-6"><ShieldCheck className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Overdraagbare toegang</h3><p className="mt-3 leading-7 text-white/70">Minimaal twee beheerders, centrale secrets, herstelcodes en zakelijke betaalroutes beperken operationeel risico.</p></Panel>
+            <Panel className="p-6"><FlowArrow className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Modulaire automatisering</h3><p className="mt-3 leading-7 text-white/70">Workflows en agents worden als losse modules opgebouwd en kunnen zonder volledige herbouw worden uitgebreid.</p></Panel>
           </div>
         </div>
       </section>
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Fasering" title="Vier bouwfasen met een logische afhankelijkheid" text="Niet alles hoeft tegelijk. Wat wel tegelijk moet, is nadenken. De fasen voorkomen dat een voice-agent wordt gebouwd terwijl nog niemand weet waar offertes en klantstatussen thuishoren." />
+          <SectionHeader eyebrow="Fasering" title="Vier bouwfasen met duidelijke afhankelijkheden" text="Niet ieder onderdeel hoeft gelijktijdig te worden uitgevoerd. De fasering voorkomt dat geavanceerde agents of rapportages worden ontwikkeld voordat gegevensbronnen, processen en eigenaarschap betrouwbaar zijn ingericht." />
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
             {phases.map((phase) => (
               <Panel key={phase.number} className="p-6">
@@ -91,7 +91,7 @@ export default function SoftwarePage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Infrastructuurkeuzes" title="Kies per technisch onderdeel de passende route" text="De aanbevolen optie is gemarkeerd, maar niet vergrendeld. Iedere keuze werkt direct door in de totale maandkosten op de calculator en het dashboard." />
+          <SectionHeader eyebrow="Infrastructuurkeuzes" title="Selecteer per technisch onderdeel de passende route" text="De aanbevolen optie is gemarkeerd, maar niet vergrendeld. Iedere keuze werkt direct door in de totale maandkosten op de calculator en in het centrale overzicht." />
           <div className="mt-9 grid gap-5 xl:grid-cols-2">
             {choiceGroups.map((group) => {
               const selectedId = state.toolChoices[group.id];
@@ -104,7 +104,7 @@ export default function SoftwarePage() {
                       return (
                         <button key={option.id} onClick={() => selectOption(group.id, option.id)} className={`flex w-full items-start gap-3 p-4 text-left transition ${active ? "bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : "hover:bg-white/[.025]"}`}>
                           <span className={`mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${active ? "border-[var(--section-accent)] bg-[var(--section-accent)]" : "border-white/35"}`}>{active && <span className="h-2 w-2 rounded-full bg-background" />}</span>
-                          <span className="min-w-0 flex-1"><span className="flex flex-wrap justify-between gap-2"><span className={active ? "text-[var(--section-accent)]" : "text-white"}>{option.name}</span><span className="text-white/72">{option.monthly === 0 ? "€0" : `${euro.format(option.monthly)} p/m`}</span></span><span className="mt-1 block text-sm leading-6 text-white/58">{option.description}</span>{option.recommended && <span className="mt-2 block text-xs uppercase tracking-[0.12em] text-[var(--section-accent)]">aanbevolen</span>}</span>
+                          <span className="min-w-0 flex-1"><span className="flex flex-wrap justify-between gap-2"><span className={active ? "text-[var(--section-accent)]" : "text-white"}>{option.name}</span><span className="text-white/72">{option.monthly === 0 ? "€0" : `${euro.format(option.monthly)} p/m`}</span></span><span className="mt-1 block text-sm leading-6 text-white/58">{getBusinessOptionDescription(option)}</span>{option.recommended && <span className="mt-2 block text-xs uppercase tracking-[0.12em] text-[var(--section-accent)]">aanbevolen</span>}</span>
                         </button>
                       );
                     })}
@@ -118,7 +118,7 @@ export default function SoftwarePage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Mogelijke software" title="Selecteer wat uiteindelijk gebouwd kan worden" text="De marktwaarde is een indicatie van wat ontwerp, development, integratie en testen bij een extern softwarebedrijf ongeveer zouden kosten. De bouwkosten van Volker blijven buiten deze calculator." />
+          <SectionHeader eyebrow="Mogelijke software" title="Selecteer welke functies uiteindelijk worden ontwikkeld" text="De marktwaarde is een indicatie van de externe kosten voor ontwerp, development, integratie, testen en oplevering. Interne ontwikkeltijd staat buiten het operationele maandbudget en wordt uitsluitend als omvangsvergelijking getoond." />
           <div className="mt-9 overflow-hidden rounded-lg border border-[var(--section-accent)]/35 bg-card">
             <div className="hidden grid-cols-[60px_1.5fr_.55fr_.65fr_.75fr] gap-3 border-b border-border bg-white/[.025] px-4 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] lg:grid"><span>Kies</span><span>Onderdeel</span><span>Impact</span><span>Tijd</span><span>Marktwaarde</span></div>
             {features.map((feature) => {
@@ -145,14 +145,14 @@ export default function SoftwarePage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <Panel className="p-6"><Users className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">CRM eerst</h3><p className="mt-3 leading-7 text-white/70">Zonder centrale lead- en verkoopstatus kan marketing niet betrouwbaar aan omzet worden gekoppeld.</p></Panel>
-          <Panel className="p-6"><Robot className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Agents daarna</h3><p className="mt-3 leading-7 text-white/70">Agents werken pas verantwoord wanneer productdata, processen en escalaties vooraf zijn vastgelegd.</p></Panel>
-          <Panel className="p-6"><CalendarBlank className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Iteratief bouwen</h3><p className="mt-3 leading-7 text-white/70">Iedere module krijgt een kleine livegang, meetbare acceptatie en pas daarna uitbreiding.</p></Panel>
-          <Panel className="p-6"><Briefcase className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eigendom vastleggen</h3><p className="mt-3 leading-7 text-white/70">Accounts, data, broncode, domeinen en betaalmethoden blijven onder Earth Spas-controle.</p></Panel>
+          <Panel className="p-6"><Users className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">CRM als commerciële basis</h3><p className="mt-3 leading-7 text-white/70">Een centrale lead- en verkoopstatus is nodig om marketing betrouwbaar aan omzet te koppelen.</p></Panel>
+          <Panel className="p-6"><Robot className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Agents op gevalideerde data</h3><p className="mt-3 leading-7 text-white/70">Agents worden pas ingezet wanneer productdata, processen, bevoegdheden en escalaties zijn vastgelegd.</p></Panel>
+          <Panel className="p-6"><CalendarBlank className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Iteratieve oplevering</h3><p className="mt-3 leading-7 text-white/70">Iedere module krijgt een afgebakende livegang, meetbare acceptatiecriteria en pas daarna uitbreiding.</p></Panel>
+          <Panel className="p-6"><Briefcase className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eigendom vastleggen</h3><p className="mt-3 leading-7 text-white/70">Accounts, data, broncode, domeinen en betaalmethoden blijven onder controle van Earth Spas.</p></Panel>
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Softwareplan · keuzes worden automatisch gedeeld met dashboard, calculator en checklist</footer>
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Softwareplan · keuzes worden automatisch gedeeld met overzicht, calculator en checklist</footer>
     </main>
   );
 }
