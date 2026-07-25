@@ -22,6 +22,7 @@ function run(script) {
 try {
   run("scripts/install-registry-components.mjs");
   run("scripts/customize-registry-components.mjs");
+  run("scripts/normalize-registry-layout.mjs");
 } finally {
   for (const [absolute, content] of snapshots) writeFileSync(absolute, content);
   console.log("Restored the canonical three-file CSS architecture after registry generation.");
