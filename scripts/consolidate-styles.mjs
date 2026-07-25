@@ -1,3 +1,4 @@
+// Canonical repository-level style consolidation. Do not replace with registry generation.
 import {
   existsSync,
   readFileSync,
