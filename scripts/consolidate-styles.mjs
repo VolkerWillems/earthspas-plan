@@ -57,7 +57,7 @@ function assertCanonical() {
   const components = read(join(stylesDirectory, "components.css"));
   const globals = read(globalsPath);
 
-  if (/\.\/(?:ui|cards|flows|charts|motion|motion-base)\.css/.test(index)) {
+  if (/^@import\s+"\.\/(?:ui|cards|flows|charts|motion|motion-base)\.css";/m.test(index)) {
     throw new Error("styles/index.css still imports a retired stylesheet.");
   }
   if (components.includes('@import "./motion.css";')) {
@@ -82,9 +82,10 @@ let components = read(componentsPath);
 let globals = read(globalsPath);
 
 index = index.replace(
-  /^(?:@import\s+"\.\/(?:components|responsive|flows|charts|ui|cards|motion|motion-base)\.css";\s*)+/,
-  '@import "./components.css";\n@import "./responsive.css";\n\n',
+  /^@import\s+"\.\/(?:components|responsive|flows|charts|ui|cards|motion|motion-base)\.css";\s*$/gm,
+  "",
 );
+index = `@import "./components.css";\n@import "./responsive.css";\n\n${index.trimStart()}`;
 
 for (const { file, marker } of mergedSources) {
   const sourcePath = join(stylesDirectory, file);
