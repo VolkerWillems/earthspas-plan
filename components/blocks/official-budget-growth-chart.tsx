@@ -35,17 +35,17 @@ export function OfficialBudgetGrowthChart() {
   const final = data.at(-1);
 
   return (
-    <article className="panel motion-card p-5 sm:p-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <article className="panel motion-card p-[var(--card-padding)]">
+      <div className="flex flex-col gap-[var(--space-5)] lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="eyebrow">Budgetscenario</p>
-          <h3 className="mt-2 text-2xl uppercase text-white">Groei per budgetniveau</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">Drie planningslijnen. De slider verandert het maandbudget; de brush selecteert de zichtbare periode.</p>
+          <h3 className="heading-card mt-[var(--space-2)] uppercase">Groei per budgetniveau</h3>
+          <p className="mt-[var(--space-2)] max-w-2xl text-sm leading-6 text-muted-foreground">Drie planningslijnen. De slider verandert het maandbudget; de brush selecteert de zichtbare periode.</p>
         </div>
-        <div className="min-w-[240px]">
-          <div className="mb-2 flex items-center justify-between gap-4 text-sm">
-            <label htmlFor="growth-budget" className="text-white/62">Maandbudget</label>
-            <span className="text-lg text-[var(--section-accent)]">{euro(monthlyBudget)}</span>
+        <div className="min-w-[clamp(13rem,22vw,16rem)]">
+          <div className="mb-[var(--space-2)] flex items-center justify-between gap-[var(--space-4)] text-sm">
+            <label htmlFor="growth-budget" className="text-muted-foreground">Maandbudget</label>
+            <span className="text-[var(--font-size-card-title)] text-[var(--section-accent)]">{euro(monthlyBudget)}</span>
           </div>
           <input
             id="growth-budget"
@@ -62,13 +62,13 @@ export function OfficialBudgetGrowthChart() {
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <div className="border border-[#2E333B] p-4"><p className="text-xs uppercase tracking-[.12em] text-white/48">Voorzichtig</p><p className="mt-2 text-xl text-white">{euro(final?.voorzichtig ?? 0)}</p></div>
-        <div className="border border-[#2E333B] p-4"><p className="text-xs uppercase tracking-[.12em] text-white/48">Werkbasis</p><p className="mt-2 text-xl text-[var(--section-accent)]">{euro(final?.werkbasis ?? 0)}</p></div>
-        <div className="border border-[#2E333B] p-4"><p className="text-xs uppercase tracking-[.12em] text-white/48">Sterk gemeten</p><p className="mt-2 text-xl text-white">{euro(final?.sterk ?? 0)}</p></div>
+      <div className="mt-[var(--space-5)] grid gap-[var(--space-3)] sm:grid-cols-3">
+        <div className="rounded-[var(--radius-md)] border border-border bg-card p-[var(--card-padding)]"><p className="text-xs uppercase tracking-[var(--tracking-label)] text-muted-foreground">Voorzichtig</p><p className="mt-[var(--space-2)] text-[var(--font-size-card-title)] text-foreground">{euro(final?.voorzichtig ?? 0)}</p></div>
+        <div className="rounded-[var(--radius-md)] border border-border bg-card p-[var(--card-padding)]"><p className="text-xs uppercase tracking-[var(--tracking-label)] text-muted-foreground">Werkbasis</p><p className="mt-[var(--space-2)] text-[var(--font-size-card-title)] text-[var(--section-accent)]">{euro(final?.werkbasis ?? 0)}</p></div>
+        <div className="rounded-[var(--radius-md)] border border-border bg-card p-[var(--card-padding)]"><p className="text-xs uppercase tracking-[var(--tracking-label)] text-muted-foreground">Sterk gemeten</p><p className="mt-[var(--space-2)] text-[var(--font-size-card-title)] text-foreground">{euro(final?.sterk ?? 0)}</p></div>
       </div>
 
-      <div className="mt-5 h-[440px]">
+      <div className="mt-[var(--space-5)] h-[clamp(22rem,34vw,27.5rem)]">
         <ChartBrushLayout
           brushStrip={({ brushSelection, onBrushSelectionChange }) => (
             <LineChart
@@ -112,7 +112,7 @@ export function OfficialBudgetGrowthChart() {
           )}
         </ChartBrushLayout>
       </div>
-      <p className="mt-3 text-xs leading-5 text-white/42">Scenario, geen omzetbelofte. Werkelijke kosten per lead, afspraak, offerte en verkoop moeten dit model vervangen.</p>
+      <p className="mt-[var(--space-3)] text-xs leading-5 text-muted-foreground">Scenario, geen omzetbelofte. Werkelijke kosten per lead, afspraak, offerte en verkoop moeten dit model vervangen.</p>
     </article>
   );
 }
