@@ -76,7 +76,7 @@ export default function HomePage() {
     <main>
       <PageIntro
         eyebrow="01 · huidige stand van zaken"
-        title="Wat staat er al, wat presteert en wat moet worden overgedragen?"
+        title="Project status, prestaties en aanbevolen vervolgstappen"
         text="Dit dashboard geeft een zakelijk overzicht van de bestaande digitale basis, geregistreerde projectinzet, kanaalprestaties en de voortgang van de noodzakelijke overdracht. Het vormt het vertrekpunt voor beslissingen over marketing, software en verdere groei."
         accent="secondary"
         image="/showroom-building.jpeg"
@@ -94,7 +94,7 @@ export default function HomePage() {
         <div className="content-shell">
           <SectionHeader
             eyebrow="Opgebouwde digitale basis"
-            title="Wat al is ontwikkeld en hoeveel tijd daarin is geïnvesteerd"
+            title="Software status en development uren per onderdeel"
             text="Dit overzicht toont uitsluitend aantoonbaar uitgevoerd werk. De onderdelen wisselen automatisch en laten per ontwikkelgebied zien wat is opgeleverd, hoeveel geregistreerde uren daarin zitten en welke groeikans daardoor beschikbaar is."
           />
           <DevelopmentShowcase />
