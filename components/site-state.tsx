@@ -3,8 +3,8 @@
 import * as React from "react";
 import { defaultSiteState, type SiteState } from "@/lib/site-model";
 
-const STORAGE_KEY = "earth-spas-multipage-plan-v1";
-const LEGACY_KEY = "earth-spas-choice-guide-v5";
+const STORAGE_KEY = "earth-spas-multipage-plan-v2";
+const LEGACY_KEYS = ["earth-spas-multipage-plan-v1", "earth-spas-choice-guide-v5"];
 
 type SiteStateContextValue = {
   state: SiteState;
@@ -22,7 +22,7 @@ export function SiteStateProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setMounted(true);
     try {
-      const raw = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_KEY);
+      const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const parsed = JSON.parse(raw) as Partial<SiteState>;
       setState({
@@ -49,7 +49,7 @@ export function SiteStateProvider({ children }: { children: React.ReactNode }) {
   const reset = React.useCallback(() => {
     setState(defaultSiteState);
     localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(LEGACY_KEY);
+    LEGACY_KEYS.forEach((key) => localStorage.removeItem(key));
   }, []);
 
   return <SiteStateContext.Provider value={{ state, setState, update, reset }}>{children}</SiteStateContext.Provider>;
