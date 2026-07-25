@@ -1,8 +1,8 @@
 "use client";
 
-import { SoftwareFlowDiagram } from "@/components/blocks";
+import { SoftwareFlowDiagram } from "@/components/blocks/software-flow-diagram";
 import { OfficialSoftwareFlows } from "@/components/blocks/official-software-flows";
-import { AgentFlowShowcase } from "@/components/motion";
+import { AgentFlowShowcase } from "@/components/motion/agent-flow-showcase";
 
 export function SoftwareRouteVisuals() {
   return (
