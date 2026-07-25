@@ -1,14 +1,10 @@
 "use client";
 
-import { SoftwareFlowDiagram } from "@/components/blocks/software-flow-diagram";
 import { OfficialSoftwareFlows } from "@/components/blocks/official-software-flows";
-import { AgentFlowShowcase } from "@/components/motion/agent-flow-showcase";
 
 export function SoftwareRouteVisuals() {
   return (
     <div className="route-visual-restoration">
-      <SoftwareFlowDiagram />
-      <AgentFlowShowcase />
       <section className="route-visual-chart-section theme-secondary" aria-labelledby="software-registry-flows-title">
         <div className="content-shell">
           <div className="route-visual-chart-heading">
