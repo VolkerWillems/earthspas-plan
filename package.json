@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/install-registry-components.mjs",
+    "prebuild": "node scripts/install-registry-components.mjs && node scripts/customize-registry-components.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
