@@ -39,10 +39,10 @@ const performance = [
 ];
 
 const pageCards = [
-  { href: "/marketing", number: "02", title: "Marketingplan", text: "Strategie, doelgroepen, campagnes, budgetkeuzes, voorbeelden en groeiscenario's.", icon: MagicWand, accent: "secondary" as const },
-  { href: "/software", number: "03", title: "Softwareplan", text: "Infrastructuur, agents, CRM, support, automatiseringen, bouwtijd en marktwaarde.", icon: Code, accent: "primary" as const },
-  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Alle accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, accent: "secondary" as const },
-  { href: "/checklist", number: "05", title: "Actielijst", text: "Alles wat ongeacht de overige plannen snel geregeld, overgezet en getest moet worden.", icon: Check, accent: "primary" as const },
+  { href: "/marketing", number: "02", title: "Marketingplan", text: "Strategie, doelgroepen, campagnes, budgetkeuzes, voorbeelden en groeiscenario's.", icon: MagicWand, image: "/earth-spas-collage-a-starry-lake-1920x1080.jpg" },
+  { href: "/software", number: "03", title: "Softwareplan", text: "Infrastructuur, agents, CRM, support, automatiseringen, bouwtijd en marktwaarde.", icon: Code, image: "/earth-spas-eco-smart-1920x1080.jpg" },
+  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Alle accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, image: "/earth-spas-special-features-1920x1080.jpg" },
+  { href: "/checklist", number: "05", title: "Actielijst", text: "Alles wat ongeacht de overige plannen snel geregeld, overgezet en getest moet worden.", icon: Check, image: "/earth-spas-collage-b-glacier-1920x1080.jpg" },
 ];
 
 const accountGroups = ["payment", "workspace", "passwords", "source", "dns", "server", "database", "frontend"];
@@ -66,17 +66,20 @@ export default function HomePage() {
         title="Wat staat er al, wat is bereikt en wat moet nu worden overgedragen?"
         text="Dit dashboard geeft Jeroen eerst het eerlijke vertrekpunt: bestaande prestaties, gewerkte uren, gekozen accounts, vaste kosten en de voortgang van de noodzakelijke overdracht. Daarna pas komen marketingdromen en softwarekastelen. Een zeldzame aanval van logische volgorde."
         accent="secondary"
+        image="/showroom-building.jpeg"
+        imageAlt="Earth Spas showroom"
+        imagePosition="center"
         actions={
           <>
-            <PrimaryLink href="/marketing" accent="secondary">Ga naar marketingplan</PrimaryLink>
-            <PrimaryLink href="/checklist" accent="primary">Bekijk urgente actielijst</PrimaryLink>
+            <PrimaryLink href="/marketing">Ga naar marketingplan</PrimaryLink>
+            <PrimaryLink href="/checklist">Bekijk urgente actielijst</PrimaryLink>
           </>
         }
       />
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Kernoverzicht" title="De digitale basis in zes cijfers" text="De huidige omzet is zonder structurele marketing gegenereerd. De onderstaande bedragen zijn daarom geen vervanging van bestaande verkoop, maar het vertrekpunt voor extra groei en professioneel eigenaarschap." accent="primary" />
+          <SectionHeader eyebrow="Kernoverzicht" title="De digitale basis in zes cijfers" text="De huidige omzet is zonder structurele marketing gegenereerd. De onderstaande bedragen zijn daarom geen vervanging van bestaande verkoop, maar het vertrekpunt voor extra groei en professioneel eigenaarschap." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             <StatCard label="Huidige omzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} />
             <StatCard label="Tools & accounts" value={`${euro.format(model.platformMonthly)} p/m`} detail="op basis van huidige keuzes" />
@@ -90,11 +93,11 @@ export default function HomePage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Resultaten tot nu toe" title="Er is al genoeg bewijs dat de basis werkt" text="Geen van deze cijfers bewijst direct verkochte spa's uit advertenties. Ze bewijzen wel organische vindbaarheid, lokale interesse, een bruikbaar Google-profiel en opvallend goedkoop websiteverkeer." accent="secondary" />
+          <SectionHeader eyebrow="Resultaten tot nu toe" title="Er is al genoeg bewijs dat de basis werkt" text="Geen van deze cijfers bewijst direct verkochte spa's uit advertenties. Ze bewijzen wel organische vindbaarheid, lokale interesse, een bruikbaar Google-profiel en opvallend goedkoop websiteverkeer." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {performance.map((item) => (
-              <Panel key={item.label} className="theme-secondary border-secondary/38 p-5 sm:p-6">
-                <p className="text-4xl text-secondary">{item.value}</p>
+              <Panel key={item.label} className="p-5 sm:p-6">
+                <p className="text-4xl text-[var(--section-accent)]">{item.value}</p>
                 <h3 className="mt-3 text-xl uppercase text-white">{item.label}</h3>
                 <p className="mt-2 text-base leading-6 text-white/65">{item.detail}</p>
               </Panel>
@@ -106,7 +109,7 @@ export default function HomePage() {
       <section className="section-block theme-primary">
         <div className="content-shell grid gap-8 xl:grid-cols-[1fr_.9fr]">
           <div>
-            <SectionHeader eyebrow="Gewerkte uren" title="Maak zichtbaar wat al is opgebouwd" text="De uren worden bewust niet financieel gewaardeerd. Vul alleen de werkelijk bestede tijd per categorie in. Zo ziet Jeroen de omvang zonder dat deze keuzehulp ineens een factuur vermomd als vriendschapsdocument wordt." accent="primary" />
+            <SectionHeader eyebrow="Gewerkte uren" title="Maak zichtbaar wat al is opgebouwd" text="De uren worden bewust niet financieel gewaardeerd. Vul alleen de werkelijk bestede tijd per categorie in. Zo ziet Jeroen de omvang zonder dat deze keuzehulp ineens een factuur vermomd als vriendschapsdocument wordt." />
             <Panel className="mt-8 p-6 sm:p-8">
               <div className="grid gap-5 sm:grid-cols-2">
                 <NumberField label="Website & contentstructuur" value={state.workedHours.website} onChange={(value) => updateWorkedHours("website", value)} suffix="uur" />
@@ -114,26 +117,26 @@ export default function HomePage() {
                 <NumberField label="Marketing & analytics" value={state.workedHours.marketing} onChange={(value) => updateWorkedHours("marketing", value)} suffix="uur" />
                 <NumberField label="Agents & automatisering" value={state.workedHours.automation} onChange={(value) => updateWorkedHours("automation", value)} suffix="uur" />
                 <NumberField label="Accounts & infrastructuur" value={state.workedHours.infrastructure} onChange={(value) => updateWorkedHours("infrastructure", value)} suffix="uur" />
-                <div className="rounded-md border border-primary/45 bg-primary/8 p-4">
+                <div className="rounded-md border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] p-4">
                   <p className="text-sm uppercase tracking-[0.13em] text-white/55">Totaal geregistreerd</p>
-                  <p className="mt-2 text-4xl text-primary">{number.format(model.totalWorkedHours)} uur</p>
+                  <p className="mt-2 text-4xl text-[var(--section-accent)]">{number.format(model.totalWorkedHours)} uur</p>
                 </div>
               </div>
             </Panel>
           </div>
 
           <div>
-            <SectionHeader eyebrow="Overdracht" title="Noodzakelijke acties lopen los van groeiplannen" text="Accounts, betaalmethoden, toegang, back-ups en eigenaarschap moeten hoe dan ook geregeld worden. Zelfs wanneer er voorlopig nul euro naar advertenties of nieuwe software gaat." accent="primary" />
+            <SectionHeader eyebrow="Overdracht" title="Noodzakelijke acties lopen los van groeiplannen" text="Accounts, betaalmethoden, toegang, back-ups en eigenaarschap moeten hoe dan ook geregeld worden. Zelfs wanneer er voorlopig nul euro naar advertenties of nieuwe software gaat." />
             <Panel className="mt-8 p-6 sm:p-8">
               <div className="flex items-end justify-between gap-4">
-                <div><p className="text-sm uppercase tracking-[0.13em] text-white/55">Voortgang</p><p className="mt-2 text-3xl text-primary">{model.checklistProgress}%</p></div>
+                <div><p className="text-sm uppercase tracking-[0.13em] text-white/55">Voortgang</p><p className="mt-2 text-3xl text-[var(--section-accent)]">{model.checklistProgress}%</p></div>
                 <p className="text-right text-base text-white/65">{model.completedTasks} van {checklistItems.length}<br />acties afgerond</p>
               </div>
               <div className="mt-5"><ProgressBar value={model.checklistProgress} /></div>
               <div className="mt-6 space-y-3">
                 {checklistItems.filter((item) => item.priority === "Nu").slice(0, 5).map((item) => (
                   <div key={item.id} className="flex items-start gap-3 border-t border-border/70 pt-3 first:border-0 first:pt-0">
-                    <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-sm border ${state.checklist[item.id] ? "border-primary bg-primary text-primary-foreground" : "border-white/30"}`}>
+                    <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-sm border ${state.checklist[item.id] ? "border-[var(--section-accent)] bg-[var(--section-accent)] text-primary-foreground" : "border-white/35"}`}>
                       {state.checklist[item.id] && <Check className="h-3.5 w-3.5" />}
                     </span>
                     <div><p className="text-base text-white">{item.title}</p><p className="mt-1 text-sm text-white/52">{item.owner}</p></div>
@@ -148,7 +151,7 @@ export default function HomePage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Accounts en providers" title="De huidige gekozen digitale stack" text="Dit is geen definitieve verplichting. Iedere categorie kan in de calculator worden gewijzigd. Het overzicht laat alleen zien wat nu geselecteerd staat en of de bijbehorende overdracht al is afgerond." accent="secondary" />
+          <SectionHeader eyebrow="Accounts en providers" title="De huidige gekozen digitale stack" text="Dit is geen definitieve verplichting. Iedere categorie kan in de calculator worden gewijzigd. Het overzicht laat alleen zien wat nu geselecteerd staat en of de bijbehorende overdracht al is afgerond." />
           <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {accountGroups.map((groupId, index) => {
               const group = choiceGroups.find((item) => item.id === groupId)!;
@@ -157,37 +160,40 @@ export default function HomePage() {
               const completed = relatedTask ? state.checklist[relatedTask.id] : false;
               const Icon = accountIcons[index];
               return (
-                <Panel key={groupId} className="border-secondary/35 p-5">
+                <Panel key={groupId} className="p-5">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-md border border-secondary/35 bg-secondary/8 text-secondary"><Icon className="h-5 w-5" /></div>
-                    <span className={`rounded-full border px-2 py-1 text-xs uppercase tracking-[0.1em] ${completed ? "border-secondary/45 bg-secondary/10 text-secondary" : "border-white/15 text-white/48"}`}>{completed ? "geregeld" : "te regelen"}</span>
+                    <div className="grid h-10 w-10 place-items-center rounded-md border border-[var(--section-accent)]/35 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-5 w-5" /></div>
+                    <span className={`rounded-full border px-2 py-1 text-xs uppercase tracking-[0.1em] ${completed ? "border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)] text-[var(--section-accent)]" : "border-white/15 text-white/48"}`}>{completed ? "geregeld" : "te regelen"}</span>
                   </div>
                   <p className="mt-4 text-sm uppercase tracking-[0.13em] text-white/48">{group.title}</p>
                   <h3 className="mt-2 text-lg text-white">{selected.name}</h3>
-                  <p className="mt-3 text-base text-secondary">{selected.monthly === 0 ? "€0 per maand" : `${euro.format(selected.monthly)} per maand`}</p>
+                  <p className="mt-3 text-base text-[var(--section-accent)]">{selected.monthly === 0 ? "€0 per maand" : `${euro.format(selected.monthly)} per maand`}</p>
                 </Panel>
               );
             })}
           </div>
-          <div className="mt-7"><PrimaryLink href="/calculator" accent="secondary">Pas account- en providerkeuzes aan</PrimaryLink></div>
+          <div className="mt-7"><PrimaryLink href="/calculator">Pas account- en providerkeuzes aan</PrimaryLink></div>
         </div>
       </section>
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Verder in dit plan" title="Vier pagina's, ieder met één duidelijke taak" text="De huidige lange pagina wordt opgesplitst zodat Jeroen niet meer door een digitaal telefoonboek hoeft te scrollen om één keuze terug te vinden." accent="primary" />
-          <div className="mt-9 grid gap-4 lg:grid-cols-2">
+          <SectionHeader eyebrow="Verder in dit plan" title="Vier pagina's, ieder met één duidelijke taak" text="De informatie is opgesplitst zodat Jeroen niet meer door een digitaal telefoonboek hoeft te scrollen om één keuze terug te vinden." />
+          <div className="mt-9 grid gap-5 lg:grid-cols-2">
             {pageCards.map((item) => {
               const Icon = item.icon;
               return (
-                <Link key={item.href} href={item.href} className={`panel group block p-6 transition hover:-translate-y-0.5 ${item.accent === "primary" ? "theme-primary hover:border-primary/70" : "theme-secondary hover:border-secondary/70"}`}>
-                  <div className="flex items-start justify-between gap-5">
-                    <div className="grid h-12 w-12 place-items-center rounded-md border border-[var(--section-accent)]/40 bg-[var(--section-accent)]/8 text-[var(--section-accent)]"><Icon className="h-6 w-6" /></div>
-                    <span className="text-sm tracking-[0.18em] text-white/38">{item.number}</span>
+                <Link key={item.href} href={item.href} className="panel group block overflow-hidden transition hover:-translate-y-0.5 hover:border-[var(--section-accent)]/70">
+                  <div className="plan-card-image"><img src={item.image} alt="" /></div>
+                  <div className="p-6">
+                    <div className="flex items-start justify-between gap-5">
+                      <div className="grid h-12 w-12 place-items-center rounded-md border border-[var(--section-accent)]/40 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-6 w-6" /></div>
+                      <span className="text-sm tracking-[0.18em] text-white/38">{item.number}</span>
+                    </div>
+                    <h3 className="mt-6 text-2xl uppercase text-[var(--section-accent)]">{item.title}</h3>
+                    <p className="mt-3 text-lg leading-8 text-white/72">{item.text}</p>
+                    <p className="mt-6 text-sm uppercase tracking-[0.14em] text-white/58 group-hover:text-[var(--section-accent)]">Open pagina →</p>
                   </div>
-                  <h3 className="mt-6 text-2xl uppercase text-[var(--section-accent)]">{item.title}</h3>
-                  <p className="mt-3 text-lg leading-8 text-white/72">{item.text}</p>
-                  <p className="mt-6 text-sm uppercase tracking-[0.14em] text-white/58 group-hover:text-[var(--section-accent)]">Open pagina →</p>
                 </Link>
               );
             })}
@@ -195,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 pb-28 text-center text-sm text-white/45 lg:pb-10">
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">
         Earth Spas digitale keuzehulp · scenario's zijn indicatief · bouwkosten van Volker staan buiten het budget
       </footer>
     </main>
