@@ -1,6 +1,6 @@
 {
   "name": "earth-spas-choice-guide",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,11 +8,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "ui:add": "shadcn add",
     "ui:sync": "node scripts/install-registry-safe.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-checkbox": "^1.3.7",
     "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-slot": "^1.3.1",
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.13",
     "@tanstack/react-table": "^8.21.3",
@@ -36,6 +41,9 @@
     "@types/react-dom": "^19.0.0",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "shadcn": "4.14.1",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.7.0"
   }
