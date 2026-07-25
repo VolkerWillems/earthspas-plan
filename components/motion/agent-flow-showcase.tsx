@@ -16,6 +16,7 @@ import {
   Users,
   Video,
 } from "@/lib/phosphor-icons";
+import { SectionHeader } from "@/components/plan-ui";
 import {
   AnimatedConnectorLayer,
   FlowNode,
@@ -23,7 +24,6 @@ import {
   type FlowConnector,
   type FlowMobileStep,
 } from "./flow-kit";
-import styles from "./motion-flow.module.css";
 
 const contentConnectors: FlowConnector[] = [
   { id: "checklist-intake", path: "M170 112C224 112 226 226 272 264", delay: 0.05 },
@@ -73,42 +73,37 @@ const advisorMobileSteps: FlowMobileStep[] = [
 
 export function AgentFlowShowcase() {
   return (
-    <section className={`${styles.section} theme-primary`} aria-labelledby="agent-flows-title">
+    <section className="agent-flow-section theme-primary" aria-labelledby="agent-flows-title">
       <div className="content-shell">
-        <div className={styles.sectionHeader} data-reveal="up">
-          <div className={styles.sectionHeaderCopy}>
-            <span>Toekomstige agent-infrastructuur</span>
-            <h2 id="agent-flows-title">Van nieuwe plaatsing naar publicatie, en van vakkennis naar persoonlijk advies</h2>
-            <p>Deze twee flows maken zichtbaar hoe losse foto&apos;s, video&apos;s en praktijkkennis later als één gecontroleerd systeem kunnen samenwerken. Geen magische AI-doos, maar een reeks duidelijke stappen met opslag, controle, agents en menselijke overdracht.</p>
-          </div>
-          <div className={styles.sectionHeaderNote}>
-            <strong>Gebouwd als herbruikbare Motion-componenten</strong>
-            <p>De nodes, SVG-paden, bewegende datapakketten, elevation en responsive mobiele flow staan los van de inhoud. Figma-iconen en geëxporteerde paden kunnen daardoor later rechtstreeks worden vervangen.</p>
-          </div>
+        <div className="agent-flow-header">
+          <SectionHeader
+            eyebrow="Toekomstige agent-infrastructuur"
+            title="Agentflows voor content en advies"
+            text="Twee gecontroleerde processen verbinden plaatsingsmedia, marketingproductie, praktijkkennis en persoonlijk klantadvies. Iedere stap blijft zichtbaar, overdraagbaar en menselijk controleerbaar."
+          />
+          <aside className="agent-flow-note">
+            <strong>Herbruikbare Motion-componenten</strong>
+            <p>Nodes, connectoren, datapakketten en responsive varianten staan los van de inhoud en volgen voortaan hetzelfde Earth Spas designsysteem.</p>
+          </aside>
         </div>
 
-        <div className={styles.flowBlock}>
-          <div className={styles.flowHeading} data-reveal="up">
+        <div className="agent-flow-block">
+          <div className="agent-flow-heading" data-reveal="up">
             <div>
-              <span>Flow 01 · Installation Content Engine</span>
-              <h3>Één upload vanaf de plaatsing wordt een complete contentproductie</h3>
+              <span className="eyebrow">Flow 01 · Installation Content Engine</span>
+              <h3>Plaatsing naar content</h3>
             </div>
-            <p>De monteur of eigenaar levert één gecontroleerde set bronmateriaal aan. Daarna sorteren gespecialiseerde stappen de assets, maken ze content en verdelen ze het resultaat per kanaal.</p>
+            <p>Een gecontroleerde upload wordt gesorteerd, verrijkt, geproduceerd en per kanaal klaargezet.</p>
           </div>
 
           <FlowStage label="Installation Content Engine" mobileSteps={contentMobileSteps}>
             <AnimatedConnectorLayer connectors={contentConnectors} />
-
             <FlowNode x={9} y={18} width={17} icon={ClipboardText} eyebrow="Input" title="Plaatsingschecklist" text="Verplichte foto- en videoshots" delay={0.05} />
             <FlowNode x={9} y={72} width={17} icon={Image} eyebrow="Mobiele app" title="Upload plaatsing" text="Spa, locatie, datum en omschrijving" delay={0.1} />
-
             <FlowNode x={30} y={45} width={12} icon={Server} eyebrow="Intake" title="Media hub" text="Controleert en ontvangt alles" variant="hub" delay={0.18} />
-
             <FlowNode x={48} y={17} width={18} icon={Database} eyebrow="Asset pipeline" title="Sorteren & benoemen" text="Structuur, metadata en vaste bestandsnamen" delay={0.24} />
             <FlowNode x={48} y={73} width={18} icon={MagicWand} eyebrow="Agent" title="Marketingproductie" text="Copy, beeldselectie, editing en short video" delay={0.3} />
-
             <FlowNode x={68} y={45} width={12} icon={FlowArrow} eyebrow="Orchestratie" title="Social manager" text="Kiest kanaal, formaat en planning" variant="hub" delay={0.38} />
-
             <FlowNode x={90} y={15} width={15} icon={FileText} eyebrow="Website" title="Nieuwe blog" text="Projectverhaal met geselecteerde media" variant="output" delay={0.48} />
             <FlowNode x={90} y={38} width={15} icon={Video} eyebrow="TikTok / Reels" title="Short video" text="Verticaal, kort en platformklaar" variant="output" delay={0.53} />
             <FlowNode x={90} y={61} width={15} icon={Users} eyebrow="Social" title="Facebook & Instagram" text="Berichten met passende foto's" variant="output" delay={0.58} />
@@ -116,29 +111,25 @@ export function AgentFlowShowcase() {
           </FlowStage>
         </div>
 
-        <div className={styles.flowBlock}>
-          <div className={styles.flowHeading} data-reveal="up">
+        <div className="agent-flow-block">
+          <div className="agent-flow-heading" data-reveal="up">
             <div>
-              <span>Flow 02 · Knowledge & Voice Advisor</span>
-              <h3>Praktijkkennis wordt een gesprek dat tekst én audio begrijpt</h3>
+              <span className="eyebrow">Flow 02 · Knowledge & Voice Advisor</span>
+              <h3>Kennis naar persoonlijk advies</h3>
             </div>
-            <p>De agent gebruikt een gecontroleerde kennisbron voor advies op de website. Voice is hier alleen een extra invoer- en uitvoerkanaal, niet een los systeem dat opnieuw het wiel probeert uit te vinden.</p>
+            <p>Gecontroleerde product- en servicekennis ondersteunt chat, voice en warme menselijke overdracht.</p>
           </div>
 
           <FlowStage label="Knowledge and Voice Advisor" mobileSteps={advisorMobileSteps}>
             <AnimatedConnectorLayer connectors={advisorConnectors} />
-
             <FlowNode x={9} y={15} width={15} icon={FileText} eyebrow="Bron" title="Productkennis" text="Modellen, opties en verschillen" delay={0.04} />
             <FlowNode x={9} y={38} width={15} icon={Server} eyebrow="Bron" title="Servicekennis" text="Onderhoud, storingen en oplossingen" delay={0.08} />
             <FlowNode x={9} y={61} width={15} icon={Users} eyebrow="Bron" title="Verkoopervaring" text="Vragen, bezwaren en behoeften" delay={0.12} />
             <FlowNode x={9} y={84} width={15} icon={Image} eyebrow="Bron" title="Projecthistorie" text="Plaatsingen, situaties en resultaten" delay={0.16} />
-
             <FlowNode x={30} y={50} width={12} icon={Database} eyebrow="Grounding" title="Kennisbank" text="Beheerde en actuele informatie" variant="hub" delay={0.24} />
             <FlowNode x={52} y={50} width={14} icon={Robot} eyebrow="Reasoning" title="AI Spa Advisor" text="Combineert vraag, context en kennis" variant="hub" delay={0.32} />
-
             <FlowNode x={74} y={25} width={16} icon={ChatText} eyebrow="Website" title="Chatgesprek" text="De klant typt een vraag" delay={0.4} />
             <FlowNode x={74} y={75} width={16} icon={Headphones} eyebrow="Telefoon" title="Voicegesprek" text="Vraag en antwoord via microfoon" delay={0.45} />
-
             <FlowNode x={92} y={25} width={13} icon={Sparkle} eyebrow="Output" title="Persoonlijk advies" text="Duidelijk antwoord en opties" variant="output" delay={0.52} />
             <FlowNode x={92} y={50} width={13} icon={ChatText} eyebrow="Output" title="Tekst of audio" text="Hetzelfde antwoord in passend formaat" variant="output" delay={0.57} />
             <FlowNode x={92} y={75} width={13} icon={Users} eyebrow="Escalatie" title="Warme overdracht" text="Context mee naar een medewerker" variant="output" delay={0.62} />
