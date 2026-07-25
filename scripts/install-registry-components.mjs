@@ -163,6 +163,15 @@ patchTextFile(
   "Corrected the Bklit shimmering-text import path.",
 );
 
+patchTextFile(
+  "components/integrations-block.tsx",
+  (source) => source.replace(
+    /<DialogTrigger\s+render=\{\s*<Button([^>]*)\/>\s*\}\s*>\s*([\s\S]*?)\s*<\/DialogTrigger>/g,
+    '<DialogTrigger asChild>\n            <Button$1>$2</Button>\n          </DialogTrigger>',
+  ),
+  "Adapted the 7Ovr DialogTrigger render pattern to Radix asChild.",
+);
+
 for (const projectPath of [
   "components/stat-card-chart.tsx",
   "components/stat-card-area.tsx",
