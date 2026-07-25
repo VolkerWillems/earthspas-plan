@@ -1,0 +1,203 @@
+/*
+ * EARTH SPAS CARD SYSTEM
+ *
+ * There are two supported card components:
+ * 1. Panel    -> .panel
+ * 2. StatCard -> .panel.stat-card
+ *
+ * Metric panels are Panel instances with an icon and use .metric-panel.
+ * This file is imported last and is the single authoritative visual layer
+ * for card surfaces, typography, spacing, icons, radius and interaction.
+ */
+
+:root,
+.dark {
+  --card-radius: var(--radius);
+  --card-surface: var(--surface-card);
+  --card-surface-hover: var(--surface-card-alt);
+  --card-border: var(--border-default);
+  --card-border-hover: var(--border-hover);
+  --card-padding-standard: var(--card-padding);
+  --card-icon-size: var(--icon-box);
+  --card-icon-size-mobile: var(--icon-box-sm);
+}
+
+/* --------------------------------------------------------------------------
+   1. PANEL
+   -------------------------------------------------------------------------- */
+
+.panel {
+  position: relative;
+  min-width: 0;
+  border: var(--border-width) solid var(--card-border) !important;
+  border-radius: var(--card-radius) !important;
+  background: var(--card-surface) !important;
+  background-image: none !important;
+  box-shadow: var(--shadow-card), var(--shadow-inset) !important;
+  color: var(--text-primary);
+  transform: none !important;
+  transform-style: flat !important;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    background-color var(--motion-duration-fast) var(--motion-ease-standard) !important;
+}
+
+.panel:hover {
+  border-color: var(--card-border-hover) !important;
+  background: var(--card-surface-hover) !important;
+  box-shadow: var(--shadow-card), var(--shadow-inset) !important;
+  transform: none !important;
+}
+
+.panel::before,
+.panel::after,
+.panel.motion-card::before,
+.panel.motion-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.panel h3 {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-card-title);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-tight);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.panel p,
+.panel li {
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-body);
+}
+
+.panel .eyebrow {
+  color: var(--section-accent);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-compact);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Nested panels remain visually subordinate. */
+.panel .panel {
+  background: var(--card-surface-hover) !important;
+  box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   PANEL WITH METRIC ICON
+   -------------------------------------------------------------------------- */
+
+.panel.metric-panel {
+  min-height: 0;
+  padding: var(--card-padding-standard) !important;
+  padding-right: calc(var(--card-padding-standard) + var(--card-icon-size) + var(--space-3)) !important;
+}
+
+.panel-metric-icon {
+  position: absolute;
+  top: var(--card-padding-standard);
+  right: var(--card-padding-standard);
+  z-index: 1;
+  display: grid;
+  width: var(--card-icon-size);
+  height: var(--card-icon-size);
+  place-items: center;
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--card-radius) !important;
+  background: var(--surface-raised);
+  color: var(--section-accent);
+  box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+.panel-metric-icon svg {
+  width: var(--font-size-icon);
+  height: var(--font-size-icon);
+  color: inherit;
+}
+
+.panel.metric-panel > p:first-of-type:not(.eyebrow) {
+  color: var(--brand-secondary);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-metric-sm);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.panel.metric-panel > h3 {
+  margin-top: var(--space-3);
+  color: var(--text-primary);
+  font-size: var(--font-size-card-title);
+  line-height: var(--line-height-heading);
+  text-transform: uppercase;
+}
+
+.panel.metric-panel > p:last-of-type:not(:first-of-type) {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+}
+
+/* --------------------------------------------------------------------------
+   2. STAT CARD
+   -------------------------------------------------------------------------- */
+
+.panel.stat-card {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--card-padding-standard) !important;
+  padding-right: calc(var(--card-padding-standard) + var(--card-icon-size) + var(--space-3)) !important;
+}
+
+.panel.stat-card > p:first-of-type {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-compact);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.panel.stat-card .value-change,
+.panel.stat-card .metric-value {
+  margin-top: var(--space-3);
+  color: var(--brand-secondary);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-metric-sm) !important;
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.panel.stat-card > p:last-of-type:not(:first-of-type) {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+}
+
+@media (max-width: 48rem) {
+  .panel.metric-panel,
+  .panel.stat-card {
+    padding-right: calc(var(--card-padding-standard) + var(--card-icon-size-mobile) + var(--space-3)) !important;
+  }
+
+  .panel-metric-icon {
+    width: var(--card-icon-size-mobile);
+    height: var(--card-icon-size-mobile);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition: none !important;
+  }
+}
