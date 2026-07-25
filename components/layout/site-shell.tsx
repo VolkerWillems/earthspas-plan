@@ -3,12 +3,9 @@
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
-import {
-  PrepaidDelegationBanner,
-  SoftwareFlowDiagram,
-} from "@/components/blocks";
+import { PrepaidDelegationBanner } from "@/components/blocks";
 import { SiteHeader } from "@/components/layout/site-header";
-import { AgentFlowShowcase } from "@/components/motion";
+import { RouteVisualSections } from "@/components/layout/route-visual-sections";
 import { MotionController } from "@/components/motion-controller";
 import { MobileNavigation } from "@/components/navigation/site-navigation";
 import { PageBottomSummary } from "@/components/page-bottom-summary";
@@ -57,12 +54,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <div key={pathname} className="route-transition">
         {children}
-        {pathname === "/software" && (
-          <>
-            <SoftwareFlowDiagram />
-            <AgentFlowShowcase />
-          </>
-        )}
+        <RouteVisualSections pathname={pathname} />
         {pathname === "/checklist" && <PrepaidDelegationBanner />}
         <PageBottomSummary />
       </div>
