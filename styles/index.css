@@ -1,6 +1,6 @@
 /* Canonical Earth Spas stylesheet entrypoint.
    Imports are ordered from foundations to route-specific presentation.
-   The final block is the visual stability contract for shared cards and controls. */
+   The final block is the approved visual stability contract. */
 
 @import "./components.css";
 @import "./responsive.css";
@@ -9,133 +9,244 @@
 @import "./ui.css";
 
 /* --------------------------------------------------------------------------
-   VISUAL STABILITY CONTRACT
-   Keep shared card, typography and button corrections here until the visible
-   baseline has been approved. Do not scatter competing overrides elsewhere.
+   QUICK EDIT CONTRACT
+   This is the only file to edit for the shared visual baseline.
    -------------------------------------------------------------------------- */
 
 :root,
 .dark {
-  --font-size-body: clamp(1rem, 0.96rem + 0.16vw, 1.1rem);
-  --font-size-sm: clamp(0.88rem, 0.84rem + 0.12vw, 0.96rem);
-  --font-size-card-title: clamp(1.08rem, 1rem + 0.24vw, 1.25rem);
-  --surface-card: #08141d;
-  --surface-card-alt: #0b1a24;
-  --surface-raised: #102430;
-  --border-default: #28414d;
-  --border-hover: #5f8798;
-  --text-secondary: #c8d2d7;
-  --text-muted: #96a7af;
-  --card-padding: clamp(1.25rem, 1rem + 0.75vw, 1.9rem);
+  --radius-base: 0.75rem;
+  --radius-soft: 1rem;
+  --radius-pill: 999px;
+
+  --font-size-body: clamp(1.05rem, 1rem + 0.18vw, 1.18rem);
+  --font-size-sm: clamp(0.9rem, 0.86rem + 0.14vw, 1rem);
+  --font-size-card-title: clamp(1.12rem, 1.02rem + 0.28vw, 1.32rem);
+
+  --card-blue-1: #0b1f2b;
+  --card-blue-2: #081721;
+  --card-blue-3: #050e15;
+  --card-blue-raised: #102a38;
+  --card-border: #294651;
+  --card-border-hover: #668d9d;
+  --metric-gold: #d8c78f;
+
+  --surface-card: var(--card-blue-2);
+  --surface-card-alt: var(--card-blue-1);
+  --surface-raised: var(--card-blue-raised);
+  --border-default: var(--card-border);
+  --border-hover: var(--card-border-hover);
+  --text-secondary: #d0d8dc;
+  --text-muted: #9babb3;
+  --card-padding: clamp(1.3rem, 1rem + 0.85vw, 2rem);
 }
 
 body {
   font-size: var(--font-size-body);
+  line-height: 1.65;
 }
 
-:where(.panel, .stat-card, [data-slot="card"]) {
-  border: 1px solid color-mix(in srgb, var(--section-accent) 24%, var(--border-default)) !important;
-  border-radius: 0.75rem !important;
+:where(.page-intro-subtitle, .section-header > p:last-child, .route-visual-chart-heading > p:last-child) {
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-body) !important;
+  line-height: 1.65 !important;
+  letter-spacing: 0.005em !important;
+}
+
+:where(.eyebrow, .badge-label, .card-eyebrow) {
+  letter-spacing: 0.12em !important;
+}
+
+:where(.panel h3, [data-slot="card-title"], .heading-card) {
+  letter-spacing: 0.006em !important;
+}
+
+/* --------------------------------------------------------------------------
+   PREMIUM CARD SYSTEM
+   -------------------------------------------------------------------------- */
+
+:where(.panel:not(.premium-statement-card), .stat-card, [data-slot="card"]) {
+  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, var(--card-border)) !important;
+  border-radius: var(--radius-soft) !important;
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 5%, #0d1d27), #07121a 78%) !important;
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--section-accent) 5%, var(--card-blue-1)) 0%,
+      var(--card-blue-2) 54%,
+      var(--card-blue-3) 100%
+    ) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.045),
-    0 1.2rem 3rem rgba(0, 0, 0, 0.28) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 1.25rem 3.4rem rgba(0, 0, 0, 0.34) !important;
 }
 
-:where(.panel, .stat-card, [data-slot="card"]):hover {
-  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--border-hover)) !important;
+.grid > :where(.panel:not(.premium-statement-card), [data-slot="card"]):nth-child(3n + 2) {
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 7%, #10232e), #08151e 78%) !important;
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--section-accent) 4%, #0e2633) 0%,
+      #091a24 56%,
+      #061018 100%
+    ) !important;
+}
+
+.grid > :where(.panel:not(.premium-statement-card), [data-slot="card"]):nth-child(3n + 3) {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--section-accent) 4%, #0a1a25) 0%,
+      #07141d 56%,
+      #040b11 100%
+    ) !important;
+}
+
+:where(.panel:not(.premium-statement-card), .stat-card, [data-slot="card"]):hover {
+  border-color: color-mix(in srgb, var(--section-accent) 58%, var(--card-border-hover)) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 1.5rem 3.8rem rgba(0, 0, 0, 0.34) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 1.65rem 4.2rem rgba(0, 0, 0, 0.4),
+    0 0 0 1px color-mix(in srgb, var(--section-accent) 8%, transparent) !important;
 }
 
-.stat-card {
-  min-height: clamp(11rem, 13vw, 13.25rem) !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--card-padding) !important;
-}
-
+.panel::before,
+.panel::after,
+.metric-panel::before,
+.metric-panel::after,
 .stat-card::before,
 .stat-card::after {
+  pointer-events: none;
+}
+
+.metric-panel.motion-card::before,
+.metric-panel.motion-card::after,
+.stat-card.motion-card::before,
+.stat-card.motion-card::after {
   display: none !important;
   content: none !important;
 }
 
-.stat-card > p:first-child {
+.metric-panel {
+  position: relative;
+  min-height: clamp(12rem, 13vw, 14rem);
+  padding: var(--card-padding) !important;
+  padding-right: clamp(4.75rem, 5vw, 6rem) !important;
+}
+
+.panel-metric-icon {
+  position: absolute;
+  top: clamp(1.15rem, 1vw, 1.5rem);
+  right: clamp(1.15rem, 1vw, 1.5rem);
+  z-index: 2;
+  display: grid;
+  width: clamp(2.65rem, 2.3rem + 0.7vw, 3.25rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 44%, var(--card-border));
+  border-radius: var(--radius-base);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 18%, var(--card-blue-raised)), var(--card-blue-2));
+  color: var(--section-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 0.8rem 1.7rem rgba(0, 0, 0, 0.24);
+}
+
+.panel-metric-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  color: inherit;
+}
+
+.stat-card {
+  min-height: clamp(11.5rem, 13vw, 13.75rem) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--card-padding) !important;
+  padding-right: clamp(4.75rem, 5vw, 6rem) !important;
+}
+
+.stat-card > p:first-of-type {
   color: var(--text-muted) !important;
   font-family: var(--font-sans) !important;
-  font-size: 0.82rem !important;
+  font-size: 0.88rem !important;
   font-weight: 400 !important;
   line-height: 1.35 !important;
-  letter-spacing: 0.075em !important;
+  letter-spacing: 0.095em !important;
   text-transform: uppercase;
 }
 
 .stat-card .value-change,
 .stat-card .metric-value {
   margin-top: 0.8rem !important;
-  color: var(--text-primary) !important;
+  color: var(--metric-gold) !important;
   font-family: var(--font-heading) !important;
-  font-size: clamp(2.15rem, 1.8rem + 0.95vw, 3rem) !important;
+  font-size: clamp(2.25rem, 1.9rem + 1vw, 3.2rem) !important;
   font-weight: 400 !important;
   line-height: 0.98 !important;
   letter-spacing: 0 !important;
 }
 
-.stat-card > p:last-child:not(:first-child) {
-  margin-top: 0.85rem !important;
+.stat-card > p:last-of-type:not(:first-of-type) {
+  margin-top: 0.9rem !important;
   color: var(--text-secondary) !important;
-  font-size: 0.96rem !important;
-  line-height: 1.5 !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
 }
 
-.panel:has(> p:first-child + h3) {
-  min-height: 12rem;
-  padding: var(--card-padding) !important;
-}
-
-.panel:has(> p:first-child + h3) > p:first-child {
-  color: var(--text-primary) !important;
+.metric-panel:has(> p:first-of-type + h3) > p:first-of-type {
+  color: var(--metric-gold) !important;
   font-family: var(--font-heading) !important;
-  font-size: clamp(2.15rem, 1.8rem + 0.95vw, 3rem) !important;
-  line-height: 1 !important;
+  font-size: clamp(2.35rem, 1.9rem + 1.1vw, 3.25rem) !important;
+  line-height: 0.98 !important;
   letter-spacing: 0 !important;
 }
 
-.panel:has(> p:first-child + h3) > h3 {
-  margin-top: 0.85rem !important;
+.metric-panel:has(> p:first-of-type + h3) > h3 {
+  margin-top: 0.9rem !important;
   color: var(--text-primary) !important;
   font-family: var(--font-sans) !important;
-  font-size: 0.93rem !important;
+  font-size: clamp(0.95rem, 0.9rem + 0.16vw, 1.08rem) !important;
   font-weight: 400 !important;
   line-height: 1.35 !important;
-  letter-spacing: 0.045em !important;
+  letter-spacing: 0.035em !important;
 }
 
-.panel:has(> p:first-child + h3) > p:last-child {
-  margin-top: 0.7rem !important;
+.metric-panel:has(> p:first-of-type + h3) > p:last-of-type {
+  margin-top: 0.75rem !important;
   color: var(--text-secondary) !important;
-  font-size: 0.93rem !important;
-  line-height: 1.5 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.55 !important;
 }
+
+:where(.panel > p:not(.eyebrow):not(.value-change), .panel li) {
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   PREMIUM CONTROLS
+   -------------------------------------------------------------------------- */
 
 .action-link {
-  min-height: 3rem !important;
+  min-height: 3.2rem !important;
   border: 1px solid color-mix(in srgb, var(--section-accent) 82%, white 8%) !important;
-  border-radius: 0.65rem !important;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--section-accent) 92%, white 8%), var(--section-accent)) !important;
-  color: #071017 !important;
-  padding-inline: 1.25rem !important;
+  border-radius: 0.9rem !important;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--section-accent) 90%, white 10%),
+      color-mix(in srgb, var(--section-accent) 82%, #a88f4c)
+    ) !important;
+  color: #061017 !important;
+  padding-inline: 1.35rem !important;
   font-family: var(--font-sans) !important;
-  font-size: 0.96rem !important;
+  font-size: 1rem !important;
   font-weight: 400 !important;
-  letter-spacing: 0.01em !important;
-  box-shadow: 0 0.75rem 1.8rem color-mix(in srgb, var(--section-accent) 18%, transparent) !important;
+  letter-spacing: 0.005em !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0.85rem 2rem color-mix(in srgb, var(--section-accent) 18%, transparent) !important;
 }
 
 .action-link > span,
@@ -146,23 +257,40 @@ body {
   opacity: 1 !important;
 }
 
+.action-link > svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
 .action-group .action-link:nth-child(n + 2),
 .action-link + .action-link {
-  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--border-default)) !important;
-  background: color-mix(in srgb, var(--section-accent) 5%, var(--surface-card)) !important;
+  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--card-border)) !important;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 7%, var(--card-blue-1)), var(--card-blue-3)) !important;
   color: var(--section-accent) !important;
-  box-shadow: none !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0.75rem 1.8rem rgba(0, 0, 0, 0.25) !important;
 }
 
 .action-link:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--section-accent) 78%, white 8%) !important;
   filter: brightness(1.06);
 }
 
+/* --------------------------------------------------------------------------
+   ROUTE VISUALS: MAPS, CHARTS AND FLOWS
+   -------------------------------------------------------------------------- */
+
+.route-visual-slot,
 .route-visual-restoration {
   position: relative;
+  display: block;
+  width: 100%;
 }
 
+.route-visual-slot [data-reveal],
 .route-visual-restoration [data-reveal] {
   opacity: 1;
   transform: none;
@@ -178,12 +306,14 @@ body {
 
 .route-visual-chart-section {
   padding-block: var(--section-space);
-  border-top: 1px solid var(--border-default);
-  background: var(--background);
+  border-block: 1px solid var(--border-default);
+  background:
+    radial-gradient(circle at 75% 10%, color-mix(in srgb, var(--section-accent) 7%, transparent), transparent 34%),
+    var(--background);
 }
 
 .route-visual-chart-heading {
-  max-width: 62rem;
+  max-width: 66rem;
   margin-bottom: var(--space-6);
 }
 
@@ -192,24 +322,101 @@ body {
   color: var(--section-accent);
   font-size: var(--font-size-section);
   line-height: var(--line-height-heading);
+  letter-spacing: 0.005em;
   text-transform: uppercase;
 }
 
-.route-visual-chart-heading > p:last-child {
-  margin-top: var(--space-3);
-  color: var(--text-secondary);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+:where(
+  .growth-map-card,
+  .budget-growth-chart,
+  .software-flow-canvas,
+  .software-flow-principle,
+  .software-flow-node,
+  .software-flow-automation,
+  .agent-flow-canvas,
+  .flow-stage,
+  .registry-flow-stack > *
+) {
+  border-radius: var(--radius-soft) !important;
+  border-color: color-mix(in srgb, var(--section-accent) 30%, var(--card-border)) !important;
+  background-color: var(--card-blue-2) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1.5rem 4rem rgba(0, 0, 0, 0.34) !important;
+}
+
+.growth-map-card {
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #0c2230 0%, #081721 46%, #050e15 100%) !important;
+}
+
+.growth-map-metrics > div {
+  border-radius: var(--radius-base) !important;
+  background: linear-gradient(145deg, #0e2633, #07131c) !important;
+}
+
+.growth-map-metrics strong,
+.growth-map-legend button > span:first-child,
+.budget-growth-chart__result strong {
+  color: var(--metric-gold) !important;
+}
+
+.growth-map-icon,
+.software-flow-automation-icon,
+.flow-node-icon,
+.flow-hub-icon {
+  border-radius: var(--radius-base) !important;
+  color: var(--section-accent) !important;
+}
+
+.growth-map-visual {
+  background:
+    radial-gradient(circle at 58% 42%, color-mix(in srgb, var(--metric-gold) 10%, transparent), transparent 34%),
+    linear-gradient(145deg, #07141d, #030a0f) !important;
+}
+
+.growth-map-region path {
+  fill: #0b202c !important;
+  stroke: color-mix(in srgb, var(--brand-primary) 72%, #9fc0cc) !important;
+  stroke-width: 1.6 !important;
+}
+
+.growth-map-region.is-active path {
+  fill: color-mix(in srgb, var(--metric-gold) 24%, #0b202c) !important;
+  stroke: var(--metric-gold) !important;
+}
+
+.growth-map-legend button {
+  border-radius: var(--radius-base) !important;
+  background: #06121a !important;
+}
+
+.growth-map-legend button.is-active {
+  border-color: color-mix(in srgb, var(--metric-gold) 62%, var(--card-border)) !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--metric-gold) 9%, #0d2029), #07131b) !important;
+}
+
+:where(.software-flow-node, .flow-node-card, .flow-mobile-step) svg,
+:where(.agent-flow-section, .registry-flow-stack) svg {
+  color: var(--section-accent);
 }
 
 @media (max-width: 48rem) {
   :where(.panel, .stat-card, [data-slot="card"]) {
-    border-radius: 0.6rem !important;
+    border-radius: var(--radius-base) !important;
   }
 
-  .stat-card,
-  .panel:has(> p:first-child + h3) {
+  .metric-panel,
+  .stat-card {
     min-height: auto !important;
+    padding-right: 4.5rem !important;
+  }
+
+  .panel-metric-icon {
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
   }
 
   .action-group {
