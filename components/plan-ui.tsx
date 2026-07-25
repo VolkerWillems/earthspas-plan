@@ -6,7 +6,6 @@ import * as React from "react";
 import { ArrowRight, Info } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
 import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup-gallery";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 type Accent = "primary" | "secondary";
 
@@ -21,13 +20,13 @@ const routeHeaderCopy: Record<string, { title: string; kicker: string }> = {
 
 const routeHeroAssets: Record<string, { image: string; alt: string; position?: string }> = {
   "/": {
-    image: "/earth-spas-collage-a-starry-lake-1920x1080.jpg",
-    alt: "Earth Spas spa in een premium buitenomgeving",
+    image: "/showroom-building.jpeg",
+    alt: "Earth Spas showroom in Venlo",
     position: "center",
   },
   "/strategie": {
-    image: "/earth-spas-collage-b-glacier-1920x1080.jpg",
-    alt: "Earth Spas spa in een rustige premium wellnessomgeving",
+    image: "/showroom-building.jpeg",
+    alt: "Earth Spas showroom als basis voor regionale groei",
     position: "center",
   },
   "/calculator": {
@@ -228,32 +227,24 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
 export function Panel({ className, children }: { className?: string; children: React.ReactNode }) {
   const isPremiumStatement = getNodeText(children).includes("Positioneringszin");
   const displayChildren = isPremiumStatement ? compactPremiumStatement(children) : children;
-  const backgroundImage = isPremiumStatement
-    ? "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')"
-    : "linear-gradient(145deg, color-mix(in srgb, var(--surface-raised) 90%, var(--highlight-soft)), var(--surface-card) 72%)";
-
-  return (
-    <SpotlightCard
-      className={cn(
-        "panel motion-card [&>*]:relative [&>*]:z-[1] hover:border-[color-mix(in_srgb,var(--section-accent)_52%,var(--border-default))]",
-        isPremiumStatement && "premium-statement-card",
-        className,
-      )}
-      data-motion-card
-      data-reveal="up"
-      spotlightColor="var(--section-accent)"
-      style={{
-        backgroundColor: "var(--surface-card)",
-        backgroundImage,
+  const premiumStyle: React.CSSProperties | undefined = isPremiumStatement
+    ? {
+        backgroundImage: "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        borderColor: "color-mix(in srgb, var(--section-accent) 28%, var(--border-default))",
-        boxShadow: "0 1px 0 var(--highlight-soft), 0 1.1rem 3.5rem color-mix(in srgb, var(--palette-black) 34%, transparent)",
-      }}
+      }
+    : undefined;
+
+  return (
+    <div
+      className={cn("panel motion-card", isPremiumStatement && "premium-statement-card", className)}
+      style={premiumStyle}
+      data-reveal="up"
+      data-motion-card
     >
       {displayChildren}
-    </SpotlightCard>
+    </div>
   );
 }
 
@@ -269,15 +260,7 @@ export function StatCard({ label, value, detail }: { label: string; value: strin
 
 export function PrimaryLink({ href, children }: { href: string; children: React.ReactNode; accent?: Accent }) {
   return (
-    <Link
-      href={href}
-      className="action-link bg-[length:220%_100%] transition-[background-position,transform,box-shadow,filter] duration-500 motion-safe:hover:-translate-y-px hover:bg-[position:100%_0]"
-      style={{
-        backgroundImage: "linear-gradient(115deg, var(--section-accent), color-mix(in srgb, var(--section-accent) 68%, var(--brand-secondary)), var(--section-accent))",
-        backgroundSize: "220% 100%",
-        boxShadow: "0 0.65rem 1.9rem color-mix(in srgb, var(--section-accent) 16%, transparent), inset 0 1px 0 color-mix(in srgb, var(--palette-white) 18%, transparent)",
-      }}
-    >
+    <Link href={href} className="action-link">
       <span>{children}</span>
       <ArrowRight className="h-4 w-4" />
     </Link>
