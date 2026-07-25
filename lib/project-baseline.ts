@@ -13,7 +13,7 @@ export const projectBaseline = {
     { category: "Marketing, SEO, social en analytics", hours: 113, result: "Meetbare kanalen, vindbaarheid en een basis voor leadgeneratie." },
     { category: "AI-agents en contextoverdracht", hours: 37, result: "Herbruikbare projectkennis en voorbereiding van toekomstige automatisering." },
     { category: "Recente verbeteringen en controles", hours: 40, result: "Aanvullende kwaliteitscontrole en verdere platformuitwerking." },
-    { category: "Aanvullende platform- en planuitwerking", hours: 110, result: "Verdere plannen, kostenmodellen, keuzehulpen, prestaties en technische uitwerking." },
+    { category: "Later geregistreerde inzet", hours: 110, result: "Verschil tussen het gedetailleerde overzicht van 840 uur en het latere totaal van circa 950 uur; niet verder uitgesplitst in de bronbestanden." },
   ],
   foundation: [
     { title: "Website en domeinen", detail: "Next.js-omgeving, meerdere domeinen, NL/DE/EN-structuur en deploymentbasis." },
