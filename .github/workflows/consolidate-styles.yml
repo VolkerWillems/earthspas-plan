@@ -17,23 +17,239 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Consolidate styles
-        run: node scripts/consolidate-styles.mjs
-
-      - name: Commit canonical style structure
+      - name: Confirm canonical styles do not change code
+        shell: bash
         run: |
-          if git diff --quiet; then
-            echo "Style structure already canonical."
-            exit 0
+          node scripts/consolidate-styles.mjs
+          if ! git diff --quiet -- app/globals.css styles; then
+            echo "Canonical style command changed existing CSS. Aborting comment-only task."
+            git diff -- app/globals.css styles
+            exit 1
           fi
+
+      - name: Add CSS comments only
+        shell: bash
+        run: |
+          python <<'PY'
+          from __future__ import annotations
+
+          import re
+          from pathlib import Path
+
+          FILES = [
+              Path("styles/theme.css"),
+              Path("styles/components.css"),
+              Path("styles/responsive.css"),
+              Path("styles/index.css"),
+          ]
+
+          TOC = {
+              "theme.css": [
+                  "Design-token palette en semantische kleurrollen",
+                  "Grafiekpalet en typografie",
+                  "Fluid lettergroottes, regelhoogtes en tracking",
+                  "Fluid spacing en componentafmetingen",
+                  "Geometry, radius, borders en shadows",
+                  "Tailwind/shadcn token bridge",
+                  "Pagina- en sectiethema's",
+              ],
+              "components.css": [
+                  "Base, reset en gedeelde typografie",
+                  "Layoutcontainers en sectieritme",
+                  "Cards, panels, badges en knoppen",
+                  "Header, navigatie en mobiele menu's",
+                  "Page intro, samenvattingen en hero-content",
+                  "Keuzekaarten, checklists, tabellen en calculator",
+                  "Marketing-, software- en developmentpresentatie",
+                  "Modals, install prompts en printregels",
+              ],
+              "responsive.css": [
+                  "Fluid viewport-, type-, spacing- en layouttokens",
+                  "Containers en container queries",
+                  "Complexe grids en cardgedrag",
+                  "Centrale typografische guards",
+                  "Controls, registry-secties en brede visuals",
+                  "Tablet-, mobiel- en printbreakpoints",
+              ],
+              "index.css": [
+                  "Imports van de drie uitvoerende stylesheets",
+                  "Globale radius- en kleuraliassen",
+                  "Projectbrede documentatie en uitzonderingen",
+              ],
+          }
+
+          GROUP_COMMENTS = {
+              "theme.css": {
+                  ":root,": "Globale design tokens: gebruikt door alle routes en componenten.",
+                  "@theme inline {": "Tailwind/shadcn bridge: koppelt utility tokens aan de core variables.",
+                  ".theme-primary {": "Sectiethema's: wijzigen alleen semantische accenten per route.",
+              },
+              "components.css": {
+                  "@layer base {": "Basegroep: reset en standaardgedrag voor de volledige applicatie.",
+                  ".content-shell {": "Layoutgroep: centrale contentbreedte en horizontale paginauitlijning.",
+                  ".panel {": "Cardgroep: gedeelde basis voor normale contentpanelen.",
+                  ".site-header {": "Navigatiegroep: desktopheader, voortgang en hoofdmenu.",
+                  ".page-intro {": "Introductiegroep: paginatitel, toelichting en hero-presentatie.",
+              },
+              "responsive.css": {
+                  ":root,": "Fluid tokengroep: schaalt type, spacing en componentmaten per viewport.",
+                  ".content-shell {": "Containergroep: bewaakt breedte en schaalgedrag van pagina-inhoud.",
+                  "@media (max-width: 74rem) {": "Tabletbreakpoint: vereenvoudigt brede grids en samengestelde visuals.",
+                  "@media (max-width: 48rem) {": "Mobiel breakpoint: zet meerkolomscontent om naar compacte stapeling.",
+              },
+              "index.css": {
+                  "@import \"./components.css\";": "Importlaag: componentregels worden vóór responsive overrides geladen.",
+                  ":root,": "Aliasgroep: verwijst globale namen terug naar de centrale theme variables.",
+              },
+          }
+
+          DOC_MARKER = "EARTH SPAS CSS DOCUMENTATIE"
+          RANGE_RE = re.compile(r"/\*\s*-?\d+(?:\.\d+)?px\s+-\s+-?\d+(?:\.\d+)?px\s+\*/")
+          DECL_RE = re.compile(r"^(?P<indent>\s*)--[\w-]+\s*:\s*clamp\(")
+
+          def documentation_block(path: Path) -> str:
+              lines = [
+                  "/* ==========================================================================\n",
+                  f"   {DOC_MARKER}\n",
+                  "\n",
+                  "   Inhoudsopgave\n",
+              ]
+              for number, item in enumerate(TOC[path.name], start=1):
+                  lines.append(f"   {number}. {item}\n")
+              lines.extend([
+                  "\n",
+                  "   Onderhoudsregel\n",
+                  "   - Alleen de beschreven classgroep of tokenfamilie in deze sectie aanpassen.\n",
+                  "   - Fluid clamp-bereiken zijn omgerekend op basis van 1rem = 16px.\n",
+                  "   - Deze documentatie wijzigt geen selector, property, waarde of import.\n",
+                  "   ========================================================================== */\n",
+                  "\n",
+              ])
+              return "".join(lines)
+
+          def split_clamp_arguments(value: str) -> list[str]:
+              start = value.find("clamp(")
+              if start < 0:
+                  return []
+              body = value[start + len("clamp("):]
+              depth = 0
+              current: list[str] = []
+              parts: list[str] = []
+              for char in body:
+                  if char == "(":
+                      depth += 1
+                  elif char == ")":
+                      if depth == 0:
+                          parts.append("".join(current).strip())
+                          return parts
+                      depth -= 1
+                  if char == "," and depth == 0:
+                      parts.append("".join(current).strip())
+                      current = []
+                  else:
+                      current.append(char)
+              return []
+
+          def length_to_px(value: str) -> float | None:
+              match = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*(rem|px)\s*", value)
+              if not match:
+                  return None
+              amount = float(match.group(1))
+              return amount * 16 if match.group(2) == "rem" else amount
+
+          def format_px(value: float) -> str:
+              return f"{round(value, 2):.2f}".rstrip("0").rstrip(".")
+
+          def range_comment(block: str, indent: str) -> str | None:
+              if RANGE_RE.search(block):
+                  return None
+              args = split_clamp_arguments(block)
+              if len(args) != 3:
+                  return None
+              minimum = length_to_px(args[0])
+              maximum = length_to_px(args[2])
+              if minimum is None or maximum is None:
+                  return None
+              return f"{indent}/* {format_px(minimum)}px - {format_px(maximum)}px */\n"
+
+          def transform(path: Path) -> None:
+              original = path.read_text(encoding="utf-8")
+              original_lines = original.splitlines(keepends=True)
+              output: list[tuple[str, bool]] = []
+
+              if DOC_MARKER not in original:
+                  output.append((documentation_block(path), True))
+
+              group_comments = GROUP_COMMENTS[path.name]
+              inserted_groups: set[str] = set()
+              index = 0
+
+              while index < len(original_lines):
+                  line = original_lines[index]
+                  stripped = line.strip()
+
+                  for anchor, description in group_comments.items():
+                      if anchor in inserted_groups or stripped != anchor:
+                          continue
+                      output.append((f"/* {description} */\n", True))
+                      inserted_groups.add(anchor)
+
+                  match = DECL_RE.match(line)
+                  if not match:
+                      output.append((line, False))
+                      index += 1
+                      continue
+
+                  block_lines = [line]
+                  cursor = index + 1
+                  while ";" not in "".join(block_lines) and cursor < len(original_lines):
+                      block_lines.append(original_lines[cursor])
+                      cursor += 1
+
+                  comment = range_comment("".join(block_lines), match.group("indent"))
+                  if comment:
+                      output.append((comment, True))
+
+                  output.extend((existing, False) for existing in block_lines)
+                  index = cursor
+
+              preserved = "".join(chunk for chunk, inserted in output if not inserted)
+              if preserved != original:
+                  raise RuntimeError(f"Existing CSS content changed in {path}")
+
+              for chunk, inserted in output:
+                  if not inserted or not chunk.strip():
+                      continue
+                  if not (chunk.lstrip().startswith("/*") and chunk.rstrip().endswith("*/")):
+                      raise RuntimeError(f"Non-comment content inserted in {path}: {chunk!r}")
+
+              path.write_text("".join(chunk for chunk, _ in output), encoding="utf-8", newline="")
+              print(f"Documented {path}; all existing CSS lines are unchanged.")
+
+          for css_file in FILES:
+              transform(css_file)
+          PY
+
+      - name: Restore workflows and verify comment-only result
+        shell: bash
+        run: |
+          git show HEAD^:.github/workflows/consolidate-styles.yml > .github/workflows/consolidate-styles.yml
+          rm -f .github/workflows/document-css-comments.yml
+          git diff --check
+          git status --short
+
+      - name: Commit documented CSS
+        shell: bash
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/globals.css styles
-          git commit -m "Consolidate styles to four canonical files [skip ci]"
+          git add styles/theme.css styles/components.css styles/responsive.css styles/index.css .github/workflows
+          git commit -m "Document CSS structure and fluid ranges [skip ci]"
           git push
