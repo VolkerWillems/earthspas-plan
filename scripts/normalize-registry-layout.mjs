@@ -112,30 +112,32 @@ const variants: Record<Status, "default" | "secondary" | "outline"> = {
 
 export default function TimelineBlock() {
   return (
-    <section className="w-full max-w-[var(--reading-max)]">
+    <section className="timeline-block">
       <SectionHeader
         eyebrow="Development timeline"
         title="Van basis naar automatisering"
         text="Nieuwe software volgt pas nadat eigenaarschap, data en processen betrouwbaar zijn."
       />
-      <ol className="mt-[var(--space-6)] flex flex-col">
+      <ol className="timeline-list">
         {milestones.map((item, index) => {
           const last = index === milestones.length - 1;
+          const Icon = item.icon;
+
           return (
-            <li key={item.title} className="flex gap-[var(--space-5)]">
-              <div className="flex flex-col items-center">
-                <span className="flex size-[var(--icon-box)] shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card text-[var(--section-accent)]">
-                  <item.icon className="size-[var(--font-size-icon)]" />
+            <li key={item.title} className="timeline-item">
+              <div className="timeline-rail" aria-hidden="true">
+                <span className="timeline-marker">
+                  <Icon weight="duotone" />
                 </span>
-                {!last && <span className="w-px flex-1 bg-border" />}
+                {!last && <span className="timeline-line" />}
               </div>
-              <div className={last ? "pb-0" : "pb-[var(--space-8)]"}>
-                <div className="flex flex-wrap items-center gap-[var(--space-2)]">
-                  <span className="font-mono text-xs text-muted-foreground">{item.date}</span>
+              <div className="timeline-content">
+                <div className="timeline-meta">
+                  <span className="timeline-date">{item.date}</span>
                   <Badge variant={variants[item.status]}>{item.status}</Badge>
                 </div>
-                <h3 className="heading-card mt-[var(--space-2)] uppercase">{item.title}</h3>
-                <p className="mt-[var(--space-2)] text-sm leading-[var(--line-height-body)] text-muted-foreground">{item.copy}</p>
+                <h3 className="timeline-title">{item.title}</h3>
+                <p className="timeline-copy">{item.copy}</p>
               </div>
             </li>
           );
