@@ -14,12 +14,15 @@ import {
   Target,
   X,
 } from "@/lib/phosphor-icons";
-import { GrowthChoroplethCard } from "@/components/blocks/growth-choropleth-card";
-import { SoftwareFlowDiagram } from "@/components/blocks/software-flow-diagram";
+import {
+  GrowthChoroplethCard,
+  PrepaidDelegationBanner,
+  SoftwareFlowDiagram,
+} from "@/components/blocks";
 import { MotionController } from "@/components/motion-controller";
 import { PageBottomSummary } from "@/components/page-bottom-summary";
-import { PrepaidDelegationBanner } from "@/components/prepaid-delegation-banner";
 import { useSiteState } from "@/components/site-state";
+import { brandAssets } from "@/lib/brand-assets";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -61,7 +64,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="site-progress" aria-hidden="true" />
         <div className="content-shell site-header-inner">
           <Link href="/" className="site-brand" aria-label="Earth Spas homepage">
-            <img src="/screens/logo-full-gold.png" alt="Earth Spas" />
+            <img src={brandAssets.fullLogo} alt="Earth Spas" />
           </Link>
 
           <nav className="desktop-nav" aria-label="Hoofdnavigatie">
@@ -145,7 +148,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      <div key={pathname} className={cn("route-transition", pathname === "/checklist" && "checklist-route")}>
+      <div key={pathname} className="route-transition">
         {pathname === "/" && <GrowthChoroplethCard />}
         {children}
         {pathname === "/software" && <SoftwareFlowDiagram />}
