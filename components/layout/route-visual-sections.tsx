@@ -1,12 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { GrowthChoroplethCard, SoftwareFlowDiagram } from "@/components/blocks";
 import { OfficialBudgetGrowthChart } from "@/components/blocks/official-budget-growth-chart";
 import { OfficialMarketingCharts } from "@/components/blocks/official-marketing-charts";
 import { OfficialSoftwareFlows } from "@/components/blocks/official-software-flows";
 import { AgentFlowShowcase } from "@/components/motion";
 
-export function RouteVisualSections({ pathname }: { pathname: string }) {
+function RouteVisualContent({ pathname }: { pathname: string }) {
   if (pathname === "/strategie") {
     return (
       <div className="route-visual-restoration">
@@ -32,7 +34,7 @@ export function RouteVisualSections({ pathname }: { pathname: string }) {
           <div className="route-visual-chart-heading">
             <p className="eyebrow">Meetbare marketingketen</p>
             <h2 id="marketing-visuals-title">Van bereik naar afspraken en verkopen</h2>
-            <p>Deze visualisaties maken funnel, regionale focus en het voorzichtige verkoopschema opnieuw zichtbaar. Planningsdata wordt later vervangen door CRM-resultaten.</p>
+            <p>Funnel, marktverdeling en het voorzichtige verkoopschema staan weer direct bij de marketingintro. Planningsdata wordt later vervangen door CRM-resultaten.</p>
           </div>
           <OfficialMarketingCharts />
         </div>
@@ -50,7 +52,7 @@ export function RouteVisualSections({ pathname }: { pathname: string }) {
             <div className="route-visual-chart-heading">
               <p className="eyebrow">Uitvoering en integraties</p>
               <h2 id="software-registry-flows-title">Van technische basis naar beheersbare automatisering</h2>
-              <p>De proces-, integratie- en tijdlijncomponenten staan weer expliciet op de softwarepagina in plaats van los in de repository te verstoffen.</p>
+              <p>Proces-, integratie- en tijdlijncomponenten staan direct onder de softwareintro, in plaats van na de volledige pagina te verdwijnen.</p>
             </div>
             <OfficialSoftwareFlows />
           </div>
@@ -60,4 +62,34 @@ export function RouteVisualSections({ pathname }: { pathname: string }) {
   }
 
   return null;
+}
+
+export function RouteVisualSections({ pathname }: { pathname: string }) {
+  const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!["/strategie", "/marketing", "/software"].includes(pathname)) {
+      setPortalNode(null);
+      return;
+    }
+
+    const intro = document.querySelector<HTMLElement>(".route-transition .page-intro");
+    if (!intro) {
+      setPortalNode(null);
+      return;
+    }
+
+    const slot = document.createElement("div");
+    slot.className = "route-visual-slot";
+    slot.dataset.routeVisuals = pathname;
+    intro.insertAdjacentElement("afterend", slot);
+    setPortalNode(slot);
+
+    return () => {
+      slot.remove();
+    };
+  }, [pathname]);
+
+  if (!portalNode) return null;
+  return createPortal(<RouteVisualContent pathname={pathname} />, portalNode);
 }
