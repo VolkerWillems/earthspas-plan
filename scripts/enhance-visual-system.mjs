@@ -22,10 +22,14 @@ patch("app/page.tsx", (source) => source
 patch("app/software/page.tsx", (source) => source
   .replace('className="mt-9 grid gap-5 xl:grid-cols-2"', 'className="software-choice-grid mt-9 grid gap-5 xl:grid-cols-2"'));
 
+patch("data/visitors.ts", (source) => source
+  .replace('if (!value) return "var(--muted)";', 'if (!value) return "var(--chart-land)";'));
+
 patch("components/stat-card-choropleth.tsx", (source) => source
   .replace('className="relative w-full gap-0 overflow-hidden py-0"', 'className="growth-map-card relative w-full gap-0 overflow-hidden py-0"')
   .replaceAll('min-h-[320px]', 'min-h-[var(--growth-map-height)]')
-  .replace('aspectRatio="2.5 / 1"', 'aspectRatio="1.7 / 1"'));
+  .replace('aspectRatio="2.5 / 1"', 'aspectRatio="1.7 / 1"')
+  .replace('displayLabel = hover.label ?? "Planningsverdeling"', 'displayLabel = hover.label ?? "Scenarioverdeling"'));
 
 patch("components/stat-card-area.tsx", (source) => source
   .replace('className="w-full gap-0 py-0"', 'className="growth-revenue-card w-full gap-0 py-0"'));

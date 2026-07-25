@@ -1,399 +1,85 @@
-/* Earth Spas motion contract.
-   All CSS transitions, keyframes and reduced-motion behavior live here. */
+@import "./motion-base.css";
 
-:root {
-  --motion-duration-instant: 80ms;
-  --motion-duration-fast: 160ms;
-  --motion-duration-base: 240ms;
-  --motion-duration-slow: 420ms;
-  --motion-duration-reveal: 620ms;
-  --motion-duration-ambient: 6s;
-  --motion-ease-standard: cubic-bezier(0.2, 0.6, 0.2, 1);
-  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --motion-ease-linear: linear;
-  --motion-distance-sm: clamp(0.2rem, 0.15rem + 0.15vw, 0.35rem);
-  --motion-distance: clamp(0.55rem, 0.4rem + 0.35vw, 0.85rem);
-  --motion-scale-hover: 1.012;
-}
+/* Growth map motion belongs to the central motion contract. */
 
-.route-transition {
-  min-width: 0;
-  animation: route-enter var(--motion-duration-slow) var(--motion-ease-out) both;
-}
-
-[data-reveal] {
-  opacity: 0;
-  transform: translate3d(0, var(--motion-distance), 0);
-  transition:
-    opacity var(--motion-duration-reveal) var(--motion-ease-out),
-    transform var(--motion-duration-reveal) var(--motion-ease-out);
-  transition-delay: calc(var(--reveal-delay, 0) * 1ms);
-  will-change: opacity, transform;
-}
-
-[data-reveal="scale"] {
-  transform: translate3d(0, var(--motion-distance-sm), 0) scale(0.988);
-}
-
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-:where(
-  a,
-  button,
-  input,
-  select,
-  textarea,
-  .panel,
-  [data-slot="card"],
-  .nav-link,
-  .mobile-nav-link,
-  .icon-button,
-  .mobile-menu-button,
-  .action-link,
-  .badge,
-  .value-chip,
-  .compact-priority,
-  .task-execute-button,
-  .hero-mockup-tab,
-  .flow-node-card,
-  .flow-hub,
-  .flow-mobile-step
-) {
-  transition-duration: var(--motion-duration-fast);
-  transition-timing-function: var(--motion-ease-standard);
-}
-
-:where(a, button, .panel, [data-slot="card"]) {
-  transition-property: color, background-color, border-color, box-shadow, opacity, transform, filter;
-}
-
-:where(input, select, textarea) {
-  transition-property: color, background-color, border-color, box-shadow, opacity;
-}
-
-.site-progress {
-  transition: transform var(--motion-duration-instant) var(--motion-ease-linear);
-}
-
-.menu-icon {
-  transition:
-    opacity var(--motion-duration-fast) var(--motion-ease-standard),
-    transform var(--motion-duration-base) var(--motion-ease-out);
-}
-
-.mobile-menu {
-  transition:
-    opacity var(--motion-duration-base) var(--motion-ease-standard),
-    visibility var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.mobile-menu-backdrop {
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.mobile-menu-panel {
-  transition:
-    transform var(--motion-duration-slow) var(--motion-ease-out),
-    opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.mobile-nav-link::after {
-  transition: transform var(--motion-duration-base) var(--motion-ease-out);
-}
-
-.motion-card {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
-}
-
-.motion-card::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: radial-gradient(
-    24rem circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
-    color-mix(in srgb, var(--section-accent) 9%, transparent),
-    transparent 64%
-  );
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.motion-border::after {
-  position: absolute;
-  inset: 0;
-  border: var(--border-width-subtle) solid transparent;
-  border-radius: inherit;
-  background: linear-gradient(
-      110deg,
-      transparent 22%,
-      color-mix(in srgb, var(--section-accent) 82%, var(--palette-white) 4%) 48%,
-      transparent 72%
-    ) border-box;
-  background-size: 240% 100%;
-  content: "";
-  mask:
-    linear-gradient(var(--palette-black) 0 0) padding-box,
-    linear-gradient(var(--palette-black) 0 0);
-  mask-composite: exclude;
-  opacity: 0.34;
-  pointer-events: none;
-  animation: border-sweep calc(var(--motion-duration-ambient) * 1.15) var(--motion-ease-in-out) infinite;
-}
-
-.value-change {
-  animation: value-in var(--motion-duration-base) var(--motion-ease-out) both;
-}
-
-.progress-fill {
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-fill::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--palette-white) 30%, transparent),
-    transparent
-  );
-  content: "";
-  transform: translateX(-110%);
-  animation: progress-shine calc(var(--motion-duration-ambient) * 0.65) var(--motion-ease-in-out) infinite;
-}
-
-.page-intro-visual img,
-.hero-mockup-canvas img,
-.plan-card-image img {
-  transition:
-    transform var(--motion-duration-slow) var(--motion-ease-out),
-    filter var(--motion-duration-slow) var(--motion-ease-standard);
-}
-
-.page-intro-visual:hover img,
-.hero-mockup-stage:hover .hero-mockup-canvas img,
-.group:hover .plan-card-image img {
-  transform: scale(var(--motion-scale-hover));
-  filter: contrast(1.025);
-}
-
-.action-link::before {
-  transition: transform var(--motion-duration-reveal) var(--motion-ease-out);
-}
-
-.action-link:hover::before {
-  transform: translateX(120%);
-}
-
-.action-link svg,
-.task-execution-links svg,
-.dev-showcase__nav-arrow {
-  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.action-link:hover svg,
-.task-execution-links a:hover svg,
-.dev-showcase__nav-item.is-active .dev-showcase__nav-arrow {
-  transform: translateX(var(--motion-distance-sm));
-}
-
-.hero-mockup-stage {
-  animation: mockup-swap var(--motion-duration-base) var(--motion-ease-out) both;
-}
-
-.hero-mockup-copy {
-  animation: mockup-copy var(--motion-duration-base) var(--motion-ease-out) both;
-}
-
-.mockup-lightbox-panel {
-  animation: lightbox-in var(--motion-duration-base) var(--motion-ease-out) both;
-}
-
-.dev-showcase__active {
-  animation: card-enter var(--motion-duration-slow) var(--motion-ease-out) both;
-}
-
-.dev-showcase__progress-fill {
-  transform-origin: left;
-  animation: autoplay-progress var(--dev-showcase-duration, 5600ms) var(--motion-ease-linear) both;
-}
-
-.dev-showcase__progress-fill.is-paused {
-  animation-play-state: paused;
-}
-
-.task-execution-panel {
-  animation: task-plan-enter var(--motion-duration-base) var(--motion-ease-out) both;
-}
-
-.growth-map-route,
-.software-flow-line {
-  animation: dash-flow calc(var(--motion-duration-ambient) * 0.8) var(--motion-ease-linear) infinite;
-}
-
-.software-flow-line-return {
-  animation-direction: reverse;
-  animation-duration: calc(var(--motion-duration-ambient) * 1.15);
-}
-
-.growth-map-pulse-a {
-  animation: map-pulse calc(var(--motion-duration-ambient) * 0.54) var(--motion-ease-linear) infinite;
-}
-
-.growth-map-pulse-b {
-  animation: map-pulse calc(var(--motion-duration-ambient) * 0.64) var(--motion-ease-linear) 0.8s infinite;
-}
-
-.software-flow-packet-a {
-  animation: flow-packet var(--motion-duration-ambient) var(--motion-ease-linear) infinite;
-}
-
-.software-flow-packet-b {
-  animation: flow-packet var(--motion-duration-ambient) var(--motion-ease-linear) 2s infinite;
-}
-
-.software-flow-packet-c {
-  animation: flow-packet calc(var(--motion-duration-ambient) * 1.15) var(--motion-ease-linear) 1s infinite;
-}
-
-.install-prompt-card {
-  animation: install-card-in var(--motion-duration-slow) var(--motion-ease-out) both;
-}
-
-.flow-stage::before {
-  animation: flow-grid-breathe calc(var(--motion-duration-ambient) * 1.5) var(--motion-ease-in-out) infinite alternate;
-}
-
-.flow-connector-base {
-  transition: stroke var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.flow-node-card::after {
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.flow-node-card:hover::after {
-  opacity: 0.78;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .motion-card:hover::before {
+@keyframes growth-map-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(var(--motion-distance));
+  }
+  to {
     opacity: 1;
+    transform: scale(1) translateY(0);
   }
+}
 
-  :where(a.panel, button.panel, [data-slot="card"]:hover) {
-    transform: translateY(calc(var(--motion-distance-sm) * -0.35));
+@keyframes growth-map-scan {
+  0% {
+    transform: translateX(-125%);
+    opacity: 0;
   }
+  18% {
+    opacity: 0.22;
+  }
+  72% {
+    opacity: 0.12;
+  }
+  100% {
+    transform: translateX(225%);
+    opacity: 0;
+  }
+}
+
+@keyframes market-status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--section-accent) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 var(--space-2) color-mix(in srgb, var(--section-accent) 8%, transparent);
+  }
+}
+
+.growth-map-card [data-slot="card-content"] {
+  animation: growth-map-enter var(--motion-duration-reveal) var(--motion-ease-out) both;
+}
+
+.growth-map-card::after {
+  position: absolute;
+  inset: 0 auto 0 -22%;
+  z-index: 4;
+  width: 18%;
+  background: linear-gradient(90deg, transparent, var(--highlight-medium), transparent);
+  content: "";
+  pointer-events: none;
+  transform: skewX(-12deg);
+  animation: growth-map-scan 8.5s var(--motion-ease-in-out) 1.2s infinite;
+}
+
+.growth-map-card path {
+  transition:
+    fill var(--motion-duration-base) var(--motion-ease-standard),
+    stroke var(--motion-duration-fast) var(--motion-ease-standard),
+    opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    filter var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.growth-map-card path:hover {
+  filter: brightness(1.18) drop-shadow(0 0 var(--space-2) color-mix(in srgb, var(--brand-primary) 34%, transparent));
+}
+
+.growth-market-status[data-status="active"] .growth-market-indicator {
+  animation: market-status-pulse 4.5s var(--motion-ease-in-out) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
-
-  .motion-border::after,
-  .progress-fill::after,
-  .growth-map-route,
-  .software-flow-line,
-  .growth-map-pulse,
-  .software-flow-packet,
-  .flow-stage::before {
+  .growth-map-card [data-slot="card-content"],
+  .growth-map-card::after,
+  .growth-market-status[data-status="active"] .growth-market-indicator {
     animation: none !important;
   }
-}
 
-@keyframes route-enter {
-  from { opacity: 0; transform: translateY(var(--motion-distance-sm)); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes value-in {
-  from { opacity: 0.45; transform: translateY(var(--motion-distance-sm)); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes progress-shine {
-  0%, 55% { transform: translateX(-110%); }
-  100% { transform: translateX(110%); }
-}
-
-@keyframes border-sweep {
-  0%, 35% { background-position: 150% 0; }
-  65%, 100% { background-position: -50% 0; }
-}
-
-@keyframes mockup-swap {
-  from { opacity: 0.35; transform: translateY(var(--motion-distance-sm)) scale(0.995); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes mockup-copy {
-  from { opacity: 0; transform: translateY(var(--motion-distance-sm)); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes lightbox-in {
-  from { opacity: 0; transform: translateY(var(--motion-distance)) scale(0.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes card-enter {
-  from { opacity: 0.25; transform: translateY(var(--motion-distance)); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes autoplay-progress {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
-@keyframes task-plan-enter {
-  from { opacity: 0; transform: translateY(calc(var(--motion-distance-sm) * -1)); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes dash-flow {
-  to { stroke-dashoffset: -80; }
-}
-
-@keyframes map-pulse {
-  from { offset-distance: 0%; opacity: 0; }
-  10%, 85% { opacity: 1; }
-  to { offset-distance: 100%; opacity: 0; }
-}
-
-@keyframes flow-packet {
-  from { offset-distance: 0%; opacity: 0; }
-  10%, 85% { opacity: 1; }
-  to { offset-distance: 100%; opacity: 0; }
-}
-
-@keyframes install-card-in {
-  from { opacity: 0; transform: translateY(calc(var(--motion-distance) * 2)) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes flow-grid-breathe {
-  from { opacity: 0.42; }
-  to { opacity: 0.72; }
+  .growth-map-card path {
+    transition: none !important;
+  }
 }
