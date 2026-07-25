@@ -78,8 +78,8 @@ export default function HomePage() {
         title="Project status, prestaties en aanbevolen vervolgstappen"
         text="Dit dashboard geeft een zakelijk overzicht van de bestaande digitale basis, geregistreerde projectinzet, kanaalprestaties en de voortgang van de noodzakelijke overdracht. Het vormt het vertrekpunt voor beslissingen over marketing, software en verdere groei."
         accent="secondary"
-        image="/showroom-building.jpeg"
-        imageAlt="Earth Spas showroom"
+        image="/earth-spas-collage-a-lake-sunset-820x312.jpg"
+        imageAlt="Earth Spas spa in een rustige luxe setting aan het water bij zonsondergang"
         imagePosition="center"
         actions={
           <>
