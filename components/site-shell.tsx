@@ -54,9 +54,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <header className="site-header">
         <div className="site-progress" aria-hidden="true" />
         <div className="content-shell site-header-inner">
-          <Link href="/" className="site-brand" aria-label="Earth Spas keuzehulp homepage">
+          <Link href="/" className="site-brand" aria-label="Earth Spas homepage">
             <img src="/screens/logo-full-gold.png" alt="Earth Spas" />
-            <span>Digitale keuzehulp</span>
           </Link>
 
           <nav className="desktop-nav" aria-label="Hoofdnavigatie">
