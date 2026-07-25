@@ -21,6 +21,13 @@
   text-align: center;
 }
 
+@media (min-width: 1024px) {
+  .site-header,
+  .site-header-inner {
+    height: 86px;
+  }
+}
+
 @media (max-width: 700px) {
   .hero-mockup .hero-mockup-tab {
     flex-basis: calc(33.333% - .35rem);
