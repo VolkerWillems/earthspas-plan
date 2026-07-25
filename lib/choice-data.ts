@@ -41,7 +41,7 @@ export type ChecklistItem = {
 
 export const pricingReview = {
   reviewedAt: "25 juli 2026",
-  note: "Bedragen zijn afgeronde planningsbedragen per maand. Valuta, btw, wisselkoers, jaarlijkse facturering, verbruik en prijswijzigingen kunnen het uiteindelijke factuurbedrag beïnvloeden. API- en andere verbruikskosten blijven afzonderlijk.",
+  note: "Bedragen zijn de afgesproken planningsbedragen voor Earth Spas. Alleen noodzakelijke vaste diensten staan standaard geselecteerd; creatieve, AI- en productietools blijven optioneel en worden pas na budgetgoedkeuring geactiveerd.",
 };
 
 export const choiceGroups: ChoiceGroup[] = [
@@ -50,29 +50,19 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Betaalmethode",
     description: "Wie betaalt software, AI-credits en advertenties?",
     options: [
-      { id: "earthspas-card", groupId: "payment", name: "Zakelijke Earth Spas-kaart", monthly: 0, description: "Eigen kaart of virtuele kaart met harde maandlimieten en duidelijke afschriften.", recommended: true, icon: "credit-card" },
-      { id: "prepaid-card", groupId: "payment", name: "Prepaid / virtuele kaart", monthly: 0, description: "Los saldo voor digitale kosten, bruikbaar wanneer een normale zakelijke kaart nog niet geregeld is.", icon: "wallet" },
+      { id: "earthspas-card", groupId: "payment", name: "Zakelijke Earth Spas-kaart", monthly: 0, description: "Eigen kaart of virtuele kaart met harde maandlimieten en duidelijke afschriften.", icon: "credit-card" },
+      { id: "prepaid-card", groupId: "payment", name: "Prepaid / virtuele kaart", monthly: 0, description: "Los saldo voor digitale kosten, bruikbaar wanneer een normale zakelijke kaart nog niet geregeld is.", recommended: true, icon: "wallet" },
       { id: "personal-card", groupId: "payment", name: "Voorlopig persoonlijke kaart", monthly: 0, description: "Tijdelijke noodoplossing. Kosten en eigenaarschap blijven hierdoor onnodig door elkaar lopen.", caution: true, icon: "warning" },
     ],
   },
   {
     id: "workspace",
     title: "E-mail en bestanden",
-    description: "Zakelijke mail, agenda, gedeelde documenten en hersteltoegang.",
+    description: "Zakelijke mail, agenda, gedeelde documenten en hersteltoegang. Wachtwoorden blijven in Microsoft Edge; een extra wachtwoordtool is niet nodig.",
     options: [
-      { id: "m365", groupId: "workspace", name: "Microsoft 365 Business Basic", monthly: 5.2, description: "Mail, agenda, SharePoint en gedeelde bestanden in één zakelijke tenant.", recommended: true, logoSlug: "microsoft", icon: "envelope" },
+      { id: "m365", groupId: "workspace", name: "Microsoft 365 Business", monthly: 14, description: "Zakelijke Microsoft-licentie voor mail, agenda, SharePoint, gedeelde bestanden en centraal beheer.", recommended: true, logoSlug: "microsoft", icon: "envelope" },
       { id: "google-workspace", groupId: "workspace", name: "Google Workspace Starter", monthly: 7, description: "Gmail, Drive en agenda. Prima alternatief wanneer Google de voorkeur heeft.", logoSlug: "google", icon: "envelope" },
       { id: "workspace-current", groupId: "workspace", name: "Huidige mailoplossing behouden", monthly: 0, description: "Geen directe migratie. Eigenaarschap, back-up en gedeelde toegang moeten dan wel apart worden gecontroleerd.", icon: "archive" },
-    ],
-  },
-  {
-    id: "passwords",
-    title: "Wachtwoorden en 2FA",
-    description: "Gedeelde toegang zonder wachtwoorden via WhatsApp of geheugenacrobatiek.",
-    options: [
-      { id: "bitwarden", groupId: "passwords", name: "Bitwarden Teams", monthly: 7, description: "Gedeelde kluizen, 2FA, herstelcodes en noodtoegang voor twee beheerders.", recommended: true, logoSlug: "bitwarden", icon: "shield" },
-      { id: "onepassword", groupId: "passwords", name: "1Password Business", monthly: 15, description: "Sterk beheer en gebruiksgemak, maar duurder voor een kleine beheerploeg.", logoSlug: "1password", icon: "shield" },
-      { id: "passwords-current", groupId: "passwords", name: "Bestaande methode behouden", monthly: 0, description: "Geen nieuwe tool. Dan moeten eigenaarschap, herstelcodes en tweede toegang handmatig worden geregeld.", caution: true, icon: "key" },
     ],
   },
   {
@@ -100,8 +90,7 @@ export const choiceGroups: ChoiceGroup[] = [
     description: "De kern voor Directus, n8n, agents en backendservices.",
     options: [
       { id: "hetzner-starter", groupId: "server", name: "Hetzner starterserver", monthly: 18, description: "Goedkope start voor lichte workflows en een beperkte productieomgeving.", logoSlug: "hetzner", icon: "server" },
-      { id: "hetzner-production", groupId: "server", name: "Hetzner productieserver + back-ups", monthly: 46, description: "Aanbevolen capaciteit voor Directus, n8n, agents, monitoring en dagelijkse back-ups.", recommended: true, logoSlug: "hetzner", icon: "server" },
-      { id: "managed-server", groupId: "server", name: "Volledig managed hosting", monthly: 95, description: "Minder technisch beheer voor Earth Spas, maar duurder en minder vrij in de inrichting.", icon: "cloud" },
+      { id: "hetzner-production", groupId: "server", name: "Hetzner productieserver + back-ups", monthly: 103, description: "Werkelijk planningsbedrag voor de Earth Spas-productieserver, back-ups, monitoring en benodigde servercapaciteit.", recommended: true, logoSlug: "hetzner", icon: "server" },
       { id: "no-server", groupId: "server", name: "Nog geen eigen server", monthly: 0, description: "Alles blijft voorlopig verspreid over bestaande accounts en SaaS-diensten.", caution: true, icon: "warning" },
     ],
   },
@@ -170,10 +159,10 @@ export const choiceGroups: ChoiceGroup[] = [
     description: "Research, content, analyse, agents en Codexwerk. API-verbruik blijft altijd apart.",
     options: [
       { id: "chatgpt-plus", groupId: "ai-workspace", name: "ChatGPT Plus", monthly: 20, description: "Individueel abonnement met ruimere toegang dan Free, maar lagere limieten dan Pro.", logoSlug: "openai", icon: "robot" },
-      { id: "chatgpt-pro5", groupId: "ai-workspace", name: "ChatGPT Pro", monthly: 200, description: "Voorkeurskeuze voor structureel en zeer intensief individueel gebruik binnen analyse, content en development.", recommended: true, logoSlug: "openai", icon: "rocket" },
+      { id: "chatgpt-pro5", groupId: "ai-workspace", name: "ChatGPT Pro", monthly: 200, description: "Voor structureel en zeer intensief individueel gebruik binnen analyse, content en development.", logoSlug: "openai", icon: "rocket" },
       { id: "chatgpt-pro20", groupId: "ai-workspace", name: "ChatGPT Business, 2 seats · jaarlijks", monthly: 40, description: "Teamworkspace met centraal beheer. Dit bedrag gaat uit van twee seats en jaarlijkse facturering.", logoSlug: "openai", icon: "briefcase" },
       { id: "chatgpt-business", groupId: "ai-workspace", name: "ChatGPT Business, 2 seats · maandelijks", monthly: 50, description: "Teamworkspace met centraal beheer en maandelijkse facturering voor minimaal twee gebruikers.", logoSlug: "openai", icon: "briefcase" },
-      { id: "no-chatgpt", groupId: "ai-workspace", name: "Geen apart Earth Spas-abonnement", monthly: 0, description: "Gebruik blijft via bestaande accounts lopen en is daardoor minder zuiver toe te wijzen.", caution: true, icon: "pause" },
+      { id: "no-chatgpt", groupId: "ai-workspace", name: "Geen apart Earth Spas-abonnement", monthly: 0, description: "Gebruik blijft via bestaande accounts lopen en is daardoor minder zuiver toe te wijzen.", recommended: true, icon: "pause" },
     ],
   },
   {
@@ -181,8 +170,8 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Design en prototypes",
     description: "Ontwerp, feedback en overdracht van website- en appschermen.",
     options: [
-      { id: "figma-pro", groupId: "design", name: "Figma Professional", monthly: 14, description: "Volwaardige projectstructuur, prototypes en developer handoff.", recommended: true, logoSlug: "figma", icon: "layout" },
-      { id: "figma-free", groupId: "design", name: "Figma Free", monthly: 0, description: "Voldoende zolang projecten en samenwerking beperkt blijven.", logoSlug: "figma", icon: "layout" },
+      { id: "figma-pro", groupId: "design", name: "Figma Professional", monthly: 14, description: "Volwaardige projectstructuur, prototypes en developer handoff.", logoSlug: "figma", icon: "layout" },
+      { id: "figma-free", groupId: "design", name: "Figma Free", monthly: 0, description: "Voldoende zolang projecten en samenwerking beperkt blijven.", recommended: true, logoSlug: "figma", icon: "layout" },
       { id: "no-design-tool", groupId: "design", name: "Geen aparte designtool", monthly: 0, description: "Ontwerp direct in code; sneller voor kleine wijzigingen, minder overzichtelijk voor feedback.", icon: "layout" },
     ],
   },
@@ -191,8 +180,8 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Social en dagelijkse content",
     description: "Templates, korte video, posts en herbruikbare merkassets.",
     options: [
-      { id: "canva-pro", groupId: "social-content", name: "Canva Pro", monthly: 11, description: "Snelste route voor socialcontent, presentaties en eenvoudige video.", recommended: true, logoSlug: "canva", icon: "image" },
-      { id: "canva-free", groupId: "social-content", name: "Canva Free", monthly: 0, description: "Bruikbaar met minder merk- en exportmogelijkheden.", logoSlug: "canva", icon: "image" },
+      { id: "canva-pro", groupId: "social-content", name: "Canva Pro", monthly: 11, description: "Snelste route voor socialcontent, presentaties en eenvoudige video.", logoSlug: "canva", icon: "image" },
+      { id: "canva-free", groupId: "social-content", name: "Canva Free", monthly: 0, description: "Bruikbaar met minder merk- en exportmogelijkheden.", recommended: true, logoSlug: "canva", icon: "image" },
       { id: "no-content-tool", groupId: "social-content", name: "Geen aparte contenttool", monthly: 0, description: "Content volledig via andere ontwerp- en AI-tools maken.", icon: "image" },
     ],
   },
@@ -202,9 +191,9 @@ export const choiceGroups: ChoiceGroup[] = [
     description: "Codingagents, premium modellen, code review en actieve bouwmaanden.",
     options: [
       { id: "copilot-pro", groupId: "coding-ai", name: "GitHub Copilot Pro", monthly: 10, description: "Goede basis voor dagelijkse code-aanvulling, chat en agentgebruik.", logoSlug: "githubcopilot", icon: "code" },
-      { id: "copilot-proplus", groupId: "coding-ai", name: "GitHub Copilot Pro+", monthly: 39, description: "Meer inbegrepen AI-credits en toegang tot zwaardere modellen voor intensieve bouwmaanden.", recommended: true, logoSlug: "githubcopilot", icon: "magic" },
+      { id: "copilot-proplus", groupId: "coding-ai", name: "GitHub Copilot Pro+", monthly: 39, description: "Meer inbegrepen AI-credits en toegang tot zwaardere modellen voor intensieve bouwmaanden.", logoSlug: "githubcopilot", icon: "magic" },
       { id: "copilot-max", groupId: "coding-ai", name: "GitHub Copilot Max", monthly: 100, description: "Voor structureel hoog agentgebruik met een grotere inbegrepen AI-creditpot.", logoSlug: "githubcopilot", icon: "rocket" },
-      { id: "no-coding-ai", groupId: "coding-ai", name: "Geen apart codingabonnement", monthly: 0, description: "Development draait uitsluitend op de gekozen ChatGPT-werkruimte en losse API-credits.", icon: "code" },
+      { id: "no-coding-ai", groupId: "coding-ai", name: "Geen apart codingabonnement", monthly: 0, description: "Development draait uitsluitend op de gekozen ChatGPT-werkruimte en losse API-credits.", recommended: true, icon: "code" },
     ],
   },
   {
@@ -212,8 +201,8 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Stock en commerciële assets",
     description: "Beeld, templates, muziek en effecten voor website en campagnes.",
     options: [
-      { id: "envato", groupId: "stock", name: "Envato Core", monthly: 14, description: "Brede bibliotheek met commerciële licenties voor dagelijkse productie.", recommended: true, logoSlug: "envato", icon: "sparkle" },
-      { id: "free-assets", groupId: "stock", name: "Alleen gratis / eigen assets", monthly: 0, description: "Lagere kosten, maar minder keuze en meer zoektijd.", icon: "image" },
+      { id: "envato", groupId: "stock", name: "Envato Core", monthly: 14, description: "Brede bibliotheek met commerciële licenties voor dagelijkse productie.", logoSlug: "envato", icon: "sparkle" },
+      { id: "free-assets", groupId: "stock", name: "Alleen gratis / eigen assets", monthly: 0, description: "Lagere kosten, maar minder keuze en meer zoektijd.", recommended: true, icon: "image" },
     ],
   },
   {
@@ -221,8 +210,8 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "AI-voice",
     description: "Meertalige voice-overs, uitlegvideo's en gesproken agents.",
     options: [
-      { id: "elevenlabs", groupId: "voice", name: "ElevenLabs Starter", monthly: 5, description: "Goede meertalige voice-overs en bruikbare productiekwaliteit.", recommended: true, logoSlug: "elevenlabs", icon: "headphones" },
-      { id: "no-voice", groupId: "voice", name: "Geen betaald voice-abonnement", monthly: 0, description: "Voice alleen incidenteel inkopen of via beschikbare gratis credits maken.", icon: "headphones" },
+      { id: "elevenlabs", groupId: "voice", name: "ElevenLabs Starter", monthly: 5, description: "Goede meertalige voice-overs en bruikbare productiekwaliteit.", logoSlug: "elevenlabs", icon: "headphones" },
+      { id: "no-voice", groupId: "voice", name: "Geen betaald voice-abonnement", monthly: 0, description: "Voice alleen incidenteel inkopen of via beschikbare gratis credits maken.", recommended: true, icon: "headphones" },
     ],
   },
   {
@@ -230,8 +219,8 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "AI-video",
     description: "Video-effecten, varianten en snelle campagneproductie.",
     options: [
-      { id: "runway", groupId: "video-ai", name: "Runway Pro", monthly: 25, description: "Vaste credits en productietools voor regelmatige videocontent.", recommended: true, logoSlug: "runway", icon: "video" },
-      { id: "video-credits-only", groupId: "video-ai", name: "Alleen losse media-credits", monthly: 0, description: "Geen vast abonnement; alleen betalen in maanden waarin video wordt geproduceerd.", icon: "video" },
+      { id: "runway", groupId: "video-ai", name: "Runway Pro", monthly: 25, description: "Vaste credits en productietools voor regelmatige videocontent.", logoSlug: "runway", icon: "video" },
+      { id: "video-credits-only", groupId: "video-ai", name: "Alleen losse media-credits", monthly: 0, description: "Geen vast abonnement; alleen betalen in maanden waarin video wordt geproduceerd.", recommended: true, icon: "video" },
     ],
   },
 ];
@@ -255,8 +244,7 @@ export const checklistItems: ChecklistItem[] = [
   { id: "payment-card", group: "Eigenaarschap", title: "Betaalmethode kiezen en koppelen", description: "De gekozen betaalroute activeren, limieten instellen en alle facturen op Earth Spas laten landen.", owner: "Jeroen / Wim", priority: "Nu", choiceGroupId: "payment" },
   { id: "spend-alerts", group: "Eigenaarschap", title: "Budgetlimieten en verbruikswaarschuwingen instellen", description: "Per advertentie-, AI-, hosting- en API-account harde limieten of waarschuwingen activeren en maandelijks controleren.", owner: "Jeroen / Wim", priority: "Nu" },
   { id: "admins", group: "Eigenaarschap", title: "Twee vaste beheerders aanwijzen", description: "Primaire en tweede beheerder voor accounts, hersteltoegang en noodgevallen vastleggen.", owner: "Earth Spas", priority: "Nu" },
-  { id: "passwords", group: "Eigenaarschap", title: "Wachtwoord- en 2FA-oplossing inrichten", description: "Gedeelde toegang, herstelcodes en noodtoegang volgens de gekozen optie migreren.", owner: "Volker + Jeroen", priority: "Nu", choiceGroupId: "passwords" },
-  { id: "workspace", group: "Eigenaarschap", title: "E-mail- en bestandsomgeving voorbereiden", description: "Gebruikers, mailboxen, domeinen, bestanden en migratiemoment volgens de gekozen oplossing vastleggen.", owner: "Volker + Jeroen", priority: "Nu", choiceGroupId: "workspace" },
+  { id: "workspace", group: "Eigenaarschap", title: "E-mail- en bestandsomgeving voorbereiden", description: "Gebruikers, mailboxen, domeinen, bestanden en migratiemoment volgens de gekozen oplossing vastleggen. Wachtwoorden blijven in Microsoft Edge.", owner: "Volker + Jeroen", priority: "Nu", choiceGroupId: "workspace" },
   { id: "source", group: "Eigenaarschap", title: "Broncode onder Earth Spas-eigendom plaatsen", description: "Repositories, twee beheerders en overdrachtsregels instellen in de gekozen omgeving.", owner: "Volker", priority: "Nu", choiceGroupId: "source" },
   { id: "registrar", group: "Techniek", title: "Domeinregistratie en verlenging overdragen", description: "Registrar-eigendom, contactgegevens, automatische verlenging, facturering en verhuiscodes voor alle Earth Spas-domeinen vastleggen.", owner: "Samen", priority: "Nu" },
   { id: "dns", group: "Techniek", title: "DNS en domeinen inventariseren", description: "Records exporteren, drie domeinen controleren en wijzigingen alleen met rollbackplan uitvoeren.", owner: "Volker", priority: "Nu", choiceGroupId: "dns" },
