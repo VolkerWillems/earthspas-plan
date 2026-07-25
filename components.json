@@ -18,6 +18,7 @@
     "hooks": "@/hooks"
   },
   "registries": {
+    "@7ovr": "https://7ovr.com/r/{name}.json",
     "@bklit": "https://ui.bklit.com/r/{name}.json"
   }
 }
