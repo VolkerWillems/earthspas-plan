@@ -3,7 +3,9 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
+    "predev": "npm run styles:consolidate",
     "dev": "next dev",
+    "prebuild": "npm run styles:consolidate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
