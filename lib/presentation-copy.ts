@@ -19,8 +19,5 @@ export function getBusinessTaskTitle(task: ChecklistItem) {
 }
 
 export function getBusinessOptionDescription(option: ChoiceOption) {
-  if (option.id === "chatgpt-pro5") {
-    return "Voorkeurskeuze voor structureel en intensief individueel gebruik binnen ontwikkeling, analyse en contentproductie.";
-  }
   return option.description;
 }
