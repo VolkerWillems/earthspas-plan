@@ -1,0 +1,111 @@
+.prepaid-delegation-section {
+  padding: 4.5rem 0 0;
+}
+
+.prepaid-delegation-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 46%, var(--border));
+  border-radius: 5px;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--section-accent) 12%, transparent), transparent 36%),
+    var(--card);
+  box-shadow:
+    inset 0 3px 0 color-mix(in srgb, var(--section-accent) 58%, transparent),
+    0 24px 60px rgba(0, 0, 0, .28);
+}
+
+.prepaid-delegation-icon {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 45%, transparent);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, .18);
+  color: var(--section-accent);
+}
+
+.prepaid-delegation-copy h2 {
+  max-width: 68rem;
+  margin-top: .75rem;
+  font-size: clamp(1.65rem, 3vw, 2.55rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--section-accent);
+}
+
+.prepaid-delegation-copy > p:not(.eyebrow) {
+  max-width: 72rem;
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, .74);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prepaid-delegation-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
+.prepaid-delegation-steps div {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  min-height: 4.25rem;
+  padding: .9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, .16);
+  color: rgba(255, 255, 255, .78);
+}
+
+.prepaid-delegation-steps span {
+  color: var(--section-accent);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+}
+
+.prepaid-delegation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.prepaid-delegation-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: rgba(255, 255, 255, .62);
+  font-size: .9rem;
+}
+
+.prepaid-delegation-proof svg {
+  color: var(--section-accent);
+}
+
+/* The earlier explanatory card is replaced by the more explicit handoff above. */
+.compact-checklist-section > .content-shell > div:nth-child(2) {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .prepaid-delegation-section {
+    padding-top: 3rem;
+  }
+
+  .prepaid-delegation-card {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+  }
+
+  .prepaid-delegation-steps {
+    grid-template-columns: 1fr;
+  }
+}
