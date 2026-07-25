@@ -60,7 +60,7 @@ function filled(Icon: React.ElementType) {
     }),
   );
 
-  FilledIcon.displayName = `Filled${Icon.displayName ?? Icon.name ?? "PhosphorIcon"}`;
+  FilledIcon.displayName = "FilledPhosphorIcon";
   return FilledIcon;
 }
 
