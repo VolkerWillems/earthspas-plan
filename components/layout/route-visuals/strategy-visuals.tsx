@@ -1,12 +1,10 @@
 "use client";
 
-import { GrowthChoroplethCard } from "@/components/blocks/growth-choropleth-card";
 import { OfficialBudgetGrowthChart } from "@/components/blocks/official-budget-growth-chart";
 
 export function StrategyRouteVisuals() {
   return (
     <div className="route-visual-restoration">
-      <GrowthChoroplethCard />
       <section className="route-visual-chart-section theme-primary" aria-labelledby="strategy-growth-chart-title">
         <div className="content-shell">
           <div className="route-visual-chart-heading">
