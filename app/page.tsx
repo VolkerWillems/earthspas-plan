@@ -12,7 +12,6 @@ import {
   Globe,
   MagicWand,
   Server,
-  ShieldCheck,
   Users,
 } from "@/lib/phosphor-icons";
 import { DevelopmentShowcase } from "@/components/development-showcase";
@@ -65,8 +64,8 @@ const pageCards = [
   { href: "/checklist", number: "05", title: "Actielijst", text: "Alle noodzakelijke overdrachts-, beveiligings- en acceptatietaken in één overzicht.", icon: Check, image: "/cards/actielijst-card.png" },
 ];
 
-const accountGroups = ["payment", "workspace", "passwords", "source", "dns", "server", "database", "frontend"];
-const accountIcons = [CreditCard, Users, ShieldCheck, Code, Globe, Server, Database, Briefcase];
+const accountGroups = ["payment", "workspace", "source", "dns", "server", "database", "frontend"];
+const accountIcons = [CreditCard, Users, Code, Globe, Server, Database, Briefcase];
 
 export default function HomePage() {
   const { state } = useSiteState();
@@ -96,6 +95,7 @@ export default function HomePage() {
             eyebrow="Opgebouwde digitale basis"
             title="Software status en development uren per onderdeel"
             text="Dit overzicht is puur om te laten zien wat er allemaal al gebouwd is en hoeveel tijd het gekost heeft om dit te ontwikkelen. Dit geeft dan ook een indicatie van de mogelijkheden en eventueel ook extra groeikansen voor Earth Spas."
+          />
           <DevelopmentShowcase />
         </div>
       </section>

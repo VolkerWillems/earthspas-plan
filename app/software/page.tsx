@@ -28,7 +28,7 @@ import {
 } from "@/components/plan-ui";
 
 const phases = [
-  { number: "01", title: "Eigenaarschap en basis", text: "Accounts, betaalmethoden, toegang, server, back-ups, secrets en duidelijke beheerders.", items: ["payment", "passwords", "source", "dns", "server", "secrets"] },
+  { number: "01", title: "Eigenaarschap en basis", text: "Accounts, betaalmethoden, toegang, server, back-ups, secrets en duidelijke beheerders.", items: ["payment", "source", "dns", "server", "secrets"] },
   { number: "02", title: "Data en commerciële kern", text: "Directus, database, formulieren, CRM, afspraken, leadbronnen en verkoopstatussen.", items: ["cms", "database", "transactional-email", "frontend"] },
   { number: "03", title: "Automatisering en agents", text: "n8n, AI Spa Advisor, lead recovery, contentagent, supportagent en menselijke escalatie.", items: ["automation", "ai-workspace", "coding-ai"] },
   { number: "04", title: "Optimalisatie en schaal", text: "Attribution, dashboards, voice, mobiele installatiecapture en campagne-automatisering.", items: ["design", "social-content", "stock", "voice", "video-ai"] },

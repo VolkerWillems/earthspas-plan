@@ -11,14 +11,20 @@ import {
   FadersHorizontal,
   List,
   MagicWand,
+  Target,
   X,
 } from "@/lib/phosphor-icons";
+import { GrowthChoroplethCard } from "@/components/blocks/growth-choropleth-card";
+import { SoftwareFlowDiagram } from "@/components/blocks/software-flow-diagram";
 import { MotionController } from "@/components/motion-controller";
+import { PageBottomSummary } from "@/components/page-bottom-summary";
+import { PrepaidDelegationBanner } from "@/components/prepaid-delegation-banner";
 import { useSiteState } from "@/components/site-state";
 import { cn } from "@/lib/utils";
 
 const navigation = [
   { href: "/", label: "Stand van zaken", short: "Overzicht", icon: ChartBar },
+  { href: "/strategie", label: "Merk- en groeistrategie", short: "Strategie", icon: Target },
   { href: "/marketing", label: "Marketingplan", short: "Marketing", icon: MagicWand },
   { href: "/software", label: "Softwareplan", short: "Software", icon: Code },
   { href: "/calculator", label: "Keuzes & calculator", short: "Calculator", icon: FadersHorizontal },
@@ -139,8 +145,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      <div key={pathname} className="route-transition">
+      <div key={pathname} className={cn("route-transition", pathname === "/checklist" && "checklist-route")}>
+        {pathname === "/" && <GrowthChoroplethCard />}
         {children}
+        {pathname === "/software" && <SoftwareFlowDiagram />}
+        {pathname === "/checklist" && <PrepaidDelegationBanner />}
+        <PageBottomSummary />
       </div>
     </>
   );
