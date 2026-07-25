@@ -142,7 +142,7 @@ function collectFiles(directory, output = []) {
 }
 
 for (const required of [
-  "lib/phosphor-icons.tsx",
+  "lib/phosphor-icons.ts",
   "components/site-state.tsx",
   "lib/site-model.ts",
   "lib/choice-data.ts",
