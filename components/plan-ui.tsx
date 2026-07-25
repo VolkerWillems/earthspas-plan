@@ -102,27 +102,6 @@ function compactPremiumStatement(node: React.ReactNode): React.ReactNode {
   });
 }
 
-function premiumizeActions(node: React.ReactNode): React.ReactNode {
-  return React.Children.map(node, (child) => {
-    if (!React.isValidElement<{ className?: string; style?: React.CSSProperties }>(child)) return child;
-
-    return React.cloneElement(child, {
-      className: cn(
-        child.props.className,
-        "bg-[length:220%_100%] transition-[background-position,transform,box-shadow,filter] duration-500 motion-safe:hover:-translate-y-px hover:bg-[position:100%_0] hover:shadow-[0_0.9rem_2.6rem_color-mix(in_srgb,var(--section-accent)_22%,transparent)]",
-      ),
-      style: {
-        ...child.props.style,
-        backgroundImage:
-          "linear-gradient(115deg, var(--section-accent), color-mix(in srgb, var(--section-accent) 68%, var(--brand-secondary)), var(--section-accent))",
-        backgroundSize: "220% 100%",
-        boxShadow:
-          "0 0.65rem 1.9rem color-mix(in srgb, var(--section-accent) 16%, transparent), inset 0 1px 0 color-mix(in srgb, var(--palette-white) 18%, transparent)",
-      },
-    });
-  });
-}
-
 const marketingMockups: HeroMockupItem[] = [
   {
     id: "marketing",
@@ -200,7 +179,7 @@ export function PageIntro({
           <p className="page-intro-kicker">{headerCopy?.kicker ?? title}</p>
           <h1>{headerCopy?.title ?? title}</h1>
           <p className="page-intro-subtitle">{text}</p>
-          {actions && <div className="action-group">{premiumizeActions(actions)}</div>}
+          {actions && <div className="action-group">{actions}</div>}
         </div>
         {mockupConfig ? (
           <div data-reveal="scale" data-reveal-delay="90">
@@ -253,28 +232,25 @@ export function Panel({ className, children }: { className?: string; children: R
     ? "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')"
     : "linear-gradient(145deg, color-mix(in srgb, var(--surface-raised) 90%, var(--highlight-soft)), var(--surface-card) 72%)";
 
-  const premiumStyle: React.CSSProperties = {
-    backgroundColor: "var(--surface-card)",
-    backgroundImage,
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    borderColor: "color-mix(in srgb, var(--section-accent) 28%, var(--border-default))",
-    boxShadow:
-      "0 1px 0 var(--highlight-soft), 0 1.1rem 3.5rem color-mix(in srgb, var(--palette-black) 34%, transparent)",
-  };
-
   return (
     <SpotlightCard
       className={cn(
-        "panel motion-card [&>*:not([aria-hidden='true'])]:relative [&>*:not([aria-hidden='true'])]:z-[1] hover:border-[color-mix(in_srgb,var(--section-accent)_52%,var(--border-default))] hover:shadow-[0_1px_0_var(--highlight-medium),0_1.5rem_4.5rem_color-mix(in_srgb,var(--palette-black)_46%,transparent),0_0_2.5rem_color-mix(in_srgb,var(--section-accent)_9%,transparent)]",
+        "panel motion-card [&>*]:relative [&>*]:z-[1] hover:border-[color-mix(in_srgb,var(--section-accent)_52%,var(--border-default))]",
         isPremiumStatement && "premium-statement-card",
         className,
       )}
       data-motion-card
       data-reveal="up"
       spotlightColor="var(--section-accent)"
-      style={premiumStyle}
+      style={{
+        backgroundColor: "var(--surface-card)",
+        backgroundImage,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        borderColor: "color-mix(in srgb, var(--section-accent) 28%, var(--border-default))",
+        boxShadow: "0 1px 0 var(--highlight-soft), 0 1.1rem 3.5rem color-mix(in srgb, var(--palette-black) 34%, transparent)",
+      }}
     >
       {displayChildren}
     </SpotlightCard>
@@ -288,5 +264,98 @@ export function StatCard({ label, value, detail }: { label: string; value: strin
       <p key={value} className="value-change mt-3 text-3xl text-[var(--section-accent)] sm:text-4xl">{value}</p>
       {detail && <p className="mt-3 text-base leading-6 text-white/72">{detail}</p>}
     </Panel>
+  );
+}
+
+export function PrimaryLink({ href, children }: { href: string; children: React.ReactNode; accent?: Accent }) {
+  return (
+    <Link
+      href={href}
+      className="action-link bg-[length:220%_100%] transition-[background-position,transform,box-shadow,filter] duration-500 motion-safe:hover:-translate-y-px hover:bg-[position:100%_0]"
+      style={{
+        backgroundImage: "linear-gradient(115deg, var(--section-accent), color-mix(in srgb, var(--section-accent) 68%, var(--brand-secondary)), var(--section-accent))",
+        backgroundSize: "220% 100%",
+        boxShadow: "0 0.65rem 1.9rem color-mix(in srgb, var(--section-accent) 16%, transparent), inset 0 1px 0 color-mix(in srgb, var(--palette-white) 18%, transparent)",
+      }}
+    >
+      <span>{children}</span>
+      <ArrowRight className="h-4 w-4" />
+    </Link>
+  );
+}
+
+export function RangeField({ label, helper, value, min, max, step, display, onChange }: { label: string; helper?: string; value: number; min: number; max: number; step: number; display: string; onChange: (value: number) => void; accent?: Accent }) {
+  const progress = max === min ? 0 : Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+
+  return (
+    <label className="range-field block">
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <div>
+          <span className="text-base text-white">{label}</span>
+          {helper && <p className="mt-1 text-sm leading-5 text-white/58">{helper}</p>}
+        </div>
+        <span key={display} className="value-chip value-change">{display}</span>
+      </div>
+      <input
+        type="range"
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        aria-label={label}
+        aria-valuetext={display}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="site-range"
+        style={{ "--range-progress": `${progress}%` } as React.CSSProperties}
+      />
+    </label>
+  );
+}
+
+export function ProgressBar({ value }: { value: number; accent?: Accent }) {
+  return (
+    <div className="progress-track h-2.5 overflow-hidden rounded-full bg-white/8">
+      <div className="progress-fill h-full rounded-full bg-[var(--section-accent)] transition-all duration-500" style={{ width: `${Math.max(0, Math.min(100, value))}%` }} />
+    </div>
+  );
+}
+
+export function NumberField({
+  label,
+  helper,
+  value,
+  onChange,
+  prefix,
+  suffix,
+  step = 1,
+  max,
+}: {
+  label: string;
+  helper?: string;
+  value: number;
+  onChange: (value: number) => void;
+  prefix?: string;
+  suffix?: string;
+  step?: number;
+  max?: number;
+}) {
+  return (
+    <label className="number-field block">
+      <span className="text-sm uppercase tracking-[0.13em] text-white/58">{label}</span>
+      {helper && <p className="mt-1 text-sm leading-5 text-white/52">{helper}</p>}
+      <div className="number-field-control mt-2 flex items-center rounded-md border border-border bg-background/70 focus-within:border-[var(--section-accent)]">
+        {prefix && <span className="pl-3 text-base text-white/55">{prefix}</span>}
+        <input
+          type="number"
+          min={0}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(event) => onChange(Math.max(0, Number(event.target.value)))}
+          className="min-h-11 min-w-0 w-full bg-transparent px-3 text-lg text-white outline-none"
+        />
+        {suffix && <span className="number-field-suffix whitespace-nowrap px-3 text-sm text-white/50">{suffix}</span>}
+      </div>
+    </label>
   );
 }
