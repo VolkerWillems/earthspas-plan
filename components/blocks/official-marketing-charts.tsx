@@ -29,14 +29,14 @@ const incrementalSales = [
 
 function PieLegend({ data, suffix = "%" }: { data: typeof countryFocus; suffix?: string }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-[var(--space-2)]">
       {data.map((item) => (
-        <div key={item.label} className="flex items-center justify-between gap-4 text-sm">
-          <span className="flex min-w-0 items-center gap-2 text-white/68">
-            <span className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: item.color }} />
+        <div key={item.label} className="flex items-center justify-between gap-[var(--space-4)] text-sm">
+          <span className="flex min-w-0 items-center gap-[var(--space-2)] text-muted-foreground">
+            <span className="h-[var(--space-2)] w-[var(--space-2)] shrink-0 rounded-[var(--radius-xs)]" style={{ backgroundColor: item.color }} />
             <span className="truncate">{item.label}</span>
           </span>
-          <span className="text-white">{item.value}{suffix}</span>
+          <span className="text-foreground">{item.value}{suffix}</span>
         </div>
       ))}
     </div>
@@ -45,12 +45,12 @@ function PieLegend({ data, suffix = "%" }: { data: typeof countryFocus; suffix?:
 
 export function OfficialMarketingCharts() {
   return (
-    <div className="mt-8 grid gap-4 xl:grid-cols-3">
-      <article className="panel motion-card p-5 sm:p-6">
+    <div className="mt-[var(--space-8)] grid gap-[var(--space-4)] xl:grid-cols-3">
+      <article className="panel motion-card p-[var(--card-padding)]">
         <p className="eyebrow">Leads funnel</p>
-        <h3 className="mt-2 text-2xl uppercase text-white">Van bereik naar verkoop</h3>
-        <p className="mt-2 text-sm leading-6 text-white/58">Planning per 1.000 bereikte personen. Vervangen door CRM-data zodra de volledige funnel meetbaar is.</p>
-        <div className="mt-5 h-[340px]">
+        <h3 className="heading-card mt-[var(--space-2)] uppercase">Van bereik naar verkoop</h3>
+        <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Planning per 1.000 bereikte personen. Vervangen door CRM-data zodra de volledige funnel meetbaar is.</p>
+        <div className="mt-[var(--space-5)] h-[clamp(18rem,27vw,21.25rem)]">
           <FunnelChart
             className="h-full w-full"
             data={funnelData}
@@ -64,11 +64,11 @@ export function OfficialMarketingCharts() {
         </div>
       </article>
 
-      <article className="panel motion-card p-5 sm:p-6">
+      <article className="panel motion-card p-[var(--card-padding)]">
         <p className="eyebrow">Regionale focus</p>
-        <h3 className="mt-2 text-2xl uppercase text-white">Groeiaandacht per land</h3>
-        <p className="mt-2 text-sm leading-6 text-white/58">Planningsverdeling, geen gemeten marktaandeel.</p>
-        <div className="mt-5 h-[250px]">
+        <h3 className="heading-card mt-[var(--space-2)] uppercase">Groeiaandacht per land</h3>
+        <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Planningsverdeling, geen gemeten marktaandeel.</p>
+        <div className="mt-[var(--space-5)] h-[clamp(13rem,20vw,15.625rem)]">
           <PieChart className="h-full w-full" cornerRadius={4} data={countryFocus} innerRadius={64} padAngle={0.025}>
             {countryFocus.map((item, index) => (
               <PieSlice color={item.color} index={index} key={item.label} />
@@ -79,11 +79,11 @@ export function OfficialMarketingCharts() {
         <PieLegend data={countryFocus} />
       </article>
 
-      <article className="panel motion-card p-5 sm:p-6">
+      <article className="panel motion-card p-[var(--card-padding)]">
         <p className="eyebrow">Verkoopscenario</p>
-        <h3 className="mt-2 text-2xl uppercase text-white">Tien extra verkopen</h3>
-        <p className="mt-2 text-sm leading-6 text-white/58">Indicatieve verdeling bij tien extra verkopen. Geen omzetgarantie.</p>
-        <div className="mt-5 h-[250px]">
+        <h3 className="heading-card mt-[var(--space-2)] uppercase">Tien extra verkopen</h3>
+        <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Indicatieve verdeling bij tien extra verkopen. Geen omzetgarantie.</p>
+        <div className="mt-[var(--space-5)] h-[clamp(13rem,20vw,15.625rem)]">
           <PieChart className="h-full w-full" cornerRadius={4} data={incrementalSales} innerRadius={64} padAngle={0.025}>
             {incrementalSales.map((item, index) => (
               <PieSlice color={item.color} index={index} key={item.label} />
