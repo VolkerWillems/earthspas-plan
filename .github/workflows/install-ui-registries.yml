@@ -31,6 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo "Installing pinned Earth Spas registry selection"
 
           npx --yes shadcn@latest add @7ovr/timeline-1 -y
 
