@@ -26,7 +26,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 const tooltipStyle = {
   background: "var(--card)",
   border: "1px solid var(--border)",
-  borderRadius: "6px",
+  borderRadius: "5px",
   color: "#fff",
   fontFamily: "Barlow, sans-serif",
   fontWeight: 400,
@@ -50,7 +50,7 @@ export function TrafficSourceChart({ data }: { data: Array<{ label: string; valu
           <XAxis type="number" stroke="rgba(255,255,255,.75)" tickLine={false} axisLine={false} />
           <YAxis dataKey="label" type="category" width={124} stroke="#fff" tickLine={false} axisLine={false} tick={{ fill: "#fff", fontSize: 13, fontWeight: 400 }} />
           <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "color-mix(in srgb, var(--section-accent) 8%, transparent)" }} />
-          <Bar dataKey="value" fill="var(--section-accent, var(--primary))" radius={[0, 4, 4, 0]} maxBarSize={18} />
+          <Bar dataKey="value" fill="var(--section-accent, var(--primary))" radius={[0, 5, 5, 0]} maxBarSize={18} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -71,7 +71,7 @@ export function BudgetChart({ data, total }: { data: Array<{ name: string; value
         </PieChart>
       </ResponsiveContainer>
       <div className="pointer-events-none absolute inset-0 grid place-items-center pb-10 text-center">
-        <div><span className="block text-sm uppercase tracking-[0.14em] text-white/70">per maand</span><span className="mt-1 block text-2xl text-primary">{total}</span></div>
+        <div><span className="block text-sm uppercase tracking-[0.14em] text-white/70">per maand</span><span className="mt-1 block text-3xl text-primary">{total}</span></div>
       </div>
     </div>
   );
@@ -87,7 +87,7 @@ export function RevenueScenarioChart({ data }: { data: Array<{ name: string; omz
           <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#fff", fontSize: 12, fontWeight: 400 }} />
           <YAxis tickLine={false} axisLine={false} tick={{ fill: "rgba(255,255,255,.75)", fontSize: 11, fontWeight: 400 }} tickFormatter={(value: unknown) => `€${Math.round(Number(value) / 1000)}k`} />
           <Tooltip contentStyle={tooltipStyle} formatter={(value: unknown) => [`€${Number(value).toLocaleString("nl-NL")}`, "omzet"]} />
-          <Bar dataKey="omzet" radius={[4, 4, 0, 0]} maxBarSize={52}>
+          <Bar dataKey="omzet" radius={[5, 5, 0, 0]} maxBarSize={52}>
             {data.map((entry, index) => <Cell key={entry.name} fill={fills[index % fills.length]} />)}
           </Bar>
         </BarChart>
@@ -126,11 +126,11 @@ export function DecisionTable({ rows }: { rows: DecisionRow[] }) {
     <>
       <div className="space-y-2.5 md:hidden">
         {rows.map((row) => (
-          <article key={row.item} className={row.highlight ? "rounded-md border border-secondary/60 bg-secondary/10 p-4" : "rounded-md border border-border bg-card p-4"}>
-            <h4 className={row.highlight ? "text-base text-secondary" : "text-base text-white"}>{row.item}</h4>
+          <article key={row.item} className={row.highlight ? "rounded-[5px] border border-[var(--section-accent)]/60 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)] p-4" : "rounded-[5px] border border-border bg-card p-4"}>
+            <h4 className={row.highlight ? "text-base text-[var(--section-accent)]" : "text-base text-white"}>{row.item}</h4>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
-              <div><dt className="text-white/60">Per maand</dt><dd className="mt-1 text-white">{row.month}</dd></div>
-              <div><dt className="text-white/60">Per jaar</dt><dd className="mt-1 text-white">{row.year}</dd></div>
+              <div><dt className="text-white/60">Per maand</dt><dd className="mt-1 font-[family-name:var(--font-heading)] text-lg text-white">{row.month}</dd></div>
+              <div><dt className="text-white/60">Per jaar</dt><dd className="mt-1 font-[family-name:var(--font-heading)] text-lg text-white">{row.year}</dd></div>
             </dl>
             <p className="mt-3 border-t border-border pt-3 text-sm leading-6 text-white/90">{row.result}</p>
           </article>
@@ -145,8 +145,8 @@ export function DecisionTable({ rows }: { rows: DecisionRow[] }) {
           </thead>
           <tbody className="divide-y divide-border">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={row.original.highlight ? "bg-secondary/10" : ""}>
-                {row.getVisibleCells().map((cell, index) => <td key={cell.id} className={index === 0 ? "px-4 py-3 text-white" : row.original.highlight ? "px-4 py-3 text-secondary" : "px-4 py-3 text-white/90"}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>)}
+              <tr key={row.id} className={row.original.highlight ? "bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}>
+                {row.getVisibleCells().map((cell, index) => <td key={cell.id} className={index === 0 ? "px-4 py-3 text-white" : row.original.highlight ? "px-4 py-3 text-[var(--section-accent)]" : "px-4 py-3 text-white/90"}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>)}
               </tr>
             ))}
           </tbody>
