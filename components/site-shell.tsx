@@ -13,6 +13,7 @@ import {
   MagicWand,
   X,
 } from "@/lib/phosphor-icons";
+import { MotionController } from "@/components/motion-controller";
 import { useSiteState } from "@/components/site-state";
 import { cn } from "@/lib/utils";
 
@@ -28,13 +29,17 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { reset } = useSiteState();
   const [open, setOpen] = React.useState(false);
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => setOpen(false), [pathname]);
 
   React.useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
@@ -45,7 +50,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <MotionController />
       <header className="site-header">
+        <div className="site-progress" aria-hidden="true" />
         <div className="content-shell site-header-inner">
           <Link href="/" className="site-brand" aria-label="Earth Spas keuzehulp homepage">
             <img src="/screens/logo-full-gold.png" alt="Earth Spas" />
@@ -77,48 +84,65 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <button
+            ref={menuButtonRef}
             className="mobile-menu-button"
             onClick={() => setOpen((value) => !value)}
             aria-label={open ? "Navigatie sluiten" : "Navigatie openen"}
             aria-expanded={open}
             aria-controls="mobile-site-menu"
           >
-            {open ? <X className="h-6 w-6" /> : <List className="h-7 w-7" />}
+            <span className="menu-icon-stage" aria-hidden="true">
+              <List className={cn("menu-icon menu-icon-open", open && "menu-icon-hidden")} />
+              <X className={cn("menu-icon menu-icon-close", !open && "menu-icon-hidden")} />
+            </span>
           </button>
         </div>
       </header>
 
-      {open && (
-        <div id="mobile-site-menu" className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobiele navigatie">
-          <button className="mobile-menu-backdrop" aria-label="Navigatie sluiten" onClick={() => setOpen(false)} />
-          <div className="mobile-menu-panel">
-            <div className="mobile-menu-heading">
-              <p>Earth Spas</p>
-              <span>Kies een onderdeel</span>
-            </div>
-            <nav>
-              {navigation.map((item, index) => {
-                const Icon = item.icon;
-                const active = pathname === item.href;
-                return (
-                  <Link key={item.href} href={item.href} aria-current={active ? "page" : undefined} className={cn("mobile-nav-link", active && "mobile-nav-link-active")}>
-                    <span className="mobile-nav-number">0{index + 1}</span>
-                    <Icon className="h-6 w-6" weight="regular" />
-                    <span className="flex-1">{item.label}</span>
-                  </Link>
-                );
-              })}
-              <button onClick={reset} className="mobile-nav-link mobile-reset-button">
-                <span className="mobile-nav-number">R</span>
-                <ArrowClockwise className="h-6 w-6" />
-                <span className="flex-1">Alle keuzes resetten</span>
-              </button>
-            </nav>
+      <div
+        id="mobile-site-menu"
+        className={cn("mobile-menu", open ? "mobile-menu-open" : "mobile-menu-closed")}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!open}
+        aria-label="Mobiele navigatie"
+      >
+        <button className="mobile-menu-backdrop" aria-label="Navigatie sluiten" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1} />
+        <div className="mobile-menu-panel">
+          <div className="mobile-menu-heading">
+            <p>Earth Spas</p>
+            <span>Kies een onderdeel</span>
           </div>
+          <nav>
+            {navigation.map((item, index) => {
+              const Icon = item.icon;
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  tabIndex={open ? 0 : -1}
+                  aria-current={active ? "page" : undefined}
+                  className={cn("mobile-nav-link", active && "mobile-nav-link-active")}
+                >
+                  <span className="mobile-nav-number">0{index + 1}</span>
+                  <Icon className="h-6 w-6" weight="regular" />
+                  <span className="flex-1">{item.label}</span>
+                </Link>
+              );
+            })}
+            <button onClick={reset} tabIndex={open ? 0 : -1} className="mobile-nav-link mobile-reset-button">
+              <span className="mobile-nav-number">R</span>
+              <ArrowClockwise className="h-6 w-6" />
+              <span className="flex-1">Alle keuzes resetten</span>
+            </button>
+          </nav>
         </div>
-      )}
+      </div>
 
-      {children}
+      <div key={pathname} className="route-transition">
+        {children}
+      </div>
     </>
   );
 }
