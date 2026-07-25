@@ -30,7 +30,10 @@ export function GrowthChoroplethCard() {
           <div className="growth-map-copy">
             <div className="growth-map-heading">
               <span className="growth-map-icon"><Globe aria-hidden="true" /></span>
-              <div><p className="eyebrow">Indicatieve groeifocus</p><h1 id="growth-map-title">Van sterke basis naar meetbare regionale groei</h1></div>
+              <div>
+                <p className="eyebrow">Indicatieve groeifocus</p>
+                <h2 id="growth-map-title" className="mt-[.35rem] max-w-[16ch] text-[clamp(2rem,3.8vw,3.6rem)] uppercase leading-none text-white max-[700px]:max-w-none max-[700px]:text-[2.25rem]">Van sterke basis naar meetbare regionale groei</h2>
+              </div>
             </div>
 
             <p className="growth-map-intro">De kaart vertaalt het huidige werkbudget naar een voorzichtig groeiscenario. Nederland en NRW staan voorop; België en Luxemburg volgen pas wanneer tracking, opvolging en conversie aantoonbaar werken.</p>
@@ -42,7 +45,7 @@ export function GrowthChoroplethCard() {
             </div>
 
             <div className="growth-map-market-detail" aria-live="polite">
-              <div><span>{activeMarket.status}</span><h2>{activeMarket.label}</h2></div>
+              <div><span>{activeMarket.status}</span><h3>{activeMarket.label}</h3></div>
               <div className="growth-map-market-result"><ArrowRight aria-hidden="true" /><p><strong>circa {number.format(marketSales)} verkopen</strong><span>{euro.format(marketRevenue)} extra omzet in de werkbasis</span></p></div>
             </div>
 
@@ -52,7 +55,17 @@ export function GrowthChoroplethCard() {
           <div className="growth-map-visual" aria-label="Interactieve groeikaart Nederland, Duitsland, België en Luxemburg">
             <svg viewBox="0 0 300 230" role="img" aria-labelledby="growth-map-svg-title">
               <title id="growth-map-svg-title">Regionale groeifocus Earth Spas</title>
-              <defs><radialGradient id="growthGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="var(--section-accent)" stopOpacity=".28" /><stop offset="100%" stopColor="var(--section-accent)" stopOpacity="0" /></radialGradient></defs>
+              <defs>
+                <radialGradient id="growthGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="var(--section-accent)" stopOpacity=".28" />
+                  <stop offset="100%" stopColor="var(--section-accent)" stopOpacity="0" />
+                </radialGradient>
+                <linearGradient id="flowLineGradient" x1="0" x2="1">
+                  <stop offset="0%" stopColor="var(--brand-primary)" stopOpacity=".28" />
+                  <stop offset="52%" stopColor="var(--brand-primary)" stopOpacity="1" />
+                  <stop offset="100%" stopColor="var(--brand-secondary)" stopOpacity=".72" />
+                </linearGradient>
+              </defs>
               <circle cx="155" cy="118" r="104" fill="url(#growthGlow)" />
               <path className="growth-map-orbit" d="M29 117C55 38 192 7 267 76c56 52-4 140-100 144C76 224 7 174 29 117Z" />
               {markets.map((market, index) => (
