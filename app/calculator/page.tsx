@@ -1,7 +1,7 @@
 "use client";
 
+import * as React from "react";
 import {
-  ChartBar,
   Check,
   ClipboardText,
   DownloadSimple,
@@ -25,7 +25,6 @@ import {
   DecisionTable,
   RevenueScenarioChart,
 } from "@/components/decision-visuals";
-import * as React from "react";
 
 export default function CalculatorPage() {
   const { state, setState, update } = useSiteState();
@@ -36,7 +35,7 @@ export default function CalculatorPage() {
     setState((previous) => ({ ...previous, toolChoices: { ...previous.toolChoices, [groupId]: optionId } }));
   };
 
-  const summary = `Earth Spas totaalkeuze\n\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nBetrokkenheid Volker: ${state.involvement === "structured" ? `${state.hoursPerWeek} uur per week` : "vrij en incidenteel"}.`;
+  const summary = `Earth Spas totaalkeuze\n\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nUitvoeringsvorm: ${state.involvement === "structured" ? `${state.hoursPerWeek} uur structurele capaciteit per week` : "flexibel en incidenteel"}.`;
 
   const copySummary = async () => {
     await navigator.clipboard.writeText(summary);
@@ -48,8 +47,8 @@ export default function CalculatorPage() {
     { item: "Accounts, tools en hosting", month: euro.format(model.platformMonthly), year: euro.format(model.platformMonthly * 12), result: `${choiceGroups.length} categorieën ingevuld` },
     { item: "Meta en Google Ads", month: euro.format(model.adsMonthly), year: euro.format(model.adsMonthly * 12), result: `Meta ${euro.format(state.metaBudget)} + Google ${euro.format(state.googleBudget)}` },
     { item: "AI-creditpotten", month: euro.format(model.aiMonthly), year: euro.format(model.aiMonthly * 12), result: `Agents ${euro.format(state.aiApiBudget)}, development ${euro.format(state.aiDevelopmentBudget)}, media ${euro.format(state.aiMediaBudget)}` },
-    { item: "Contentreserve", month: euro.format(state.contentBudget), year: euro.format(state.contentBudget * 12), result: "Externe fotografie, video of losse productie" },
-    { item: "Bouw door Volker", month: "niet opgenomen", year: "apart bespreken", result: `${model.selectedFeatures.length} gekozen onderdelen, ${model.buildHoursLow}–${model.buildHoursHigh} uur indicatief` },
+    { item: "Contentreserve", month: euro.format(state.contentBudget), year: euro.format(state.contentBudget * 12), result: "Externe fotografie, video of gespecialiseerde productie" },
+    { item: "Interne bouw en doorontwikkeling", month: "niet opgenomen", year: "apart vast te leggen", result: `${model.selectedFeatures.length} gekozen onderdelen, ${model.buildHoursLow}–${model.buildHoursHigh} uur indicatief` },
     { item: "Totaal extern operationeel", month: euro.format(model.totalMonthly), year: euro.format(model.annualOperating), result: `${number.format(model.baseExtraSales)} extra spa's / ${euro.format(model.baseExtraRevenue)} extra omzet`, highlight: true },
   ];
 
@@ -65,7 +64,7 @@ export default function CalculatorPage() {
       <PageIntro
         eyebrow="04 · keuzes en totaalcalculator"
         title="Alle accounts, budgetten en aannames in één beslisoverzicht"
-        text="Deze pagina is de invullijst. Iedere keuze werkt door op de andere pagina's. Verander een provider, advertentiebudget, verkoopprijs of ureninzet en het totale scenario wordt direct opnieuw berekend. Een spreadsheet, maar dan zonder twaalf verborgen tabbladen en een cel die ineens #WAARDE! schreeuwt."
+        text="Deze pagina vormt de centrale invullijst. Iedere wijziging in provider, advertentiebudget, verkoopprijs, marge of uitvoeringscapaciteit wordt direct verwerkt in de overige pagina's en in het totale scenario."
         accent="primary"
         image="/earth-spas-special-features-1920x1080.jpg"
         imageAlt="Earth Spas productdetails en speciale functies"
@@ -79,7 +78,7 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Basisaannames" title="De commerciële uitgangspunten" text="De huidige situatie start op twee verkochte spa's per week voor gemiddeld €6.000 inclusief btw. Pas deze cijfers aan wanneer Jeroen een realistischer gemiddelde wil gebruiken." />
+          <SectionHeader eyebrow="Basisaannames" title="De commerciële uitgangspunten" text="Het startscenario gebruikt twee verkochte spa's per week en een gemiddelde verkoopprijs van €6.000 inclusief btw. Pas de waarden aan wanneer actuele bedrijfsgegevens een realistischer uitgangspunt geven." />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
             <Panel className="p-6 sm:p-8">
               <div className="grid gap-8 md:grid-cols-2">
@@ -101,7 +100,7 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Accounts en providers" title="Kies één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Niets is vergrendeld. De jaarlijkse kosten veranderen direct zodra een andere optie wordt geselecteerd." />
+          <SectionHeader eyebrow="Accounts en providers" title="Selecteer één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Geen optie is vergrendeld. De maand- en jaarbedragen veranderen direct zodra een andere oplossing wordt geselecteerd." />
           <div className="mt-9 overflow-hidden rounded-lg border border-[var(--section-accent)]/35 bg-card">
             <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] md:grid"><span>Onderdeel</span><span>Gekozen oplossing</span><span>Per maand</span></div>
             {choiceGroups.map((group) => {
@@ -118,7 +117,7 @@ export default function CalculatorPage() {
             })}
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <StatCard label="Jouw selectie" value={`${euro.format(model.platformMonthly)} p/m`} detail={`${euro.format(model.platformMonthly * 12)} per jaar`} />
+            <StatCard label="Geselecteerde stack" value={`${euro.format(model.platformMonthly)} p/m`} detail={`${euro.format(model.platformMonthly * 12)} per jaar`} />
             <StatCard label="Aanbevolen stack" value={`${euro.format(model.recommendedMonthly)} p/m`} detail="wanneer alle adviezen worden gekozen" />
             <StatCard label="Verschil" value={euro.format(model.platformMonthly - model.recommendedMonthly)} detail="negatief is goedkoper dan advies" />
           </div>
@@ -127,7 +126,7 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Maandbudget" title="Advertenties, content en AI apart instellen" text="De schuiven zijn bewust gescheiden. Zo ziet Jeroen precies of de maandkosten naar bereik, productie, agents of development gaan." />
+          <SectionHeader eyebrow="Maandbudget" title="Advertenties, content en AI afzonderlijk instellen" text="De budgetten zijn bewust gescheiden. Hierdoor blijft zichtbaar welk deel naar bereik, productie, agents, development en vaste infrastructuur gaat." />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
             <Panel className="p-6 sm:p-8">
               <div className="space-y-8">
@@ -146,18 +145,18 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Betrokkenheid Volker" title="Vrij uitvoeren of structureel tijd reserveren" text="De financiële tegenprestatie blijft buiten dit document. Deze keuze beïnvloedt alleen de verwachte uitvoeringskracht van het scenario." />
+          <SectionHeader eyebrow="Uitvoeringsvorm" title="Flexibele uitvoering of structurele capaciteit" text="De financiële of persoonlijke afspraken over interne uitvoering staan buiten dit document. Deze keuze beïnvloedt uitsluitend de uitvoeringscapaciteit die in het resultaatmodel wordt gebruikt." />
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
-            <button onClick={() => update("involvement", "free")} className={`panel p-6 text-left ${state.involvement === "free" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><Sparkle className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Vrij en incidenteel</h3><p className="mt-3 text-lg leading-8 text-white/70">Werken wanneer het uitkomt en oppakken wat op dat moment nodig of interessant is.</p></button>
-            <button onClick={() => update("involvement", "structured")} className={`panel p-6 text-left ${state.involvement === "structured" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><RocketLaunch className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Structurele betrokkenheid</h3><p className="mt-3 text-lg leading-8 text-white/70">Vaste uren voor marketing, content, website, data, agents en doorontwikkeling.</p></button>
+            <button onClick={() => update("involvement", "free")} className={`panel p-6 text-left ${state.involvement === "free" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><Sparkle className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Flexibele uitvoering</h3><p className="mt-3 text-lg leading-8 text-white/70">Werkzaamheden worden uitgevoerd op basis van beschikbare tijd, actuele noodzaak en prioriteit, zonder vaste wekelijkse capaciteit.</p></button>
+            <button onClick={() => update("involvement", "structured")} className={`panel p-6 text-left ${state.involvement === "structured" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><RocketLaunch className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Structurele uitvoering</h3><p className="mt-3 text-lg leading-8 text-white/70">Een vast aantal uren per week wordt gereserveerd voor marketing, content, website, data, agents en doorontwikkeling.</p></button>
           </div>
-          {state.involvement === "structured" && <Panel className="mt-4 p-6"><RangeField label="Uren per week" helper="46 actieve weken per jaar als rekenbasis" value={state.hoursPerWeek} min={2} max={32} step={1} display={`${state.hoursPerWeek} uur`} onChange={(value) => update("hoursPerWeek", value)} /></Panel>}
+          {state.involvement === "structured" && <Panel className="mt-4 p-6"><RangeField label="Structurele uren per week" helper="46 actieve weken per jaar als rekenbasis" value={state.hoursPerWeek} min={2} max={32} step={1} display={`${state.hoursPerWeek} uur`} onChange={(value) => update("hoursPerWeek", value)} /></Panel>}
         </div>
       </section>
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Uitkomst" title="Totaalbudget en verwacht scenario" text="De uitkomst blijft een bandbreedte. De belangrijkste functie is niet voorspellen wat zeker gebeurt, maar zichtbaar maken welke aannames nodig zijn om een investering logisch te beoordelen." />
+          <SectionHeader eyebrow="Uitkomst" title="Totaalbudget en verwacht scenario" text="De uitkomst blijft een bandbreedte. Het model maakt zichtbaar welke aannames nodig zijn om de verhouding tussen budget, capaciteit, omzetgroei en break-even zakelijk te beoordelen." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
             <StatCard label="Extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} />
             <StatCard label="Extra verkopen" value={`${number.format(model.lowExtraSales)}–${number.format(model.highExtraSales)}`} detail={`${number.format(model.baseExtraSales)} verwacht`} />
