@@ -39,6 +39,11 @@ export type ChecklistItem = {
   choiceGroupId?: string;
 };
 
+export const pricingReview = {
+  reviewedAt: "25 juli 2026",
+  note: "Bedragen zijn afgeronde planningsbedragen per maand. Valuta, btw, wisselkoers, jaarlijkse facturering, verbruik en prijswijzigingen kunnen het uiteindelijke factuurbedrag beïnvloeden. API- en andere verbruikskosten blijven afzonderlijk.",
+};
+
 export const choiceGroups: ChoiceGroup[] = [
   {
     id: "payment",
@@ -134,7 +139,7 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Database en storage",
     description: "Data, bestanden, authenticatie en betrouwbare back-ups.",
     options: [
-      { id: "supabase-pro", groupId: "database", name: "Supabase Pro", monthly: 22, description: "Beheerde database, storage, authenticatie, back-ups en spend controls.", recommended: true, logoSlug: "supabase", icon: "database" },
+      { id: "supabase-pro", groupId: "database", name: "Supabase Pro", monthly: 25, description: "Beheerde database, storage, authenticatie, back-ups en spend controls.", recommended: true, logoSlug: "supabase", icon: "database" },
       { id: "supabase-free", groupId: "database", name: "Supabase Free", monthly: 0, description: "Prima voor testen en lage volumes, met beperktere garanties en capaciteit.", logoSlug: "supabase", icon: "database" },
       { id: "postgres-selfhosted", groupId: "database", name: "PostgreSQL op eigen server", monthly: 0, description: "Geen extra abonnement, maar back-ups, updates en beheer liggen volledig bij ons.", icon: "database" },
     ],
@@ -144,7 +149,7 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Websitefrontend",
     description: "Hosting en deployment van de snelle Next.js-websites.",
     options: [
-      { id: "vercel-pro", groupId: "frontend", name: "Vercel Pro", monthly: 18, description: "Snelle deployments, previews, logs en spend controls voor productie.", recommended: true, logoSlug: "vercel", icon: "globe" },
+      { id: "vercel-pro", groupId: "frontend", name: "Vercel Pro", monthly: 20, description: "Snelle deployments, previews, logs en spend controls voor productie.", recommended: true, logoSlug: "vercel", icon: "globe" },
       { id: "vercel-free", groupId: "frontend", name: "Vercel Hobby", monthly: 0, description: "Goedkoopste route, met beperkingen voor zakelijk teamgebruik en support.", logoSlug: "vercel", icon: "globe" },
       { id: "frontend-selfhosted", groupId: "frontend", name: "Frontend ook self-hosted", monthly: 0, description: "Alles op de eigen server. Lagere SaaS-kosten, meer deployment- en beheerwerk.", icon: "server" },
     ],
@@ -154,7 +159,7 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "Formulier- en systeemmail",
     description: "Contactformulieren, afspraken, service en automatische notificaties.",
     options: [
-      { id: "resend-pro", groupId: "transactional-email", name: "Resend Pro", monthly: 18, description: "Betrouwbare verzending, logs en meerdere geverifieerde domeinen.", recommended: true, logoSlug: "resend", icon: "envelope" },
+      { id: "resend-pro", groupId: "transactional-email", name: "Resend Pro", monthly: 20, description: "Betrouwbare verzending, logs en meerdere geverifieerde domeinen.", recommended: true, logoSlug: "resend", icon: "envelope" },
       { id: "resend-free", groupId: "transactional-email", name: "Resend Free", monthly: 0, description: "Voldoende voor een rustige start en lage volumes.", logoSlug: "resend", icon: "envelope" },
       { id: "mail-smtp", groupId: "transactional-email", name: "Mail via bestaande mailbox", monthly: 0, description: "Geen extra account, maar minder inzicht, controle en schaalbaarheid.", icon: "envelope" },
     ],
@@ -162,12 +167,12 @@ export const choiceGroups: ChoiceGroup[] = [
   {
     id: "ai-workspace",
     title: "ChatGPT-werkruimte",
-    description: "Research, content, analyse, agents en Codexwerk.",
+    description: "Research, content, analyse, agents en Codexwerk. API-verbruik blijft altijd apart.",
     options: [
-      { id: "chatgpt-plus", groupId: "ai-workspace", name: "ChatGPT Plus", monthly: 18, description: "Goedkoopste individuele optie met lagere gebruikslimieten.", logoSlug: "openai", icon: "robot" },
-      { id: "chatgpt-pro5", groupId: "ai-workspace", name: "ChatGPT Pro 5x", monthly: 88, description: "Voorkeurskeuze voor structureel en intensief werk door Volker.", recommended: true, logoSlug: "openai", icon: "robot" },
-      { id: "chatgpt-pro20", groupId: "ai-workspace", name: "ChatGPT Pro 20x", monthly: 176, description: "Voor uitzonderlijk intensieve bouw- en productiemaanden.", logoSlug: "openai", icon: "rocket" },
-      { id: "chatgpt-business", groupId: "ai-workspace", name: "ChatGPT Business, 2 seats", monthly: 44, description: "Teamworkspace en centraal beheer, minder logisch wanneer één gebruiker het meeste verbruikt.", logoSlug: "openai", icon: "briefcase" },
+      { id: "chatgpt-plus", groupId: "ai-workspace", name: "ChatGPT Plus", monthly: 20, description: "Individueel abonnement met ruimere toegang dan Free, maar lagere limieten dan Pro.", logoSlug: "openai", icon: "robot" },
+      { id: "chatgpt-pro5", groupId: "ai-workspace", name: "ChatGPT Pro", monthly: 200, description: "Voorkeurskeuze voor structureel en zeer intensief individueel gebruik binnen analyse, content en development.", recommended: true, logoSlug: "openai", icon: "rocket" },
+      { id: "chatgpt-pro20", groupId: "ai-workspace", name: "ChatGPT Business, 2 seats · jaarlijks", monthly: 40, description: "Teamworkspace met centraal beheer. Dit bedrag gaat uit van twee seats en jaarlijkse facturering.", logoSlug: "openai", icon: "briefcase" },
+      { id: "chatgpt-business", groupId: "ai-workspace", name: "ChatGPT Business, 2 seats · maandelijks", monthly: 50, description: "Teamworkspace met centraal beheer en maandelijkse facturering voor minimaal twee gebruikers.", logoSlug: "openai", icon: "briefcase" },
       { id: "no-chatgpt", groupId: "ai-workspace", name: "Geen apart Earth Spas-abonnement", monthly: 0, description: "Gebruik blijft via bestaande accounts lopen en is daardoor minder zuiver toe te wijzen.", caution: true, icon: "pause" },
     ],
   },
@@ -196,8 +201,9 @@ export const choiceGroups: ChoiceGroup[] = [
     title: "AI voor development",
     description: "Codingagents, premium modellen, code review en actieve bouwmaanden.",
     options: [
-      { id: "copilot-pro", groupId: "coding-ai", name: "GitHub Copilot Pro", monthly: 10, description: "Goede basis voor dagelijkse code-aanvulling en chat.", logoSlug: "githubcopilot", icon: "code" },
-      { id: "copilot-proplus", groupId: "coding-ai", name: "GitHub Copilot Pro+", monthly: 34, description: "Meer premium requests en betere dekking voor intensieve bouwmaanden.", recommended: true, logoSlug: "githubcopilot", icon: "magic" },
+      { id: "copilot-pro", groupId: "coding-ai", name: "GitHub Copilot Pro", monthly: 10, description: "Goede basis voor dagelijkse code-aanvulling, chat en agentgebruik.", logoSlug: "githubcopilot", icon: "code" },
+      { id: "copilot-proplus", groupId: "coding-ai", name: "GitHub Copilot Pro+", monthly: 39, description: "Meer inbegrepen AI-credits en toegang tot zwaardere modellen voor intensieve bouwmaanden.", recommended: true, logoSlug: "githubcopilot", icon: "magic" },
+      { id: "copilot-max", groupId: "coding-ai", name: "GitHub Copilot Max", monthly: 100, description: "Voor structureel hoog agentgebruik met een grotere inbegrepen AI-creditpot.", logoSlug: "githubcopilot", icon: "rocket" },
       { id: "no-coding-ai", groupId: "coding-ai", name: "Geen apart codingabonnement", monthly: 0, description: "Development draait uitsluitend op de gekozen ChatGPT-werkruimte en losse API-credits.", icon: "code" },
     ],
   },
@@ -244,13 +250,18 @@ export const features: FeatureItem[] = [
 ];
 
 export const checklistItems: ChecklistItem[] = [
+  { id: "billing-inventory", group: "Eigenaarschap", title: "Volledig account- en factuuroverzicht maken", description: "Per dienst eigenaar, login, herstelmail, betaalmethode, factuuradres, kosten, verlengdatum en opzegroute vastleggen.", owner: "Samen", priority: "Nu" },
+  { id: "billing-email", group: "Eigenaarschap", title: "Centrale billing- en herstelmail vastleggen", description: "Eén zakelijke mailbox gebruiken voor facturen, waarschuwingen, herstelcodes en belangrijke accountmeldingen.", owner: "Earth Spas", priority: "Nu" },
   { id: "payment-card", group: "Eigenaarschap", title: "Betaalmethode kiezen en koppelen", description: "De gekozen betaalroute activeren, limieten instellen en alle facturen op Earth Spas laten landen.", owner: "Jeroen / Wim", priority: "Nu", choiceGroupId: "payment" },
+  { id: "spend-alerts", group: "Eigenaarschap", title: "Budgetlimieten en verbruikswaarschuwingen instellen", description: "Per advertentie-, AI-, hosting- en API-account harde limieten of waarschuwingen activeren en maandelijks controleren.", owner: "Jeroen / Wim", priority: "Nu" },
   { id: "admins", group: "Eigenaarschap", title: "Twee vaste beheerders aanwijzen", description: "Primaire en tweede beheerder voor accounts, hersteltoegang en noodgevallen vastleggen.", owner: "Earth Spas", priority: "Nu" },
   { id: "passwords", group: "Eigenaarschap", title: "Wachtwoord- en 2FA-oplossing inrichten", description: "Gedeelde toegang, herstelcodes en noodtoegang volgens de gekozen optie migreren.", owner: "Volker + Jeroen", priority: "Nu", choiceGroupId: "passwords" },
   { id: "workspace", group: "Eigenaarschap", title: "E-mail- en bestandsomgeving voorbereiden", description: "Gebruikers, mailboxen, domeinen, bestanden en migratiemoment volgens de gekozen oplossing vastleggen.", owner: "Volker + Jeroen", priority: "Nu", choiceGroupId: "workspace" },
   { id: "source", group: "Eigenaarschap", title: "Broncode onder Earth Spas-eigendom plaatsen", description: "Repositories, twee beheerders en overdrachtsregels instellen in de gekozen omgeving.", owner: "Volker", priority: "Nu", choiceGroupId: "source" },
+  { id: "registrar", group: "Techniek", title: "Domeinregistratie en verlenging overdragen", description: "Registrar-eigendom, contactgegevens, automatische verlenging, facturering en verhuiscodes voor alle Earth Spas-domeinen vastleggen.", owner: "Samen", priority: "Nu" },
   { id: "dns", group: "Techniek", title: "DNS en domeinen inventariseren", description: "Records exporteren, drie domeinen controleren en wijzigingen alleen met rollbackplan uitvoeren.", owner: "Volker", priority: "Nu", choiceGroupId: "dns" },
   { id: "server", group: "Techniek", title: "Gekozen serverroute inrichten", description: "Beveiliging, updates, monitoring en back-ups activeren of de bestaande route expliciet behouden.", owner: "Volker", priority: "Nu", choiceGroupId: "server" },
+  { id: "backup-restore", group: "Techniek", title: "Back-up- en hersteltest uitvoeren", description: "Database, media, configuratie en secrets daadwerkelijk terugzetten in een testomgeving en de hersteltijd documenteren.", owner: "Volker", priority: "Voor livegang" },
   { id: "cms", group: "Techniek", title: "Contentbeheer vastleggen en migreren", description: "Schema, content en assets back-uppen en de gekozen CMS-route testen.", owner: "Volker", priority: "Daarna", choiceGroupId: "cms" },
   { id: "automation", group: "Techniek", title: "Automatiseringsplatform inrichten", description: "Workflows inventariseren, credentials koppelen en kritieke flows testen.", owner: "Volker", priority: "Daarna", choiceGroupId: "automation" },
   { id: "database", group: "Techniek", title: "Database en storage overzetten", description: "Back-ups, rechten, spend caps en productiegegevens controleren in de gekozen oplossing.", owner: "Volker", priority: "Nu", choiceGroupId: "database" },
@@ -266,7 +277,7 @@ export const checklistItems: ChecklistItem[] = [
   { id: "privacy", group: "Afronding", title: "AVG en toestemmingen vastleggen", description: "Marketingtoestemming, klantfoto's, WhatsApp, voice-transcripten en agent-escalaties goedkeuren.", owner: "Earth Spas", priority: "Voor livegang" },
   { id: "acceptance", group: "Afronding", title: "Acceptatietest en rollback uitvoeren", description: "Website, mail, formulieren, database, workflows, back-ups en herstelprocedure samen testen.", owner: "Samen", priority: "Voor livegang" },
   { id: "budgets", group: "Afronding", title: "Definitieve maandlimieten vastleggen", description: "Platform, AI/API, development-AI, media-AI, Meta Ads en Google Ads apart goedkeuren.", owner: "Jeroen / Wim", priority: "Nu" },
-  { id: "workform", group: "Afronding", title: "Vorm van Volkers betrokkenheid kiezen", description: "Vrij en incidenteel of structureel aantal uren per week; tegenprestatie blijft buiten dit document.", owner: "Jeroen + Volker", priority: "Nu" },
+  { id: "workform", group: "Afronding", title: "Vorm van structurele betrokkenheid kiezen", description: "Vrij en incidenteel of een structureel aantal uren per week; tegenprestatie blijft buiten dit document.", owner: "Jeroen + Volker", priority: "Nu" },
   { id: "personal-payments", group: "Afronding", title: "Persoonlijke betaalmethoden verwijderen", description: "Pas nadat iedere gekozen account-, billing- en herstelroute aantoonbaar werkt.", owner: "Volker", priority: "Voor livegang" },
 ];
 
