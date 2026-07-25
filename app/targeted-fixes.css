@@ -54,6 +54,22 @@
   line-height: 1.18;
 }
 
+/* Mandatory routes with one item are information, not fake dropdown choices. */
+.section-block select:has(option:only-child) {
+  appearance: none;
+  pointer-events: none;
+  border-color: transparent !important;
+  background: transparent !important;
+  padding-inline: 0 !important;
+  font-weight: 600;
+  color: white;
+}
+
+/* The software page is an implementation plan, not an alternative-provider marketplace. */
+.section-block .panel button[aria-expanded] {
+  display: none !important;
+}
+
 /* Present concept mockups directly on the page instead of inside a fake browser frame. */
 .hero-mockup {
   overflow: visible !important;
