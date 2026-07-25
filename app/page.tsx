@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Users,
 } from "@/lib/phosphor-icons";
+import { DevelopmentShowcase } from "@/components/development-showcase";
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
 import { checklistItems, choiceGroups } from "@/lib/choice-data";
@@ -58,10 +59,10 @@ const channelResults = [
 ];
 
 const pageCards = [
-  { href: "/marketing", number: "02", title: "Marketingplan", text: "Strategie, doelgroepen, campagnes, budgetkeuzes, voorbeelden en groeiscenario's.", icon: MagicWand, image: "/earth-spas-collage-a-starry-lake-1920x1080.jpg" },
-  { href: "/software", number: "03", title: "Softwareplan", text: "Infrastructuur, agents, CRM, support, automatiseringen, bouwtijd en marktwaarde.", icon: Code, image: "/earth-spas-eco-smart-1920x1080.jpg" },
-  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, image: "/earth-spas-special-features-1920x1080.jpg" },
-  { href: "/checklist", number: "05", title: "Actielijst", text: "Alle noodzakelijke overdrachts-, beveiligings- en acceptatietaken in één overzicht.", icon: Check, image: "/earth-spas-collage-b-glacier-1920x1080.jpg" },
+  { href: "/marketing", number: "02", title: "Marketingplan", text: "Strategie, doelgroepen, campagnes, budgetkeuzes, voorbeelden en groeiscenario's.", icon: MagicWand, image: "/cards/marketing-card.png" },
+  { href: "/software", number: "03", title: "Softwareplan", text: "Infrastructuur, agents, CRM, support, automatiseringen, bouwtijd en marktwaarde.", icon: Code, image: "/cards/software-card.png" },
+  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, image: "/cards/calculator-card.png" },
+  { href: "/checklist", number: "05", title: "Actielijst", text: "Alle noodzakelijke overdrachts-, beveiligings- en acceptatietaken in één overzicht.", icon: Check, image: "/cards/actielijst-card.png" },
 ];
 
 const accountGroups = ["payment", "workspace", "passwords", "source", "dns", "server", "database", "frontend"];
@@ -76,7 +77,7 @@ export default function HomePage() {
       <PageIntro
         eyebrow="01 · huidige stand van zaken"
         title="Wat staat er al, wat presteert en wat moet worden overgedragen?"
-        text="Dit dashboard geeft een zakelijk overzicht van de bestaande digitale basis, geregistreerde projectinzet, kanaalprestaties, gekozen accounts, vaste kosten en de voortgang van de noodzakelijke overdracht. Het vormt het vertrekpunt voor beslissingen over marketing, software en verdere groei."
+        text="Dit dashboard geeft een zakelijk overzicht van de bestaande digitale basis, geregistreerde projectinzet, kanaalprestaties en de voortgang van de noodzakelijke overdracht. Het vormt het vertrekpunt voor beslissingen over marketing, software en verdere groei."
         accent="secondary"
         image="/showroom-building.jpeg"
         imageAlt="Earth Spas showroom"
@@ -91,15 +92,12 @@ export default function HomePage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Kernoverzicht" title="De digitale basis in zes cijfers" text="De huidige omzet is zonder structurele marketing gegenereerd. De onderstaande cijfers tonen de bestaande bedrijfsbasis, de geregistreerde digitale investering en de omvang van de nog te nemen besluiten." />
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-            <StatCard label="Huidige omzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} />
-            <StatCard label="Tools & accounts" value={`${euro.format(model.platformMonthly)} p/m`} detail="op basis van huidige keuzes" />
-            <StatCard label="Totaal extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} />
-            <StatCard label="Geregistreerde inzet" value={`${number.format(projectBaseline.totalHours)} uur`} detail="bestaande digitale basis" />
-            <StatCard label="Acties afgerond" value={`${model.completedTasks}/${checklistItems.length}`} detail={`${model.checklistProgress}% gereed`} />
-            <StatCard label="Geselecteerde bouw" value={`${model.selectedFeatures.length}`} detail="softwareonderdelen" />
-          </div>
+          <SectionHeader
+            eyebrow="Opgebouwde digitale basis"
+            title="Wat al is ontwikkeld en hoeveel tijd daarin is geïnvesteerd"
+            text="Dit overzicht toont uitsluitend aantoonbaar uitgevoerd werk. De onderdelen wisselen automatisch en laten per ontwikkelgebied zien wat is opgeleverd, hoeveel geregistreerde uren daarin zitten en welke groeikans daardoor beschikbaar is."
+          />
+          <DevelopmentShowcase />
         </div>
       </section>
 
