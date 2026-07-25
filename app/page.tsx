@@ -18,9 +18,10 @@ import {
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
 import { checklistItems, choiceGroups } from "@/lib/choice-data";
+import { projectBaseline } from "@/lib/project-baseline";
+import { getBusinessOwnerLabel, getBusinessTaskTitle } from "@/lib/presentation-copy";
 import { euro, number } from "@/lib/utils";
 import {
-  NumberField,
   PageIntro,
   Panel,
   PrimaryLink,
@@ -47,42 +48,35 @@ const paidAdVariants = [
 ];
 
 const channelResults = [
-  { channel: "Website & GA4", metric: "9.742 gebeurtenissen", detail: "652 actieve gebruikers; directe en organische basis is al meetbaar." },
+  { channel: "Website & GA4", metric: "9.742 gebeurtenissen", detail: "652 actieve gebruikers; directe en organische basis is meetbaar." },
   { channel: "Google organisch", metric: "321 sessies", detail: "Binnengekomen zonder structurele SEO-campagne of vaste contentproductie." },
-  { channel: "Google-bedrijfsprofiel", metric: "504 interacties", detail: "5,0 uit 19 reviews; sterkste bestaande social-proofkanaal." },
+  { channel: "Google-bedrijfsprofiel", metric: "504 interacties", detail: "5,0 uit 19 reviews; het sterkste bestaande social-proofkanaal." },
   { channel: "Meta websiteverkeer", metric: "9.013 vertoningen", detail: "7.008 uniek bereik en 287 landingspaginaweergaven voor €35,90." },
   { channel: "Meta lokaal bereik", metric: "14.206 vertoningen", detail: "10.874 mensen bereikt voor €15,90; €1,46 per 1.000 bereikte mensen." },
-  { channel: "Pinterest", metric: "164 maandweergaven", detail: "Profiel staat klaar, maar heeft nog 0 volgers en vrijwel geen structurele inzet gehad." },
-  { channel: "LinkedIn", metric: "20 zoekvermeldingen", detail: "+233,3% in zeven dagen; bedrijfspagina heeft momenteel 2 volgers." },
+  { channel: "Pinterest", metric: "164 maandweergaven", detail: "Het profiel is ingericht, maar heeft nog geen structurele content- of groeiaanpak." },
+  { channel: "LinkedIn", metric: "20 zoekvermeldingen", detail: "+233,3% in zeven dagen; de bedrijfspagina heeft momenteel 2 volgers." },
 ];
 
 const pageCards = [
   { href: "/marketing", number: "02", title: "Marketingplan", text: "Strategie, doelgroepen, campagnes, budgetkeuzes, voorbeelden en groeiscenario's.", icon: MagicWand, image: "/earth-spas-collage-a-starry-lake-1920x1080.jpg" },
   { href: "/software", number: "03", title: "Softwareplan", text: "Infrastructuur, agents, CRM, support, automatiseringen, bouwtijd en marktwaarde.", icon: Code, image: "/earth-spas-eco-smart-1920x1080.jpg" },
-  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Alle accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, image: "/earth-spas-special-features-1920x1080.jpg" },
-  { href: "/checklist", number: "05", title: "Actielijst", text: "Alles wat ongeacht de overige plannen snel geregeld, overgezet en getest moet worden.", icon: Check, image: "/earth-spas-collage-b-glacier-1920x1080.jpg" },
+  { href: "/calculator", number: "04", title: "Keuzes & calculator", text: "Accounts, providers, budgetten en aannames in één totale berekening.", icon: FadersHorizontal, image: "/earth-spas-special-features-1920x1080.jpg" },
+  { href: "/checklist", number: "05", title: "Actielijst", text: "Alle noodzakelijke overdrachts-, beveiligings- en acceptatietaken in één overzicht.", icon: Check, image: "/earth-spas-collage-b-glacier-1920x1080.jpg" },
 ];
 
 const accountGroups = ["payment", "workspace", "passwords", "source", "dns", "server", "database", "frontend"];
 const accountIcons = [CreditCard, Users, ShieldCheck, Code, Globe, Server, Database, Briefcase];
 
 export default function HomePage() {
-  const { state, setState } = useSiteState();
+  const { state } = useSiteState();
   const model = calculateSiteModel(state);
-
-  const updateWorkedHours = (key: keyof typeof state.workedHours, value: number) => {
-    setState((previous) => ({
-      ...previous,
-      workedHours: { ...previous.workedHours, [key]: value },
-    }));
-  };
 
   return (
     <main>
       <PageIntro
         eyebrow="01 · huidige stand van zaken"
-        title="Wat staat er al, wat is bereikt en wat moet nu worden overgedragen?"
-        text="Dit dashboard geeft Jeroen eerst het eerlijke vertrekpunt: bestaande prestaties, gewerkte uren, gekozen accounts, vaste kosten en de voortgang van de noodzakelijke overdracht. Daarna pas komen marketingdromen en softwarekastelen. Een zeldzame aanval van logische volgorde."
+        title="Wat staat er al, wat presteert en wat moet worden overgedragen?"
+        text="Dit dashboard geeft een zakelijk overzicht van de bestaande digitale basis, geregistreerde projectinzet, kanaalprestaties, gekozen accounts, vaste kosten en de voortgang van de noodzakelijke overdracht. Het vormt het vertrekpunt voor beslissingen over marketing, software en verdere groei."
         accent="secondary"
         image="/showroom-building.jpeg"
         imageAlt="Earth Spas showroom"
@@ -90,19 +84,19 @@ export default function HomePage() {
         actions={
           <>
             <PrimaryLink href="/marketing">Ga naar marketingplan</PrimaryLink>
-            <PrimaryLink href="/checklist">Bekijk urgente actielijst</PrimaryLink>
+            <PrimaryLink href="/checklist">Bekijk noodzakelijke actielijst</PrimaryLink>
           </>
         }
       />
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Kernoverzicht" title="De digitale basis in zes cijfers" text="De huidige omzet is zonder structurele marketing gegenereerd. De onderstaande bedragen zijn daarom geen vervanging van bestaande verkoop, maar het vertrekpunt voor extra groei en professioneel eigenaarschap." />
+          <SectionHeader eyebrow="Kernoverzicht" title="De digitale basis in zes cijfers" text="De huidige omzet is zonder structurele marketing gegenereerd. De onderstaande cijfers tonen de bestaande bedrijfsbasis, de geregistreerde digitale investering en de omvang van de nog te nemen besluiten." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             <StatCard label="Huidige omzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} />
             <StatCard label="Tools & accounts" value={`${euro.format(model.platformMonthly)} p/m`} detail="op basis van huidige keuzes" />
             <StatCard label="Totaal extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} />
-            <StatCard label="Gewerkte uren" value={number.format(model.totalWorkedHours)} detail="zelf in te vullen, niet doorberekend" />
+            <StatCard label="Geregistreerde inzet" value={`${number.format(projectBaseline.totalHours)} uur`} detail="bestaande digitale basis" />
             <StatCard label="Acties afgerond" value={`${model.completedTasks}/${checklistItems.length}`} detail={`${model.checklistProgress}% gereed`} />
             <StatCard label="Geselecteerde bouw" value={`${model.selectedFeatures.length}`} detail="softwareonderdelen" />
           </div>
@@ -111,7 +105,7 @@ export default function HomePage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Resultaten tot nu toe" title="De bestaande basis presteert beter dan een paar losse screenshots doen vermoeden" text="De cijfers hieronder zijn een momentopname uit GA4, Google, Meta, LinkedIn en Pinterest. Ze bewijzen nog geen verkochte spa's uit advertenties, maar wel organische vraag, goedkoop websiteverkeer, lokaal bereik en sterke Google-social-proof." />
+          <SectionHeader eyebrow="Resultaten tot nu toe" title="De bestaande basis levert aantoonbaar bereik, verkeer en vertrouwen" text="De cijfers hieronder zijn een momentopname uit GA4, Google, Meta, LinkedIn en Pinterest. Ze bewijzen nog geen directe verkopen uit advertenties, maar wel organische vraag, goedkoop websiteverkeer, lokaal bereik en sterke Google-social-proof." />
 
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {performanceSummary.map((item) => (
@@ -201,8 +195,8 @@ export default function HomePage() {
             <div className="flex items-start gap-4">
               <ChartBar className="mt-1 h-7 w-7 shrink-0 text-[var(--section-accent)]" />
               <div>
-                <h3 className="text-xl uppercase text-[var(--section-accent)]">Eerlijke conclusie</h3>
-                <p className="mt-2 text-base leading-7 text-white/78">Google en de website leveren nu de meeste aantoonbare waarde. Meta toont dat verkeer en lokaal bereik goedkoop ingekocht kunnen worden. LinkedIn en Pinterest zijn technisch aanwezig, maar nog nauwelijks ontwikkeld. De ontbrekende schakel is volledige meting van advertentie naar lead, afspraak, offerte en verkoop.</p>
+                <h3 className="text-xl uppercase text-[var(--section-accent)]">Zakelijke conclusie</h3>
+                <p className="mt-2 text-base leading-7 text-white/78">Google en de website leveren momenteel de meeste aantoonbare waarde. Meta laat zien dat verkeer en lokaal bereik tegen lage kosten kunnen worden ingekocht. LinkedIn en Pinterest zijn technisch aanwezig, maar nog nauwelijks ontwikkeld. De ontbrekende schakel is volledige meting van advertentie naar lead, afspraak, offerte en verkoop.</p>
               </div>
             </div>
           </Panel>
@@ -210,51 +204,80 @@ export default function HomePage() {
       </section>
 
       <section className="section-block theme-primary">
-        <div className="content-shell grid gap-8 xl:grid-cols-[1fr_.9fr]">
-          <div>
-            <SectionHeader eyebrow="Gewerkte uren" title="Maak zichtbaar wat al is opgebouwd" text="De uren worden bewust niet financieel gewaardeerd. Vul alleen de werkelijk bestede tijd per categorie in. Zo ziet Jeroen de omvang zonder dat deze keuzehulp ineens een factuur vermomd als vriendschapsdocument wordt." />
-            <Panel className="mt-8 p-6 sm:p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <NumberField label="Website & contentstructuur" value={state.workedHours.website} onChange={(value) => updateWorkedHours("website", value)} suffix="uur" />
-                <NumberField label="Content & media" value={state.workedHours.content} onChange={(value) => updateWorkedHours("content", value)} suffix="uur" />
-                <NumberField label="Marketing & analytics" value={state.workedHours.marketing} onChange={(value) => updateWorkedHours("marketing", value)} suffix="uur" />
-                <NumberField label="Agents & automatisering" value={state.workedHours.automation} onChange={(value) => updateWorkedHours("automation", value)} suffix="uur" />
-                <NumberField label="Accounts & infrastructuur" value={state.workedHours.infrastructure} onChange={(value) => updateWorkedHours("infrastructure", value)} suffix="uur" />
-                <div className="rounded-[5px] border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] p-4">
-                  <p className="text-sm uppercase tracking-[0.13em] text-white/55">Totaal geregistreerd</p>
-                  <p className="mt-2 text-4xl text-[var(--section-accent)]">{number.format(model.totalWorkedHours)} uur</p>
-                </div>
-              </div>
-            </Panel>
+        <div className="content-shell">
+          <SectionHeader eyebrow="Bestaande investering" title="Geregistreerde projectinzet en opgeleverde digitale basis" text="De aangeleverde uren- en plandocumenten brengen de totale geregistreerde inzet op circa 950 uur. De waarde hieronder is een bureauvergelijking en nadrukkelijk geen factuur of onderdeel van het operationele budget." />
+
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard label="Totale geregistreerde inzet" value={`${number.format(projectBaseline.totalHours)} uur`} detail="analyse, ontwerp, ontwikkeling, content en integraties" />
+            <StatCard label="Referentiewaarde" value={euro.format(projectBaseline.bureauEquivalent)} detail={`${euro.format(projectBaseline.referenceRate)} per uur als vaste vergelijking`} />
+            <StatCard label="Eerder gedetailleerd overzicht" value={`${number.format(projectBaseline.breakdownSourceHours)} uur`} detail="verdeeld over acht hoofdonderdelen" />
+            <StatCard label="Aanvullende uitwerking" value={`${number.format(projectBaseline.additionalHours)} uur`} detail="latere platform-, plan- en keuzehulpontwikkeling" />
           </div>
 
-          <div>
-            <SectionHeader eyebrow="Overdracht" title="Noodzakelijke acties lopen los van groeiplannen" text="Accounts, betaalmethoden, toegang, back-ups en eigenaarschap moeten hoe dan ook geregeld worden. Zelfs wanneer er voorlopig nul euro naar advertenties of nieuwe software gaat." />
-            <Panel className="mt-8 p-6 sm:p-8">
-              <div className="flex items-end justify-between gap-4">
-                <div><p className="text-sm uppercase tracking-[0.13em] text-white/55">Voortgang</p><p className="mt-2 text-3xl text-[var(--section-accent)]">{model.checklistProgress}%</p></div>
-                <p className="text-right text-base text-white/65">{model.completedTasks} van {checklistItems.length}<br />acties afgerond</p>
+          <div className="mt-6 grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
+            <Panel className="overflow-hidden">
+              <div className="border-b border-border p-5 sm:p-6">
+                <p className="eyebrow">Urenverdeling</p>
+                <h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">Wat aantoonbaar is opgebouwd</h3>
               </div>
-              <div className="mt-5"><ProgressBar value={model.checklistProgress} /></div>
-              <div className="mt-6 space-y-3">
-                {checklistItems.filter((item) => item.priority === "Nu").slice(0, 5).map((item) => (
-                  <div key={item.id} className="flex items-start gap-3 border-t border-border/70 pt-3 first:border-0 first:pt-0">
-                    <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-sm border ${state.checklist[item.id] ? "border-[var(--section-accent)] bg-[var(--section-accent)] text-primary-foreground" : "border-white/35"}`}>
-                      {state.checklist[item.id] && <Check className="h-3.5 w-3.5" />}
-                    </span>
-                    <div><p className="text-base text-white">{item.title}</p><p className="mt-1 text-sm text-white/52">{item.owner}</p></div>
-                  </div>
-                ))}
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+                  <thead className="bg-white/[.025] text-xs uppercase tracking-[0.12em] text-white/68">
+                    <tr><th className="px-5 py-3">Onderdeel</th><th className="px-5 py-3">Uren</th><th className="px-5 py-3">Opgeleverde waarde</th></tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/70">
+                    {projectBaseline.breakdown.map((item) => (
+                      <tr key={item.category}>
+                        <td className="px-5 py-3 text-white">{item.category}</td>
+                        <td className="px-5 py-3 font-[family-name:var(--font-heading)] text-lg text-[var(--section-accent)]">{item.hours}</td>
+                        <td className="px-5 py-3 leading-6 text-white/68">{item.result}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <div className="mt-6"><PrimaryLink href="/checklist">Open volledige actielijst</PrimaryLink></div>
+              <p className="border-t border-border px-5 py-4 text-sm leading-6 text-white/55">De detailverdeling is gebaseerd op het eerdere urenoverzicht van 840 uur. Latere documenten vermelden circa 950 uur totaal; het verschil is afzonderlijk opgenomen als aanvullende platform- en planuitwerking.</p>
             </Panel>
+
+            <div className="space-y-6">
+              <Panel className="overflow-hidden">
+                <div className="border-b border-border p-5 sm:p-6"><p className="eyebrow">Opgeleverde basis</p><h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">Zeven bestaande fundamenten</h3></div>
+                <div className="divide-y divide-border/70">
+                  {projectBaseline.foundation.map((item) => (
+                    <div key={item.title} className="px-5 py-4">
+                      <p className="text-base text-white">{item.title}</p>
+                      <p className="mt-1 text-sm leading-6 text-white/62">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+
+              <Panel className="p-6 sm:p-8">
+                <div className="flex items-end justify-between gap-4">
+                  <div><p className="text-sm uppercase tracking-[0.13em] text-white/55">Overdrachtsvoortgang</p><p className="mt-2 text-3xl text-[var(--section-accent)]">{model.checklistProgress}%</p></div>
+                  <p className="text-right text-base text-white/65">{model.completedTasks} van {checklistItems.length}<br />acties afgerond</p>
+                </div>
+                <div className="mt-5"><ProgressBar value={model.checklistProgress} /></div>
+                <div className="mt-6 space-y-3">
+                  {checklistItems.filter((item) => item.priority === "Nu").slice(0, 5).map((item) => (
+                    <div key={item.id} className="flex items-start gap-3 border-t border-border/70 pt-3 first:border-0 first:pt-0">
+                      <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-sm border ${state.checklist[item.id] ? "border-[var(--section-accent)] bg-[var(--section-accent)] text-primary-foreground" : "border-white/35"}`}>
+                        {state.checklist[item.id] && <Check className="h-3.5 w-3.5" />}
+                      </span>
+                      <div><p className="text-base text-white">{getBusinessTaskTitle(item)}</p><p className="mt-1 text-sm text-white/52">{getBusinessOwnerLabel(item.owner)}</p></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6"><PrimaryLink href="/checklist">Open volledige actielijst</PrimaryLink></div>
+              </Panel>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Accounts en providers" title="De huidige gekozen digitale stack" text="Dit is geen definitieve verplichting. Iedere categorie kan in de calculator worden gewijzigd. Het overzicht laat alleen zien wat nu geselecteerd staat en of de bijbehorende overdracht al is afgerond." />
+          <SectionHeader eyebrow="Accounts en providers" title="De huidige geselecteerde digitale stack" text="Iedere categorie kan in de calculator worden gewijzigd. Dit overzicht toont de actuele selectie, de bijbehorende maandkosten en de status van de noodzakelijke overdracht." />
           <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {accountGroups.map((groupId, index) => {
               const group = choiceGroups.find((item) => item.id === groupId)!;
@@ -281,7 +304,7 @@ export default function HomePage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Verder in dit plan" title="Vier pagina's, ieder met één duidelijke taak" text="De informatie is opgesplitst zodat Jeroen niet meer door een digitaal telefoonboek hoeft te scrollen om één keuze terug te vinden." />
+          <SectionHeader eyebrow="Verder in dit plan" title="Vier pagina's met ieder één duidelijke functie" text="De informatie is verdeeld over afzonderlijke onderdelen voor strategie, techniek, financiële keuzes en noodzakelijke uitvoering. Daardoor blijft iedere beslissing snel terug te vinden." />
           <div className="mt-9 grid gap-5 lg:grid-cols-2">
             {pageCards.map((item) => {
               const Icon = item.icon;
@@ -305,7 +328,7 @@ export default function HomePage() {
       </section>
 
       <footer className="border-t border-border py-10 text-center text-sm text-white/45">
-        Earth Spas digitale keuzehulp · scenario's zijn indicatief · bouwkosten van Volker staan buiten het budget
+        Earth Spas digitale keuzehulp · scenario's zijn indicatief · interne ontwikkeltijd staat buiten het operationele budget
       </footer>
     </main>
   );
