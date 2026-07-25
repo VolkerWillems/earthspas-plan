@@ -16,6 +16,7 @@ import {
 } from "@/lib/phosphor-icons";
 import { MotionController } from "@/components/motion-controller";
 import { PageBottomSummary } from "@/components/page-bottom-summary";
+import { PrepaidDelegationBanner } from "@/components/prepaid-delegation-banner";
 import { useSiteState } from "@/components/site-state";
 import { cn } from "@/lib/utils";
 
@@ -144,6 +145,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <div key={pathname} className={cn("route-transition", pathname === "/checklist" && "checklist-route")}>
         {children}
+        {pathname === "/checklist" && <PrepaidDelegationBanner />}
         <PageBottomSummary />
       </div>
     </>
