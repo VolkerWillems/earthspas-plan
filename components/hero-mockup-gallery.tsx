@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Check, X } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
-import styles from "./hero-mockup-gallery.module.css";
 
 export type HeroMockupItem = {
   id: string;
@@ -15,13 +14,7 @@ export type HeroMockupItem = {
   kind?: "desktop" | "mobile";
 };
 
-export function HeroMockupGallery({
-  eyebrow,
-  items,
-}: {
-  eyebrow: string;
-  items: HeroMockupItem[];
-}) {
+export function HeroMockupGallery({ eyebrow, items }: { eyebrow: string; items: HeroMockupItem[] }) {
   const [activeId, setActiveId] = React.useState(items[0]?.id ?? "");
   const [expanded, setExpanded] = React.useState(false);
   const active = items.find((item) => item.id === activeId) ?? items[0];
@@ -42,7 +35,7 @@ export function HeroMockupGallery({
   if (!active) return null;
 
   return (
-    <div className={cn(styles.root, "hero-mockup")} aria-label={eyebrow} data-motion-card>
+    <div className="hero-mockup" aria-label={eyebrow} data-motion-card>
       <div className="hero-mockup-heading">
         <div>
           <p className="hero-mockup-eyebrow">{eyebrow}</p>
@@ -73,13 +66,8 @@ export function HeroMockupGallery({
         onClick={() => setExpanded(true)}
         aria-label={`${active.title} op groot formaat bekijken`}
       >
-        <span className="hero-mockup-toolbar" aria-hidden="true">
-          <span /><span /><span />
-          <span className="hero-mockup-toolbar-label">Earth Spas concept</span>
-        </span>
-        <span className="hero-mockup-canvas">
-          <img src={active.image} alt={active.imageAlt} loading="eager" />
-        </span>
+        <span className="hero-mockup-toolbar" aria-hidden="true"><span /><span /><span /><span className="hero-mockup-toolbar-label">Earth Spas concept</span></span>
+        <span className="hero-mockup-canvas"><img src={active.image} alt={active.imageAlt} loading="eager" /></span>
         <span className="hero-mockup-expand">Bekijk groter</span>
       </button>
 
@@ -93,10 +81,7 @@ export function HeroMockupGallery({
           <button className="mockup-lightbox-backdrop" type="button" onClick={() => setExpanded(false)} aria-label="Sluiten" />
           <div className={cn("mockup-lightbox-panel", active.kind === "mobile" && "mockup-lightbox-panel-mobile")}>
             <div className="mockup-lightbox-header">
-              <div>
-                <p className="hero-mockup-eyebrow">Conceptvisualisatie</p>
-                <h2>{active.title}</h2>
-              </div>
+              <div><p className="hero-mockup-eyebrow">Conceptvisualisatie</p><h2>{active.title}</h2></div>
               <button type="button" className="mockup-lightbox-close" onClick={() => setExpanded(false)} aria-label="Mockup sluiten"><X className="h-5 w-5" /></button>
             </div>
             <div className="mockup-lightbox-image"><img src={active.image} alt={active.imageAlt} /></div>
