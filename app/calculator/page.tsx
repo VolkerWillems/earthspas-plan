@@ -36,7 +36,11 @@ export default function CalculatorPage() {
     setState((previous) => ({ ...previous, toolChoices: { ...previous.toolChoices, [groupId]: optionId } }));
   };
 
-  const summary = `Earth Spas totaalkeuze\n\nHuidige jaaromzet: ${euro.format(model.currentRevenue)}.\nHuidige verkopen: ${number.format(model.currentUnitsYear)} spa's per jaar.\nAfgeleide gemiddelde verkoopprijs: ${euro.format(model.averageSalePrice)}.\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nUitvoeringsvorm: ${state.involvement === "structured" ? `${state.hoursPerWeek} uur structurele capaciteit per week` : "flexibel en incidenteel"}.`;
+  const hoursPerWorkday = state.hoursPerWeek / 5;
+  const hoursPerMonth = (state.hoursPerWeek * 46) / 12;
+  const hoursPerYear = state.hoursPerWeek * 46;
+
+  const summary = `Earth Spas totaalkeuze\n\nHuidige jaaromzet: ${euro.format(model.currentRevenue)}.\nHuidige verkopen: ${number.format(model.currentUnitsYear)} spa's per jaar.\nAfgeleide gemiddelde verkoopprijs: ${euro.format(model.averageSalePrice)}.\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nSamenwerkingsvorm: ${state.involvement === "structured" ? `volledig digitaal beheer met ${state.hoursPerWeek} gereserveerde uren per week` : "incidentele ondersteuning zonder vaste capaciteit"}.`;
 
   const copySummary = async () => {
     await navigator.clipboard.writeText(summary);
@@ -173,12 +177,83 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Uitvoeringsvorm" title="Flexibele uitvoering of structurele capaciteit" text="De financiële of persoonlijke afspraken over interne uitvoering staan buiten dit document. Deze keuze beïnvloedt uitsluitend de uitvoeringscapaciteit die in het resultaatmodel wordt gebruikt." />
+          <SectionHeader
+            eyebrow="Samenwerkingsvoorstel"
+            title="Incidentele ondersteuning of volledig digitaal beheer"
+            text="Voor de verdere uitvoering zijn twee samenwerkingsvormen mogelijk. De keuze bepaalt hoeveel vaste capaciteit beschikbaar is voor alles wat online gebeurt. Wat daar financieel of persoonlijk tegenover staat, blijft buiten deze calculator en is afzonderlijk bespreekbaar."
+          />
+
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
-            <button onClick={() => update("involvement", "free")} className={`panel p-6 text-left ${state.involvement === "free" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><Sparkle className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Flexibele uitvoering</h3><p className="mt-3 text-lg leading-8 text-white/70">Werkzaamheden worden uitgevoerd op basis van beschikbare tijd, actuele noodzaak en prioriteit, zonder vaste wekelijkse capaciteit.</p></button>
-            <button onClick={() => update("involvement", "structured")} className={`panel p-6 text-left ${state.involvement === "structured" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><RocketLaunch className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Structurele uitvoering</h3><p className="mt-3 text-lg leading-8 text-white/70">Een vast aantal uren per week wordt gereserveerd voor marketing, content, website, data, agents en doorontwikkeling.</p></button>
+            <button
+              type="button"
+              aria-pressed={state.involvement === "free"}
+              onClick={() => update("involvement", "free")}
+              className={`panel motion-card p-6 text-left sm:p-7 ${state.involvement === "free" ? "border-[var(--section-accent)]/75 bg-[color-mix(in_srgb,var(--section-accent)_10%,var(--card))]" : ""}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <Sparkle className="h-8 w-8 text-[var(--section-accent)]" />
+                {state.involvement === "free" && (
+                  <span className="inline-flex items-center gap-1.5 rounded-[5px] border border-[var(--section-accent)]/50 px-2.5 py-1 text-xs uppercase tracking-[0.12em] text-[var(--section-accent)]">
+                    <Check className="h-3.5 w-3.5" /> Gekozen
+                  </span>
+                )}
+              </div>
+              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">Incidentele ondersteuning</h3>
+              <p className="mt-3 text-lg leading-8 text-white/76">Ik blijf werkzaamheden oppakken wanneer beschikbare tijd, urgentie en prioriteit dit toelaten. Er is geen vaste planning, responstijd of gegarandeerde wekelijkse capaciteit.</p>
+              <div className="mt-5 space-y-3 border-t border-border/70 pt-5">
+                {["Ontwikkeling en fixes wanneer tijd beschikbaar is", "Ondersteuning bij urgente of noodzakelijke zaken", "Geen vaste frequentie voor content, campagnes en doorontwikkeling"].map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-base leading-6 text-white/68"><Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" /><span>{item}</span></div>
+                ))}
+              </div>
+            </button>
+
+            <button
+              type="button"
+              aria-pressed={state.involvement === "structured"}
+              onClick={() => update("involvement", "structured")}
+              className={`panel motion-card p-6 text-left sm:p-7 ${state.involvement === "structured" ? "border-[var(--section-accent)]/75 bg-[color-mix(in_srgb,var(--section-accent)_10%,var(--card))]" : ""}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <RocketLaunch className="h-8 w-8 text-[var(--section-accent)]" />
+                <span className="inline-flex items-center gap-1.5 rounded-[5px] border border-[var(--section-accent)]/50 px-2.5 py-1 text-xs uppercase tracking-[0.12em] text-[var(--section-accent)]">
+                  {state.involvement === "structured" && <Check className="h-3.5 w-3.5" />}
+                  {state.involvement === "structured" ? "Gekozen voorstel" : "Voorkeursvoorstel"}
+                </span>
+              </div>
+              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">Volledig digitaal beheer</h3>
+              <p className="mt-3 text-lg leading-8 text-white/76">Ik bied aan om de volledige online omgeving van Earth Spas structureel te regelen, onderhouden en verder uit te bouwen binnen een vast gereserveerd aantal uren per week.</p>
+              <div className="mt-5 space-y-3 border-t border-border/70 pt-5">
+                {["Website, software en continue doorontwikkeling", "Social media, content, advertenties en marketinguitvoering", "Analytics, leads, AI-agents en automatiseringen", "Technisch beheer, monitoring, onderhoud en optimalisatie"].map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-base leading-6 text-white/68"><Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" /><span>{item}</span></div>
+                ))}
+              </div>
+            </button>
           </div>
-          {state.involvement === "structured" && <Panel className="mt-4 p-6"><RangeField label="Structurele uren per week" helper="46 actieve weken per jaar als rekenbasis" value={state.hoursPerWeek} min={2} max={32} step={1} display={`${state.hoursPerWeek} uur`} onChange={(value) => update("hoursPerWeek", value)} /></Panel>}
+
+          {state.involvement === "structured" && (
+            <Panel className="mt-4 p-6 sm:p-7">
+              <div className="grid gap-7 xl:grid-cols-[1.2fr_.8fr] xl:items-end">
+                <RangeField
+                  label="Voorgestelde vaste capaciteit per week"
+                  helper={`Verdeeld over 46 actieve weken per jaar. Bij ${state.hoursPerWeek} uur per week is dat gemiddeld ${hoursPerWorkday.toFixed(1).replace(".", ",")} uur per werkdag.`}
+                  value={state.hoursPerWeek}
+                  min={4}
+                  max={40}
+                  step={1}
+                  display={`${state.hoursPerWeek} uur`}
+                  onChange={(value) => update("hoursPerWeek", value)}
+                />
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per werkdag</p><p className="mt-2 text-xl text-[var(--section-accent)]">{hoursPerWorkday.toFixed(1).replace(".", ",")} uur</p></div>
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per maand</p><p className="mt-2 text-xl text-[var(--section-accent)]">{number.format(hoursPerMonth)} uur</p></div>
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per jaar</p><p className="mt-2 text-xl text-[var(--section-accent)]">{number.format(hoursPerYear)} uur</p></div>
+                </div>
+              </div>
+              <div className="mt-6 border-t border-border/70 pt-5">
+                <p className="text-base leading-7 text-white/72"><strong className="font-normal text-white">Bespreekbaar voorstel:</strong> wanneer Earth Spas voor deze structurele vorm kiest, worden de precieze invulling, planning en tegenprestatie apart en onderling vastgelegd. Deze calculator rekent uitsluitend met de beschikbare uitvoeringscapaciteit.</p>
+              </div>
+            </Panel>
+          )}
         </div>
       </section>
 
