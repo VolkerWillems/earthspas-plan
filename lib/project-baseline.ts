@@ -1,0 +1,27 @@
+export const projectBaseline = {
+  totalHours: 950,
+  referenceRate: 90,
+  bureauEquivalent: 85500,
+  breakdownSourceHours: 840,
+  additionalHours: 110,
+  breakdown: [
+    { category: "Strategie, scope en projectregie", hours: 35, result: "Richting, prioriteiten, centrale informatiebron en samenhang tussen alle onderdelen." },
+    { category: "Techniek, accounts en infrastructuur", hours: 131, result: "Basis voor eigenaarschap, repositories, hosting, domeinen, mail en beheer." },
+    { category: "Website, design, talen en QA", hours: 252, result: "Meertalige website, responsive ontwerp, componenten en kwaliteitscontrole." },
+    { category: "Content, beelden en assets", hours: 144, result: "Productcontent, gestructureerde media en herbruikbare campagnematerialen." },
+    { category: "CMS, backend en integraties", hours: 88, result: "Contentbeheer, formulieren, database, reviews en technische koppelingen." },
+    { category: "Marketing, SEO, social en analytics", hours: 113, result: "Meetbare kanalen, vindbaarheid en een basis voor leadgeneratie." },
+    { category: "AI-agents en contextoverdracht", hours: 37, result: "Herbruikbare projectkennis en voorbereiding van toekomstige automatisering." },
+    { category: "Recente verbeteringen en controles", hours: 40, result: "Aanvullende kwaliteitscontrole en verdere platformuitwerking." },
+    { category: "Aanvullende platform- en planuitwerking", hours: 110, result: "Verdere plannen, kostenmodellen, keuzehulpen, prestaties en technische uitwerking." },
+  ],
+  foundation: [
+    { title: "Website en domeinen", detail: "Next.js-omgeving, meerdere domeinen, NL/DE/EN-structuur en deploymentbasis." },
+    { title: "Figma en designsysteem", detail: "Paginaontwerp, componentrichting, responsive uitwerking en visuele kwaliteitscontrole." },
+    { title: "Directus CMS", detail: "Contentmodel, mediabibliotheek, vertalingen en websitebeheer." },
+    { title: "Supabase en backend", detail: "Databasebasis, formulieren, leads, logging en voorbereiding op automatisering." },
+    { title: "Content en assets", detail: "Productteksten, leveranciersmateriaal en gesorteerde afbeeldingen en video’s." },
+    { title: "Marketingbasis", detail: "Socialaccounts, Meta, Google Business, Maps, reviews, analytics en SEO." },
+    { title: "Technische governance", detail: "GitHub, Vercel, secrets, planning, back-ups en accountstructuur." },
+  ],
+} as const;
