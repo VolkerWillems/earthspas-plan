@@ -1,4 +1,4 @@
-:global(.hero-mockup) {
+.root {
   position: relative;
   z-index: 2;
   min-width: 0;
@@ -8,7 +8,7 @@
   box-shadow: 0 32px 90px rgba(0, 0, 0, .48);
 }
 
-:global(.hero-mockup::before) {
+.root::before {
   content: "";
   position: absolute;
   inset: -1px;
@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 
-:global(.hero-mockup-heading) {
+.root :global(.hero-mockup-heading) {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -27,7 +27,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, .09);
 }
 
-:global(.hero-mockup-eyebrow) {
+.root :global(.hero-mockup-eyebrow) {
   color: var(--section-accent);
   font-size: .72rem;
   letter-spacing: .16em;
@@ -35,7 +35,7 @@
   text-transform: uppercase;
 }
 
-:global(.hero-mockup-note) {
+.root :global(.hero-mockup-note) {
   display: flex;
   align-items: center;
   gap: .4rem;
@@ -45,9 +45,9 @@
   line-height: 1.35;
 }
 
-:global(.hero-mockup-note svg) { color: var(--section-accent); }
+.root :global(.hero-mockup-note svg) { color: var(--section-accent); }
 
-:global(.hero-mockup-tabs) {
+.root :global(.hero-mockup-tabs) {
   display: flex;
   max-width: 100%;
   gap: .35rem;
@@ -55,9 +55,9 @@
   scrollbar-width: none;
 }
 
-:global(.hero-mockup-tabs::-webkit-scrollbar) { display: none; }
+.root :global(.hero-mockup-tabs::-webkit-scrollbar) { display: none; }
 
-:global(.hero-mockup-tab) {
+.root :global(.hero-mockup-tab) {
   min-height: 2rem;
   flex: 0 0 auto;
   border: 1px solid rgba(255, 255, 255, .15);
@@ -69,19 +69,19 @@
   transition: border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease;
 }
 
-:global(.hero-mockup-tab:hover) {
+.root :global(.hero-mockup-tab:hover) {
   border-color: color-mix(in srgb, var(--section-accent) 56%, transparent);
   color: #fff;
   transform: translateY(-1px);
 }
 
-:global(.hero-mockup-tab-active) {
+.root :global(.hero-mockup-tab-active) {
   border-color: var(--section-accent);
   background: color-mix(in srgb, var(--section-accent) 12%, transparent);
   color: var(--section-accent);
 }
 
-:global(.hero-mockup-stage) {
+.root :global(.hero-mockup-stage) {
   position: relative;
   display: block;
   width: calc(100% - 2rem);
@@ -96,7 +96,7 @@
   animation: mockup-swap .34s cubic-bezier(.2, .7, .2, 1) both;
 }
 
-:global(.hero-mockup-toolbar) {
+.root :global(.hero-mockup-toolbar) {
   display: flex;
   min-height: 2rem;
   align-items: center;
@@ -106,16 +106,16 @@
   background: #091219;
 }
 
-:global(.hero-mockup-toolbar > span:not(.hero-mockup-toolbar-label)) {
+.root :global(.hero-mockup-toolbar > span:not(.hero-mockup-toolbar-label)) {
   width: .45rem;
   height: .45rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, .3);
 }
 
-:global(.hero-mockup-toolbar > span:first-child) { background: var(--section-accent); }
+.root :global(.hero-mockup-toolbar > span:first-child) { background: var(--section-accent); }
 
-:global(.hero-mockup-toolbar-label) {
+.root :global(.hero-mockup-toolbar-label) {
   margin-left: auto;
   color: rgba(255, 255, 255, .43);
   font-size: .66rem;
@@ -123,7 +123,7 @@
   text-transform: uppercase;
 }
 
-:global(.hero-mockup-canvas) {
+.root :global(.hero-mockup-canvas) {
   display: grid;
   aspect-ratio: 1672 / 941;
   place-items: center;
@@ -131,7 +131,7 @@
   background: #020609;
 }
 
-:global(.hero-mockup-canvas img) {
+.root :global(.hero-mockup-canvas img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -139,7 +139,7 @@
   transition: transform .55s cubic-bezier(.2, .7, .2, 1), filter .55s ease;
 }
 
-:global(.hero-mockup-stage-mobile .hero-mockup-canvas img) {
+.root :global(.hero-mockup-stage-mobile .hero-mockup-canvas img) {
   width: auto;
   max-width: 44%;
   object-fit: contain;
@@ -147,17 +147,17 @@
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .45));
 }
 
-:global(.hero-mockup-stage:hover .hero-mockup-canvas img) {
+.root :global(.hero-mockup-stage:hover .hero-mockup-canvas img) {
   transform: scale(1.012);
   filter: contrast(1.035);
 }
 
-:global(.hero-mockup-stage-mobile:hover .hero-mockup-canvas img) {
+.root :global(.hero-mockup-stage-mobile:hover .hero-mockup-canvas img) {
   transform: translateY(-2px) scale(1.01);
   filter: drop-shadow(0 22px 34px rgba(0, 0, 0, .55));
 }
 
-:global(.hero-mockup-expand) {
+.root :global(.hero-mockup-expand) {
   position: absolute;
   right: .65rem;
   bottom: .65rem;
@@ -174,32 +174,32 @@
   transition: opacity .18s ease, transform .18s ease;
 }
 
-:global(.hero-mockup-stage:hover .hero-mockup-expand),
-:global(.hero-mockup-stage:focus-visible .hero-mockup-expand) {
+.root :global(.hero-mockup-stage:hover .hero-mockup-expand),
+.root :global(.hero-mockup-stage:focus-visible .hero-mockup-expand) {
   opacity: 1;
   transform: translateY(0);
 }
 
-:global(.hero-mockup-copy) {
+.root :global(.hero-mockup-copy) {
   padding: 0 1rem 1rem;
   animation: mockup-copy .28s ease-out both;
 }
 
-:global(.hero-mockup-title) {
+.root :global(.hero-mockup-title) {
   color: var(--section-accent);
   font-family: var(--font-heading);
   font-size: 1.15rem;
   letter-spacing: .02em;
 }
 
-:global(.hero-mockup-copy > p:last-child) {
+.root :global(.hero-mockup-copy > p:last-child) {
   margin-top: .3rem;
   color: rgba(255, 255, 255, .68);
   font-size: .9rem;
   line-height: 1.5;
 }
 
-:global(.mockup-lightbox) {
+.root :global(.mockup-lightbox) {
   position: fixed;
   inset: 0;
   z-index: 180;
@@ -208,7 +208,7 @@
   padding: 1.5rem;
 }
 
-:global(.mockup-lightbox-backdrop) {
+.root :global(.mockup-lightbox-backdrop) {
   position: absolute;
   inset: 0;
   border: 0;
@@ -216,7 +216,7 @@
   backdrop-filter: blur(12px);
 }
 
-:global(.mockup-lightbox-panel) {
+.root :global(.mockup-lightbox-panel) {
   position: relative;
   z-index: 2;
   width: min(94vw, 1600px);
@@ -229,7 +229,7 @@
   animation: lightbox-in .24s cubic-bezier(.2, .7, .2, 1) both;
 }
 
-:global(.mockup-lightbox-header) {
+.root :global(.mockup-lightbox-header) {
   position: sticky;
   top: 0;
   z-index: 3;
@@ -243,14 +243,14 @@
   backdrop-filter: blur(12px);
 }
 
-:global(.mockup-lightbox-header h2) {
+.root :global(.mockup-lightbox-header h2) {
   margin-top: .2rem;
   color: #fff;
   font-size: 1.35rem;
   text-transform: uppercase;
 }
 
-:global(.mockup-lightbox-close) {
+.root :global(.mockup-lightbox-close) {
   display: grid;
   width: 2.6rem;
   height: 2.6rem;
@@ -262,13 +262,13 @@
   transition: border-color .18s ease, color .18s ease, background .18s ease;
 }
 
-:global(.mockup-lightbox-close:hover) {
+.root :global(.mockup-lightbox-close:hover) {
   border-color: var(--section-accent);
   background: color-mix(in srgb, var(--section-accent) 10%, transparent);
   color: var(--section-accent);
 }
 
-:global(.mockup-lightbox-image) {
+.root :global(.mockup-lightbox-image) {
   display: grid;
   min-height: 0;
   place-items: center;
@@ -276,7 +276,7 @@
   background: #010406;
 }
 
-:global(.mockup-lightbox-image img) {
+.root :global(.mockup-lightbox-image img) {
   display: block;
   width: 100%;
   height: auto;
@@ -284,10 +284,10 @@
   border-radius: 5px;
 }
 
-:global(.mockup-lightbox-panel-mobile) { width: min(94vw, 620px); }
-:global(.mockup-lightbox-panel-mobile .mockup-lightbox-image img) { width: auto; max-width: 100%; max-height: 76vh; }
+.root :global(.mockup-lightbox-panel-mobile) { width: min(94vw, 620px); }
+.root :global(.mockup-lightbox-panel-mobile .mockup-lightbox-image img) { width: auto; max-width: 100%; max-height: 76vh; }
 
-:global(.mockup-lightbox-caption) {
+.root :global(.mockup-lightbox-caption) {
   border-top: 1px solid rgba(255, 255, 255, .08);
   padding: 1rem 1.15rem;
   color: rgba(255, 255, 255, .62);
@@ -311,29 +311,29 @@
 }
 
 @media (max-width: 900px) {
-  :global(.hero-mockup-heading) { display: block; }
-  :global(.hero-mockup-tabs) { margin-top: .8rem; }
-  :global(.hero-mockup-stage-mobile .hero-mockup-canvas img) { max-width: 38%; }
+  .root :global(.hero-mockup-heading) { display: block; }
+  .root :global(.hero-mockup-tabs) { margin-top: .8rem; }
+  .root :global(.hero-mockup-stage-mobile .hero-mockup-canvas img) { max-width: 38%; }
 }
 
 @media (max-width: 700px) {
-  :global(.hero-mockup-heading) { padding: .85rem; }
-  :global(.hero-mockup-note) { font-size: .72rem; }
-  :global(.hero-mockup-stage) { width: calc(100% - 1.4rem); margin: .7rem; }
-  :global(.hero-mockup-copy) { padding: 0 .85rem .85rem; }
-  :global(.hero-mockup-stage-mobile .hero-mockup-canvas img) { max-width: 48%; }
-  :global(.hero-mockup-expand) { display: none; }
-  :global(.mockup-lightbox) { padding: .5rem; }
-  :global(.mockup-lightbox-panel) { width: 100%; max-height: 96vh; }
-  :global(.mockup-lightbox-header) { padding: .8rem; }
-  :global(.mockup-lightbox-header h2) { font-size: 1.08rem; }
-  :global(.mockup-lightbox-image) { padding: .5rem; }
+  .root :global(.hero-mockup-heading) { padding: .85rem; }
+  .root :global(.hero-mockup-note) { font-size: .72rem; }
+  .root :global(.hero-mockup-stage) { width: calc(100% - 1.4rem); margin: .7rem; }
+  .root :global(.hero-mockup-copy) { padding: 0 .85rem .85rem; }
+  .root :global(.hero-mockup-stage-mobile .hero-mockup-canvas img) { max-width: 48%; }
+  .root :global(.hero-mockup-expand) { display: none; }
+  .root :global(.mockup-lightbox) { padding: .5rem; }
+  .root :global(.mockup-lightbox-panel) { width: 100%; max-height: 96vh; }
+  .root :global(.mockup-lightbox-header) { padding: .8rem; }
+  .root :global(.mockup-lightbox-header h2) { font-size: 1.08rem; }
+  .root :global(.mockup-lightbox-image) { padding: .5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :global(.hero-mockup-stage),
-  :global(.hero-mockup-copy),
-  :global(.mockup-lightbox-panel) { animation: none; }
-  :global(.hero-mockup-canvas img),
-  :global(.hero-mockup-tab) { transition: none; }
+  .root :global(.hero-mockup-stage),
+  .root :global(.hero-mockup-copy),
+  .root :global(.mockup-lightbox-panel) { animation: none; }
+  .root :global(.hero-mockup-canvas img),
+  .root :global(.hero-mockup-tab) { transition: none; }
 }
