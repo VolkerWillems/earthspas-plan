@@ -1,83 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { createPortal } from "react-dom";
-import { GrowthChoroplethCard, SoftwareFlowDiagram } from "@/components/blocks";
-import { OfficialBudgetGrowthChart } from "@/components/blocks/official-budget-growth-chart";
-import { OfficialMarketingCharts } from "@/components/blocks/official-marketing-charts";
-import { OfficialSoftwareFlows } from "@/components/blocks/official-software-flows";
-import { AgentFlowShowcase } from "@/components/motion";
+import { useEffect, useState } from "react";
+
+const StrategyRouteVisuals = dynamic(
+  () => import("@/components/layout/route-visuals/strategy-visuals").then((module) => module.StrategyRouteVisuals),
+  { ssr: false },
+);
+
+const MarketingRouteVisuals = dynamic(
+  () => import("@/components/layout/route-visuals/marketing-visuals").then((module) => module.MarketingRouteVisuals),
+  { ssr: false },
+);
+
+const SoftwareRouteVisuals = dynamic(
+  () => import("@/components/layout/route-visuals/software-visuals").then((module) => module.SoftwareRouteVisuals),
+  { ssr: false },
+);
 
 function RouteVisualContent({ pathname }: { pathname: string }) {
-  if (pathname === "/strategie") {
-    return (
-      <div className="route-visual-restoration">
-        <GrowthChoroplethCard />
-        <section className="route-visual-chart-section theme-primary" aria-labelledby="strategy-growth-chart-title">
-          <div className="content-shell">
-            <div className="route-visual-chart-heading">
-              <p className="eyebrow">Advertentiebudget naar groeiscenario</p>
-              <h2 id="strategy-growth-chart-title">Voorzichtig rekenen, zichtbaar bijsturen</h2>
-              <p>De grafiek toont drie scenario&apos;s voor een zelfstandig advertentiebudget. Software, hosting, AI en content blijven afzonderlijke kosten.</p>
-            </div>
-            <OfficialBudgetGrowthChart />
-          </div>
-        </section>
-      </div>
-    );
-  }
-
-  if (pathname === "/marketing") {
-    return (
-      <section className="route-visual-chart-section route-visual-restoration theme-secondary" aria-labelledby="marketing-visuals-title">
-        <div className="content-shell">
-          <div className="route-visual-chart-heading">
-            <p className="eyebrow">Meetbare marketingketen</p>
-            <h2 id="marketing-visuals-title">Van bereik naar afspraken en verkopen</h2>
-            <p>Funnel, marktverdeling en het voorzichtige verkoopschema staan weer direct bij de marketingintro. Planningsdata wordt later vervangen door CRM-resultaten.</p>
-          </div>
-          <OfficialMarketingCharts />
-        </div>
-      </section>
-    );
-  }
-
-  if (pathname === "/software") {
-    return (
-      <div className="route-visual-restoration">
-        <SoftwareFlowDiagram />
-        <AgentFlowShowcase />
-        <section className="route-visual-chart-section theme-secondary" aria-labelledby="software-registry-flows-title">
-          <div className="content-shell">
-            <div className="route-visual-chart-heading">
-              <p className="eyebrow">Uitvoering en integraties</p>
-              <h2 id="software-registry-flows-title">Van technische basis naar beheersbare automatisering</h2>
-              <p>Proces-, integratie- en tijdlijncomponenten staan direct onder de softwareintro, in plaats van na de volledige pagina te verdwijnen.</p>
-            </div>
-            <OfficialSoftwareFlows />
-          </div>
-        </section>
-      </div>
-    );
-  }
-
+  if (pathname === "/strategie") return <StrategyRouteVisuals />;
+  if (pathname === "/marketing") return <MarketingRouteVisuals />;
+  if (pathname === "/software") return <SoftwareRouteVisuals />;
   return null;
 }
 
 export function RouteVisualSections({ pathname }: { pathname: string }) {
   const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
+  const hasVisuals = pathname === "/strategie" || pathname === "/marketing" || pathname === "/software";
 
   useEffect(() => {
-    if (!["/strategie", "/marketing", "/software"].includes(pathname)) {
+    if (!hasVisuals) {
       setPortalNode(null);
       return;
     }
 
     const intro = document.querySelector<HTMLElement>(".route-transition .page-intro");
-    if (!intro) {
-      setPortalNode(null);
-      return;
-    }
+    if (!intro) return;
 
     const slot = document.createElement("div");
     slot.className = "route-visual-slot";
@@ -86,10 +46,11 @@ export function RouteVisualSections({ pathname }: { pathname: string }) {
     setPortalNode(slot);
 
     return () => {
+      setPortalNode(null);
       slot.remove();
     };
-  }, [pathname]);
+  }, [hasVisuals, pathname]);
 
-  if (!portalNode) return null;
+  if (!hasVisuals || !portalNode) return null;
   return createPortal(<RouteVisualContent pathname={pathname} />, portalNode);
 }
