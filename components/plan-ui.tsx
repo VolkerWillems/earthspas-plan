@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { ArrowRight, Info } from "@/lib/phosphor-icons";
+import {
+  ArrowRight,
+  ChartBar,
+  CurrencyEur,
+  Gauge,
+  Globe,
+  Info,
+  ShieldCheck,
+  Target,
+  Users,
+} from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
 import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup-gallery";
 
@@ -67,6 +77,16 @@ const sectionTitleOverrides: Record<string, string> = {
   "Persoonlijke accounts pas als laatste loskoppelen": "Accounts als laatste",
 };
 
+const metricIconRules: Array<{ pattern: RegExp; icon: React.ElementType }> = [
+  { pattern: /websitegebruikers|actieve gebruikers|klanten/, icon: Users },
+  { pattern: /google-score|reviews|vertrouwen/, icon: ShieldCheck },
+  { pattern: /google-sessies|landingspagina|websiteverkeer|lokaal bereik|vertoningen/, icon: ChartBar },
+  { pattern: /budget|omzet|kosten|prijs|break-even|besteed|euro/, icon: CurrencyEur },
+  { pattern: /markt|regio|nederland|duitsland|belgië|luxemburg/, icon: Globe },
+  { pattern: /groei|scenario|conversie|doel/, icon: Target },
+  { pattern: /uur|inzet|gemiddeld|score/, icon: Gauge },
+];
+
 function compactSectionTitle(title: string) {
   const override = sectionTitleOverrides[title];
   if (override) return override;
@@ -81,6 +101,16 @@ function getNodeText(node: React.ReactNode): string {
   if (Array.isArray(node)) return node.map(getNodeText).join(" ");
   if (React.isValidElement<{ children?: React.ReactNode }>(node)) return getNodeText(node.props.children);
   return "";
+}
+
+function getMetricIcon(children: React.ReactNode) {
+  const leadingText = React.Children.toArray(children)
+    .slice(0, 2)
+    .map(getNodeText)
+    .join(" ")
+    .toLowerCase();
+
+  return metricIconRules.find(({ pattern }) => pattern.test(leadingText))?.icon;
 }
 
 function compactPremiumStatement(node: React.ReactNode): React.ReactNode {
@@ -227,6 +257,7 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
 export function Panel({ className, children }: { className?: string; children: React.ReactNode }) {
   const isPremiumStatement = getNodeText(children).includes("Positioneringszin");
   const displayChildren = isPremiumStatement ? compactPremiumStatement(children) : children;
+  const MetricIcon = getMetricIcon(displayChildren);
   const premiumStyle: React.CSSProperties | undefined = isPremiumStatement
     ? {
         backgroundImage: "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')",
@@ -238,11 +269,21 @@ export function Panel({ className, children }: { className?: string; children: R
 
   return (
     <div
-      className={cn("panel motion-card", isPremiumStatement && "premium-statement-card", className)}
+      className={cn(
+        "panel motion-card",
+        MetricIcon && "metric-panel",
+        isPremiumStatement && "premium-statement-card",
+        className,
+      )}
       style={premiumStyle}
       data-reveal="up"
       data-motion-card
     >
+      {MetricIcon && (
+        <span className="panel-metric-icon" aria-hidden="true">
+          <MetricIcon />
+        </span>
+      )}
       {displayChildren}
     </div>
   );
