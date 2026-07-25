@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Barlow+Semi+Condensed:wght@300;400&display=swap");
 @import "tailwindcss";
 @import "./theme.css";
-@import "./motion.css";
 
 @custom-variant dark (&:is(.dark *));
 
