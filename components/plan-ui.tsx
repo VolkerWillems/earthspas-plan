@@ -19,6 +19,12 @@ import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup
 
 type Accent = "primary" | "secondary";
 
+type PanelProps = {
+  className?: string;
+  children: React.ReactNode;
+  metricIcon?: React.ElementType;
+};
+
 const routeHeaderCopy: Record<string, { title: string; kicker: string }> = {
   "/": { title: "Digitale basis", kicker: "Status en groei" },
   "/strategie": { title: "Premium groeistrategie", kicker: "Positionering en markten" },
@@ -51,7 +57,7 @@ const routeHeroAssets: Record<string, { image: string; alt: string; position?: s
   },
 };
 
-const sectionTitleOverrides: Record<string, string> = {
+const conciseSectionTitles: Record<string, string> = {
   "Software status en development uren per onderdeel": "Gebouwde digitale basis",
   "De bestaande basis levert aantoonbaar bereik, verkeer en vertrouwen": "Bereik en vertrouwen",
   "Geregistreerde projectinzet en opgeleverde digitale basis": "Projectinzet en waarde",
@@ -87,15 +93,6 @@ const metricIconRules: Array<{ pattern: RegExp; icon: React.ElementType }> = [
   { pattern: /uur|inzet|gemiddeld|score/, icon: Gauge },
 ];
 
-function compactSectionTitle(title: string) {
-  const override = sectionTitleOverrides[title];
-  if (override) return override;
-
-  const firstClause = title.split(/[;:]/)[0]?.trim() || title;
-  const words = firstClause.split(/\s+/);
-  return words.length > 6 ? words.slice(0, 6).join(" ") : firstClause;
-}
-
 function getNodeText(node: React.ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(getNodeText).join(" ");
@@ -103,32 +100,22 @@ function getNodeText(node: React.ReactNode): string {
   return "";
 }
 
-function getMetricIcon(children: React.ReactNode) {
-  const leadingText = React.Children.toArray(children)
-    .slice(0, 2)
-    .map(getNodeText)
-    .join(" ")
-    .toLowerCase();
+function getAutomaticMetricIcon(children: React.ReactNode) {
+  const elements = React.Children.toArray(children).filter(
+    (child): child is React.ReactElement<{ className?: string; children?: React.ReactNode }> => React.isValidElement(child),
+  );
 
-  return metricIconRules.find(({ pattern }) => pattern.test(leadingText))?.icon;
-}
+  const first = elements[0];
+  const second = elements[1];
+  if (!first || !second || first.type !== "p") return undefined;
+  if (first.props.className?.includes("eyebrow")) return undefined;
 
-function compactPremiumStatement(node: React.ReactNode): React.ReactNode {
-  return React.Children.map(node, (child) => {
-    if (!React.isValidElement<{ children?: React.ReactNode; className?: string }>(child)) return child;
+  const secondIsHeading = second.type === "h3";
+  const secondIsMetricValue = second.type === "p" && second.props.className?.includes("value-change");
+  if (!secondIsHeading && !secondIsMetricValue) return undefined;
 
-    const isStatement = child.type === "blockquote";
-    const nextChildren = isStatement
-      ? "Premium advies. Betrouwbare installatie. Blijvende service."
-      : compactPremiumStatement(child.props.children);
-
-    return React.cloneElement(child, {
-      children: nextChildren,
-      className: isStatement
-        ? cn(child.props.className, "max-w-[25ch] !text-[clamp(1.55rem,2.5vw,2.35rem)] !leading-[1.08]")
-        : child.props.className,
-    });
-  });
+  const metricText = elements.slice(0, 3).map(getNodeText).join(" ").toLowerCase();
+  return metricIconRules.find(({ pattern }) => pattern.test(metricText))?.icon;
 }
 
 const marketingMockups: HeroMockupItem[] = [
@@ -136,7 +123,7 @@ const marketingMockups: HeroMockupItem[] = [
     id: "marketing",
     label: "Marketing",
     title: "Marketingdashboard",
-    description: "Campagnes, kanaalprestaties, budget, leads en omzetresultaten in één managementoverzicht.",
+    description: "Campagnes, kanaalprestaties, budget, leads en omzet in één managementoverzicht.",
     image: "/mockup/marketing.png",
     imageAlt: "Earth Spas marketingdashboard",
   },
@@ -215,7 +202,13 @@ export function PageIntro({
             <HeroMockupGallery eyebrow={mockupConfig.eyebrow} items={mockupConfig.items} />
           </div>
         ) : resolvedImage ? (
-          <div className="page-intro-visual motion-border" data-reveal="scale" data-reveal-delay="90" data-motion-card aria-hidden={resolvedImageAlt ? undefined : true}>
+          <div
+            className="page-intro-visual motion-border"
+            data-reveal="scale"
+            data-reveal-delay="90"
+            data-motion-card
+            aria-hidden={resolvedImageAlt ? undefined : true}
+          >
             <img src={resolvedImage} alt={resolvedImageAlt} style={{ objectPosition: resolvedImagePosition }} />
             <div className="page-intro-visual-shade" />
           </div>
@@ -227,12 +220,12 @@ export function PageIntro({
 
 export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string; accent?: Accent }) {
   const showBudgetStrategy = title === "Advertenties, content en AI afzonderlijk instellen";
-  const displayTitle = compactSectionTitle(title);
+  const displayTitle = conciseSectionTitles[title] ?? title;
 
   return (
     <div className="section-header" data-reveal="up">
       <p className="eyebrow">{eyebrow}</p>
-      <h2 title={title}>{displayTitle}</h2>
+      <h2 title={displayTitle === title ? undefined : title}>{displayTitle}</h2>
       {text && <p>{text}</p>}
       {showBudgetStrategy && (
         <div className="budget-test-strategy">
@@ -240,7 +233,7 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
             <Info className="h-6 w-6 shrink-0" />
             <div>
               <strong>Eerst testen, dan opschalen</strong>
-              <p>Start klein en meet leadkwaliteit, afspraken, offertes en verkopen. Alleen bewezen campagnes krijgen extra budget.</p>
+              <p>Start klein en meet leads, afspraken, offertes en verkopen. Alleen bewezen campagnes krijgen meer budget.</p>
             </div>
           </div>
           <div className="budget-test-steps">
@@ -254,10 +247,9 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
   );
 }
 
-export function Panel({ className, children }: { className?: string; children: React.ReactNode }) {
+export function Panel({ className, children, metricIcon }: PanelProps) {
   const isPremiumStatement = getNodeText(children).includes("Positioneringszin");
-  const displayChildren = isPremiumStatement ? compactPremiumStatement(children) : children;
-  const MetricIcon = getMetricIcon(displayChildren);
+  const MetricIcon = metricIcon ?? getAutomaticMetricIcon(children);
   const premiumStyle: React.CSSProperties | undefined = isPremiumStatement
     ? {
         backgroundImage: "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')",
@@ -284,7 +276,7 @@ export function Panel({ className, children }: { className?: string; children: R
           <MetricIcon />
         </span>
       )}
-      {displayChildren}
+      {children}
     </div>
   );
 }
@@ -308,7 +300,26 @@ export function PrimaryLink({ href, children }: { href: string; children: React.
   );
 }
 
-export function RangeField({ label, helper, value, min, max, step, display, onChange }: { label: string; helper?: string; value: number; min: number; max: number; step: number; display: string; onChange: (value: number) => void; accent?: Accent }) {
+export function RangeField({
+  label,
+  helper,
+  value,
+  min,
+  max,
+  step,
+  display,
+  onChange,
+}: {
+  label: string;
+  helper?: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  display: string;
+  onChange: (value: number) => void;
+  accent?: Accent;
+}) {
   const progress = max === min ? 0 : Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
 
   return (
@@ -339,7 +350,10 @@ export function RangeField({ label, helper, value, min, max, step, display, onCh
 export function ProgressBar({ value }: { value: number; accent?: Accent }) {
   return (
     <div className="progress-track h-2.5 overflow-hidden rounded-full bg-white/8">
-      <div className="progress-fill h-full rounded-full bg-[var(--section-accent)] transition-all duration-500" style={{ width: `${Math.max(0, Math.min(100, value))}%` }} />
+      <div
+        className="progress-fill h-full rounded-full bg-[var(--section-accent)] transition-all duration-500"
+        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
+      />
     </div>
   );
 }
