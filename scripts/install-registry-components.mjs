@@ -58,13 +58,13 @@ const items = [
   "@bklit/line-chart",
   "@bklit/funnel-chart",
   "@bklit/pie-chart",
-  "@bklit/brush",
   "@bklit/legend",
   "@bklit/grid",
 ];
 
 console.log("Installing official registry items:");
 for (const item of items) console.log(`  - ${item}`);
+console.log("ChartBrush ships with @bklit/line-chart and is not a separate registry item.");
 
 execFileSync(
   "npx",
