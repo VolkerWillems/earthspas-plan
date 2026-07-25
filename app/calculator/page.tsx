@@ -1,21 +1,16 @@
 "use client";
 
 import {
-  Briefcase,
   ChartBar,
   Check,
   ClipboardText,
-  CurrencyEur,
   DownloadSimple,
-  FadersHorizontal,
-  Gauge,
   RocketLaunch,
   Sparkle,
-  Target,
 } from "@/lib/phosphor-icons";
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
-import { choiceGroups, features } from "@/lib/choice-data";
+import { choiceGroups } from "@/lib/choice-data";
 import { euro, number } from "@/lib/utils";
 import {
   PageIntro,
@@ -72,31 +67,33 @@ export default function CalculatorPage() {
         title="Alle accounts, budgetten en aannames in één beslisoverzicht"
         text="Deze pagina is de invullijst. Iedere keuze werkt door op de andere pagina's. Verander een provider, advertentiebudget, verkoopprijs of ureninzet en het totale scenario wordt direct opnieuw berekend. Een spreadsheet, maar dan zonder twaalf verborgen tabbladen en een cel die ineens #WAARDE! schreeuwt."
         accent="primary"
+        image="/earth-spas-special-features-1920x1080.jpg"
+        imageAlt="Earth Spas productdetails en speciale functies"
         actions={
           <>
-            <button className="action-link theme-primary" onClick={copySummary}>{copied ? <Check className="h-4 w-4" /> : <ClipboardText className="h-4 w-4" />}<span>{copied ? "Samenvatting gekopieerd" : "Kopieer samenvatting"}</span></button>
-            <button className="action-link theme-secondary" onClick={() => window.print()}><DownloadSimple className="h-4 w-4" /><span>Bewaar als PDF</span></button>
+            <button className="action-link" onClick={copySummary}>{copied ? <Check className="h-4 w-4" /> : <ClipboardText className="h-4 w-4" />}<span>{copied ? "Samenvatting gekopieerd" : "Kopieer samenvatting"}</span></button>
+            <button className="action-link" onClick={() => window.print()}><DownloadSimple className="h-4 w-4" /><span>Bewaar als PDF</span></button>
           </>
         }
       />
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Basisaannames" title="De commerciële uitgangspunten" text="De huidige situatie start op twee verkochte spa's per week voor gemiddeld €6.000 inclusief btw. Pas deze cijfers aan wanneer Jeroen een realistischer gemiddelde wil gebruiken." accent="secondary" />
+          <SectionHeader eyebrow="Basisaannames" title="De commerciële uitgangspunten" text="De huidige situatie start op twee verkochte spa's per week voor gemiddeld €6.000 inclusief btw. Pas deze cijfers aan wanneer Jeroen een realistischer gemiddelde wil gebruiken." />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
             <Panel className="p-6 sm:p-8">
               <div className="grid gap-8 md:grid-cols-2">
-                <RangeField label="Spa's per week" helper="Huidige organische verkoop" value={state.currentSalesPerWeek} min={0.5} max={8} step={0.5} display={number.format(state.currentSalesPerWeek)} onChange={(value) => update("currentSalesPerWeek", value)} accent="secondary" />
-                <RangeField label="Gemiddelde verkoopprijs" helper="Inclusief btw" value={state.averageSalePrice} min={3500} max={15000} step={250} display={euro.format(state.averageSalePrice)} onChange={(value) => update("averageSalePrice", value)} accent="secondary" />
-                <RangeField label="Brutomarge" helper="Na inkoopprijs van de spa" value={state.grossMargin} min={20} max={60} step={1} display={`${state.grossMargin}%`} onChange={(value) => update("grossMargin", value)} accent="secondary" />
-                <RangeField label="Acquisitiekosten per extra verkoop" helper="Marketing- en groeibudget, niet de inkoopprijs" value={state.acquisitionCostPerSale} min={250} max={4000} step={50} display={euro.format(state.acquisitionCostPerSale)} onChange={(value) => update("acquisitionCostPerSale", value)} accent="secondary" />
-                <RangeField label="Extra uitvoeringskosten per spa" helper="Aanvullende administratie of ondersteuning; mag €0 zijn" value={state.incrementalCostPerSale} min={0} max={1500} step={25} display={euro.format(state.incrementalCostPerSale)} onChange={(value) => update("incrementalCostPerSale", value)} accent="secondary" />
+                <RangeField label="Spa's per week" helper="Huidige organische verkoop" value={state.currentSalesPerWeek} min={0.5} max={8} step={0.5} display={number.format(state.currentSalesPerWeek)} onChange={(value) => update("currentSalesPerWeek", value)} />
+                <RangeField label="Gemiddelde verkoopprijs" helper="Inclusief btw" value={state.averageSalePrice} min={3500} max={15000} step={250} display={euro.format(state.averageSalePrice)} onChange={(value) => update("averageSalePrice", value)} />
+                <RangeField label="Brutomarge" helper="Na inkoopprijs van de spa" value={state.grossMargin} min={20} max={60} step={1} display={`${state.grossMargin}%`} onChange={(value) => update("grossMargin", value)} />
+                <RangeField label="Acquisitiekosten per extra verkoop" helper="Marketing- en groeibudget, niet de inkoopprijs" value={state.acquisitionCostPerSale} min={250} max={4000} step={50} display={euro.format(state.acquisitionCostPerSale)} onChange={(value) => update("acquisitionCostPerSale", value)} />
+                <RangeField label="Extra uitvoeringskosten per spa" helper="Aanvullende administratie of ondersteuning; mag €0 zijn" value={state.incrementalCostPerSale} min={0} max={1500} step={25} display={euro.format(state.incrementalCostPerSale)} onChange={(value) => update("incrementalCostPerSale", value)} />
               </div>
             </Panel>
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-              <StatCard label="Huidige jaaromzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} accent="secondary" />
-              <StatCard label="Brutobijdrage per extra spa" value={euro.format(model.grossProfitPerSale)} detail={`na ${euro.format(state.incrementalCostPerSale)} extra uitvoeringskosten`} accent="secondary" />
-              <StatCard label="Break-even" value={`${number.format(model.breakEvenSales)} extra spa's`} detail="voor het volledige externe jaarbudget" accent="secondary" />
+              <StatCard label="Huidige jaaromzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} />
+              <StatCard label="Brutobijdrage per extra spa" value={euro.format(model.grossProfitPerSale)} detail={`na ${euro.format(state.incrementalCostPerSale)} extra uitvoeringskosten`} />
+              <StatCard label="Break-even" value={`${number.format(model.breakEvenSales)} extra spa's`} detail="voor het volledige externe jaarbudget" />
             </div>
           </div>
         </div>
@@ -104,18 +101,18 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Accounts en providers" title="Kies één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Niets is vergrendeld. De jaarlijkse kosten veranderen direct zodra een andere optie wordt geselecteerd." accent="primary" />
-          <div className="mt-9 overflow-hidden rounded-lg border border-primary/35 bg-card">
-            <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-primary md:grid"><span>Onderdeel</span><span>Gekozen oplossing</span><span>Per maand</span></div>
+          <SectionHeader eyebrow="Accounts en providers" title="Kies één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Niets is vergrendeld. De jaarlijkse kosten veranderen direct zodra een andere optie wordt geselecteerd." />
+          <div className="mt-9 overflow-hidden rounded-lg border border-[var(--section-accent)]/35 bg-card">
+            <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] md:grid"><span>Onderdeel</span><span>Gekozen oplossing</span><span>Per maand</span></div>
             {choiceGroups.map((group) => {
               const selected = group.options.find((option) => option.id === state.toolChoices[group.id]) ?? group.options[0];
               return (
                 <div key={group.id} className="grid gap-3 border-b border-border/70 px-5 py-4 last:border-0 md:grid-cols-[1fr_1.25fr_.55fr] md:items-center">
                   <div><p className="text-base text-white">{group.title}</p><p className="mt-1 text-sm leading-5 text-white/48">{group.description}</p></div>
-                  <select value={selected.id} onChange={(event) => selectOption(group.id, event.target.value)} className="min-h-11 w-full rounded-md border border-white/22 bg-background px-3 text-base text-white outline-none focus:border-primary">
+                  <select value={selected.id} onChange={(event) => selectOption(group.id, event.target.value)} className="min-h-11 w-full rounded-md border border-white/25 bg-background px-3 text-base text-white outline-none focus:border-[var(--section-accent)]">
                     {group.options.map((option) => <option key={option.id} value={option.id}>{option.name}{option.recommended ? " · aanbevolen" : ""}</option>)}
                   </select>
-                  <div className="text-left text-lg text-primary md:text-right">{selected.monthly === 0 ? "€0" : euro.format(selected.monthly)}</div>
+                  <div className="text-left text-lg text-[var(--section-accent)] md:text-right">{selected.monthly === 0 ? "€0" : euro.format(selected.monthly)}</div>
                 </div>
               );
             })}
@@ -130,16 +127,16 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Maandbudget" title="Advertenties, content en AI apart instellen" text="De schuiven zijn bewust gescheiden. Zo ziet Jeroen precies of de maandkosten naar bereik, productie, agents of development gaan." accent="secondary" />
+          <SectionHeader eyebrow="Maandbudget" title="Advertenties, content en AI apart instellen" text="De schuiven zijn bewust gescheiden. Zo ziet Jeroen precies of de maandkosten naar bereik, productie, agents of development gaan." />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
             <Panel className="p-6 sm:p-8">
               <div className="space-y-8">
-                <RangeField label="Meta Ads" value={state.metaBudget} min={0} max={7500} step={50} display={euro.format(state.metaBudget)} onChange={(value) => update("metaBudget", value)} accent="secondary" />
-                <RangeField label="Google Ads" value={state.googleBudget} min={0} max={7500} step={50} display={euro.format(state.googleBudget)} onChange={(value) => update("googleBudget", value)} accent="secondary" />
-                <RangeField label="Externe contentreserve" value={state.contentBudget} min={0} max={3000} step={50} display={euro.format(state.contentBudget)} onChange={(value) => update("contentBudget", value)} accent="secondary" />
-                <RangeField label="Agent- en API-credits" value={state.aiApiBudget} min={0} max={2500} step={25} display={euro.format(state.aiApiBudget)} onChange={(value) => update("aiApiBudget", value)} accent="secondary" />
-                <RangeField label="Development-AI-credits" value={state.aiDevelopmentBudget} min={0} max={2500} step={25} display={euro.format(state.aiDevelopmentBudget)} onChange={(value) => update("aiDevelopmentBudget", value)} accent="secondary" />
-                <RangeField label="Media-AI-credits" value={state.aiMediaBudget} min={0} max={2500} step={25} display={euro.format(state.aiMediaBudget)} onChange={(value) => update("aiMediaBudget", value)} accent="secondary" />
+                <RangeField label="Meta Ads" value={state.metaBudget} min={0} max={7500} step={50} display={euro.format(state.metaBudget)} onChange={(value) => update("metaBudget", value)} />
+                <RangeField label="Google Ads" value={state.googleBudget} min={0} max={7500} step={50} display={euro.format(state.googleBudget)} onChange={(value) => update("googleBudget", value)} />
+                <RangeField label="Externe contentreserve" value={state.contentBudget} min={0} max={3000} step={50} display={euro.format(state.contentBudget)} onChange={(value) => update("contentBudget", value)} />
+                <RangeField label="Agent- en API-credits" value={state.aiApiBudget} min={0} max={2500} step={25} display={euro.format(state.aiApiBudget)} onChange={(value) => update("aiApiBudget", value)} />
+                <RangeField label="Development-AI-credits" value={state.aiDevelopmentBudget} min={0} max={2500} step={25} display={euro.format(state.aiDevelopmentBudget)} onChange={(value) => update("aiDevelopmentBudget", value)} />
+                <RangeField label="Media-AI-credits" value={state.aiMediaBudget} min={0} max={2500} step={25} display={euro.format(state.aiMediaBudget)} onChange={(value) => update("aiMediaBudget", value)} />
               </div>
             </Panel>
             <Panel className="p-6 sm:p-8"><p className="eyebrow">Totale verdeling</p><BudgetChart total={euro.format(model.totalMonthly)} data={[{ name: "Tools", value: model.platformMonthly }, { name: "Advertenties", value: model.adsMonthly }, { name: "Content", value: state.contentBudget }, { name: "AI", value: model.aiMonthly }]} /></Panel>
@@ -149,10 +146,10 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Betrokkenheid Volker" title="Vrij uitvoeren of structureel tijd reserveren" text="De financiële tegenprestatie blijft buiten dit document. Deze keuze beïnvloedt alleen de verwachte uitvoeringskracht van het scenario." accent="primary" />
+          <SectionHeader eyebrow="Betrokkenheid Volker" title="Vrij uitvoeren of structureel tijd reserveren" text="De financiële tegenprestatie blijft buiten dit document. Deze keuze beïnvloedt alleen de verwachte uitvoeringskracht van het scenario." />
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
-            <button onClick={() => update("involvement", "free")} className={`panel p-6 text-left ${state.involvement === "free" ? "border-primary/70 bg-primary/10" : ""}`}><Sparkle className="h-7 w-7 text-primary" /><h3 className="mt-4 text-2xl uppercase text-primary">Vrij en incidenteel</h3><p className="mt-3 text-lg leading-8 text-white/70">Werken wanneer het uitkomt en oppakken wat op dat moment nodig of interessant is.</p></button>
-            <button onClick={() => update("involvement", "structured")} className={`panel p-6 text-left ${state.involvement === "structured" ? "border-primary/70 bg-primary/10" : ""}`}><RocketLaunch className="h-7 w-7 text-primary" /><h3 className="mt-4 text-2xl uppercase text-primary">Structurele betrokkenheid</h3><p className="mt-3 text-lg leading-8 text-white/70">Vaste uren voor marketing, content, website, data, agents en doorontwikkeling.</p></button>
+            <button onClick={() => update("involvement", "free")} className={`panel p-6 text-left ${state.involvement === "free" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><Sparkle className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Vrij en incidenteel</h3><p className="mt-3 text-lg leading-8 text-white/70">Werken wanneer het uitkomt en oppakken wat op dat moment nodig of interessant is.</p></button>
+            <button onClick={() => update("involvement", "structured")} className={`panel p-6 text-left ${state.involvement === "structured" ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)]" : ""}`}><RocketLaunch className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-2xl uppercase text-[var(--section-accent)]">Structurele betrokkenheid</h3><p className="mt-3 text-lg leading-8 text-white/70">Vaste uren voor marketing, content, website, data, agents en doorontwikkeling.</p></button>
           </div>
           {state.involvement === "structured" && <Panel className="mt-4 p-6"><RangeField label="Uren per week" helper="46 actieve weken per jaar als rekenbasis" value={state.hoursPerWeek} min={2} max={32} step={1} display={`${state.hoursPerWeek} uur`} onChange={(value) => update("hoursPerWeek", value)} /></Panel>}
         </div>
@@ -160,23 +157,23 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Uitkomst" title="Totaalbudget en verwacht scenario" text="De uitkomst blijft een bandbreedte. De belangrijkste functie is niet voorspellen wat zeker gebeurt, maar zichtbaar maken welke aannames nodig zijn om een investering logisch te beoordelen." accent="secondary" />
+          <SectionHeader eyebrow="Uitkomst" title="Totaalbudget en verwacht scenario" text="De uitkomst blijft een bandbreedte. De belangrijkste functie is niet voorspellen wat zeker gebeurt, maar zichtbaar maken welke aannames nodig zijn om een investering logisch te beoordelen." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            <StatCard label="Extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} accent="secondary" />
-            <StatCard label="Extra verkopen" value={`${number.format(model.lowExtraSales)}–${number.format(model.highExtraSales)}`} detail={`${number.format(model.baseExtraSales)} verwacht`} accent="secondary" />
-            <StatCard label="Extra omzet" value={euro.format(model.baseExtraRevenue)} detail={`${number.format(model.growthPct)}% omzetgroei`} accent="secondary" />
-            <StatCard label="Bijdrage-ROI" value={`${number.format(model.contributionRoi)}%`} detail={`${euro.format(model.expectedContribution)} na extern budget`} accent="secondary" />
-            <StatCard label="Externe bouwmarktwaarde" value={`${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}`} detail={`${model.selectedFeatures.length} gekozen functies`} accent="secondary" />
+            <StatCard label="Extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} />
+            <StatCard label="Extra verkopen" value={`${number.format(model.lowExtraSales)}–${number.format(model.highExtraSales)}`} detail={`${number.format(model.baseExtraSales)} verwacht`} />
+            <StatCard label="Extra omzet" value={euro.format(model.baseExtraRevenue)} detail={`${number.format(model.growthPct)}% omzetgroei`} />
+            <StatCard label="Bijdrage-ROI" value={`${number.format(model.contributionRoi)}%`} detail={`${euro.format(model.expectedContribution)} na extern budget`} />
+            <StatCard label="Externe bouwmarktwaarde" value={`${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}`} detail={`${model.selectedFeatures.length} gekozen functies`} />
           </div>
           <div className="mt-6 grid gap-6 xl:grid-cols-[.9fr_1.1fr]">
-            <Panel className="border-secondary/35 p-6"><p className="eyebrow">Omzetscenario's</p><RevenueScenarioChart data={revenueData} /></Panel>
-            <Panel className="overflow-hidden border-secondary/35"><div className="border-b border-border p-5"><p className="eyebrow">Beslisoverzicht</p><h3 className="mt-2 text-2xl uppercase text-secondary">Alle kosten naast elkaar</h3></div><div className="p-4 md:p-0"><DecisionTable rows={rows} /></div></Panel>
+            <Panel className="p-6"><p className="eyebrow">Omzetscenario's</p><RevenueScenarioChart data={revenueData} /></Panel>
+            <Panel className="overflow-hidden"><div className="border-b border-border p-5"><p className="eyebrow">Beslisoverzicht</p><h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">Alle kosten naast elkaar</h3></div><div className="p-4 md:p-0"><DecisionTable rows={rows} /></div></Panel>
           </div>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row"><PrimaryLink href="/checklist" accent="secondary">Ga naar noodzakelijke actielijst</PrimaryLink><PrimaryLink href="/marketing">Terug naar marketingstrategie</PrimaryLink></div>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row"><PrimaryLink href="/checklist">Ga naar noodzakelijke actielijst</PrimaryLink><PrimaryLink href="/marketing">Terug naar marketingstrategie</PrimaryLink></div>
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 pb-28 text-center text-sm text-white/45 lg:pb-10">Totaalcalculator · alle keuzes worden automatisch op de andere pagina's gebruikt</footer>
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Totaalcalculator · alle keuzes worden automatisch op de andere pagina's gebruikt</footer>
     </main>
   );
 }
