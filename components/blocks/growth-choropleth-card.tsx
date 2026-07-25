@@ -45,7 +45,7 @@ export function GrowthChoroplethCard() {
             </div>
 
             <div className="growth-map-market-detail" aria-live="polite">
-              <div><span>{activeMarket.status}</span><h3>{activeMarket.label}</h3></div>
+              <div><span>{activeMarket.status}</span><h3 className="mt-1 text-[1.6rem] uppercase text-white">{activeMarket.label}</h3></div>
               <div className="growth-map-market-result"><ArrowRight aria-hidden="true" /><p><strong>circa {number.format(marketSales)} verkopen</strong><span>{euro.format(marketRevenue)} extra omzet in de werkbasis</span></p></div>
             </div>
 
