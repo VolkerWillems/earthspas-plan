@@ -1,3 +1,6 @@
+@import "./components.css";
+@import "./responsive.css";
+
 /* ==========================================================================
    EARTH SPAS CSS DOCUMENTATIE
 
@@ -13,8 +16,7 @@
    ========================================================================== */
 
 /* Importlaag: componentregels worden vóór responsive overrides geladen. */
-@import "./components.css";
-@import "./responsive.css";
+
 
 /* Canonical Earth Spas stylesheet entrypoint.
    Theme tokens remain the single source of truth for color, type, spacing and geometry. */
