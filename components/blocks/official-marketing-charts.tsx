@@ -4,6 +4,7 @@ import { FunnelChart } from "@/components/charts/funnel-chart";
 import { PieChart } from "@/components/charts/pie-chart";
 import { PieSlice } from "@/components/charts/pie-slice";
 import { PieCenter } from "@/components/charts/pie-center";
+import { Panel } from "@/components/plan-ui";
 
 const funnelData = [
   { label: "Bereik", value: 1000, displayValue: "1.000" },
@@ -46,7 +47,7 @@ function PieLegend({ data, suffix = "%" }: { data: typeof countryFocus; suffix?:
 export function OfficialMarketingCharts() {
   return (
     <div className="mt-[var(--space-8)] grid gap-[var(--space-4)] xl:grid-cols-3">
-      <article className="panel motion-card p-[var(--card-padding)]">
+      <Panel className="p-[var(--card-padding)]">
         <p className="eyebrow">Leads funnel</p>
         <h3 className="heading-card mt-[var(--space-2)] uppercase">Van bereik naar verkoop</h3>
         <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Planning per 1.000 bereikte personen. Vervangen door CRM-data zodra de volledige funnel meetbaar is.</p>
@@ -62,9 +63,9 @@ export function OfficialMarketingCharts() {
             showValues
           />
         </div>
-      </article>
+      </Panel>
 
-      <article className="panel motion-card p-[var(--card-padding)]">
+      <Panel className="p-[var(--card-padding)]">
         <p className="eyebrow">Regionale focus</p>
         <h3 className="heading-card mt-[var(--space-2)] uppercase">Groeiaandacht per land</h3>
         <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Planningsverdeling, geen gemeten marktaandeel.</p>
@@ -77,9 +78,9 @@ export function OfficialMarketingCharts() {
           </PieChart>
         </div>
         <PieLegend data={countryFocus} />
-      </article>
+      </Panel>
 
-      <article className="panel motion-card p-[var(--card-padding)]">
+      <Panel className="p-[var(--card-padding)]">
         <p className="eyebrow">Verkoopscenario</p>
         <h3 className="heading-card mt-[var(--space-2)] uppercase">Tien extra verkopen</h3>
         <p className="mt-[var(--space-2)] text-sm leading-6 text-muted-foreground">Indicatieve verdeling bij tien extra verkopen. Geen omzetgarantie.</p>
@@ -92,7 +93,7 @@ export function OfficialMarketingCharts() {
           </PieChart>
         </div>
         <PieLegend data={incrementalSales} suffix="" />
-      </article>
+      </Panel>
     </div>
   );
 }
