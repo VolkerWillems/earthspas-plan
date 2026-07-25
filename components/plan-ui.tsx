@@ -308,30 +308,82 @@ export function RangeField({
   step: number;
   display: string;
   onChange: (value: number) => void;
+  accent?: Accent;
 }) {
+  const progress = max === min ? 0 : Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+
   return (
-    <label className="range-field">
-      <span className="range-field-head">
-        <span>{label}</span>
-        <strong>{display}</strong>
-      </span>
-      {helper && <span className="range-field-helper">{helper}</span>}
+    <label className="range-field block">
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <div>
+          <span className="text-base text-white">{label}</span>
+          {helper && <p className="mt-1 text-sm leading-5 text-white/58">{helper}</p>}
+        </div>
+        <span key={display} className="value-chip value-change">{display}</span>
+      </div>
       <input
         type="range"
+        value={value}
         min={min}
         max={max}
         step={step}
-        value={value}
+        aria-label={label}
+        aria-valuetext={display}
         onChange={(event) => onChange(Number(event.target.value))}
+        className="site-range"
+        style={{ "--range-progress": `${progress}%` } as React.CSSProperties}
       />
     </label>
   );
 }
 
-export function ProgressBar({ value }: { value: number }) {
+export function ProgressBar({ value }: { value: number; accent?: Accent }) {
   return (
-    <div className="progress-track" aria-label={`${value}% voltooid`}>
-      <div className="progress-value" style={{ width: `${value}%` }} />
+    <div className="progress-track h-2.5 overflow-hidden rounded-full bg-white/8">
+      <div
+        className="progress-fill h-full rounded-full bg-[var(--section-accent)] transition-all duration-500"
+        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
+      />
     </div>
+  );
+}
+
+export function NumberField({
+  label,
+  helper,
+  value,
+  onChange,
+  prefix,
+  suffix,
+  step = 1,
+  max,
+}: {
+  label: string;
+  helper?: string;
+  value: number;
+  onChange: (value: number) => void;
+  prefix?: string;
+  suffix?: string;
+  step?: number;
+  max?: number;
+}) {
+  return (
+    <label className="number-field block">
+      <span className="text-sm uppercase tracking-[0.13em] text-white/58">{label}</span>
+      {helper && <p className="mt-1 text-sm leading-5 text-white/52">{helper}</p>}
+      <div className="number-field-control mt-2 flex items-center rounded-md border border-border bg-background/70 focus-within:border-[var(--section-accent)]">
+        {prefix && <span className="pl-3 text-base text-white/55">{prefix}</span>}
+        <input
+          type="number"
+          min={0}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(event) => onChange(Math.max(0, Number(event.target.value)))}
+          className="min-h-11 min-w-0 w-full bg-transparent px-3 text-lg text-white outline-none"
+        />
+        {suffix && <span className="number-field-suffix whitespace-nowrap px-3 text-sm text-white/50">{suffix}</span>}
+      </div>
+    </label>
   );
 }
