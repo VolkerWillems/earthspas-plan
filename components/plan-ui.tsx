@@ -1,11 +1,52 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 import { ArrowRight } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
+import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup-gallery";
 
 type Accent = "primary" | "secondary";
+
+const marketingMockups: HeroMockupItem[] = [
+  {
+    id: "marketing",
+    label: "Marketing",
+    title: "Marketingcockpit met budget, leads en omzetattributie",
+    description: "Een toekomstig dashboard kan campagnes, kanaalprestaties, leads, taken en de volledige conversiefunnel in één bestuurbaar overzicht combineren.",
+    image: "/mockup/marketing.png",
+    imageAlt: "Concept van een centraal marketingdashboard",
+  },
+];
+
+const softwareMockups: HeroMockupItem[] = [
+  {
+    id: "crm",
+    label: "CRM",
+    title: "CRM en commerciële pipeline",
+    description: "Leads, contacten, afspraken, offertes, kansen en omzet worden zichtbaar in één commerciële omgeving met duidelijke opvolging.",
+    image: "/mockup/crm.png",
+    imageAlt: "Concept van een CRM- en verkoopdashboard",
+  },
+  {
+    id: "support",
+    label: "Support AI",
+    title: "AI-ondersteund service- en supportplatform",
+    description: "Servicevragen, kennisbank, responstijden, escalaties en automatische afhandeling kunnen centraal worden beheerd en gemeten.",
+    image: "/mockup/support.png",
+    imageAlt: "Concept van een AI support- en servicedashboard",
+  },
+  {
+    id: "mobile",
+    label: "Mobiele app",
+    title: "Mobiele operationele app",
+    description: "Onderweg toegang tot tickets, klantstatus, meldingen en AI-inzichten, afgestemd op een compacte mobiele werkwijze.",
+    image: "/mockup/app.png",
+    imageAlt: "Concept van een mobiele Earth Spas managementapp",
+    kind: "mobile",
+  },
+];
 
 export function PageIntro({
   eyebrow,
@@ -26,21 +67,30 @@ export function PageIntro({
   imageAlt?: string;
   imagePosition?: string;
 }) {
+  const pathname = usePathname();
+  const mockupConfig = pathname === "/marketing"
+    ? { eyebrow: "Concept · centrale marketingsturing", items: marketingMockups }
+    : pathname === "/software"
+      ? { eyebrow: "Concept · mogelijke applicaties", items: softwareMockups }
+      : null;
+
   return (
     <section className={cn("page-intro", accent === "primary" ? "theme-primary" : "theme-secondary")}>
-      <div className={cn("content-shell page-intro-inner", image && "page-intro-split")}>
+      <div className={cn("content-shell page-intro-inner", (image || mockupConfig) && "page-intro-split")}>
         <div className="page-intro-copy">
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="mt-4 max-w-5xl text-4xl uppercase leading-[1.02] sm:text-5xl lg:text-6xl">{title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 sm:text-xl">{text}</p>
           {actions && <div className="action-group mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>}
         </div>
-        {image && (
+        {mockupConfig ? (
+          <HeroMockupGallery eyebrow={mockupConfig.eyebrow} items={mockupConfig.items} />
+        ) : image ? (
           <div className="page-intro-visual" aria-hidden={imageAlt ? undefined : true}>
             <img src={image} alt={imageAlt} style={{ objectPosition: imagePosition }} />
             <div className="page-intro-visual-shade" />
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );
