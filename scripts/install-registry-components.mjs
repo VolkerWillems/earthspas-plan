@@ -103,20 +103,33 @@ console.log("Installing official registry items:");
 for (const item of items) console.log(`  - ${item}`);
 console.log("ChartBrush ships with the Bklit time-series stack and is not a standalone registry item.");
 
+const installEnvironment = {
+  ...process.env,
+  CI: "true",
+  NODE_ENV: "development",
+  npm_config_ignore_scripts: "true",
+  npm_config_omit: "",
+  npm_config_production: "false",
+};
+
 execFileSync("npx", ["--yes", "shadcn@latest", "add", ...items, "-y"], {
   cwd: root,
   input: "n\n".repeat(200),
   stdio: ["pipe", "inherit", "inherit"],
   shell: process.platform === "win32",
-  env: {
-    ...process.env,
-    CI: "true",
-    npm_config_ignore_scripts: "true",
-  },
+  env: installEnvironment,
 });
 
 restoreSnapshot(sourceSnapshot);
 console.log("Restored the existing Earth Spas application source over the generated registry files.");
+
+execFileSync("npm", ["install", "--include=dev", "--ignore-scripts"], {
+  cwd: root,
+  stdio: "inherit",
+  shell: process.platform === "win32",
+  env: installEnvironment,
+});
+console.log("Restored production and build dependencies after registry installation.");
 
 const trendBadgePath = join(root, "components", "trend-badge.tsx");
 if (existsSync(trendBadgePath)) {
