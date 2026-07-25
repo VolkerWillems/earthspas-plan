@@ -1,4 +1,9 @@
-import { choiceGroups, pricingReview, recommendedChoices } from "@/lib/choice-data";
+import {
+  checklistItems,
+  choiceGroups,
+  pricingReview,
+  recommendedChoices,
+} from "@/lib/choice-data";
 import { softwareGroupGuidance } from "@/lib/software-choice-guidance";
 
 function group(groupId: string) {
@@ -27,21 +32,13 @@ if (microsoft) {
 }
 recommendOnly("workspace", "m365");
 
-const passwords = group("passwords");
-passwords.title = "Wachtwoorden en hersteltoegang";
-passwords.description = "Geen extra abonnement; herstelcodes en tweede beheerder worden binnen de bestaande beheerafspraken vastgelegd.";
-passwords.options = [
-  {
-    id: "passwords-current",
-    groupId: "passwords",
-    name: "Geen extra wachtwoordtool",
-    monthly: 0,
-    description: "Bitwarden is niet nodig. Herstelcodes, 2FA en tweede toegang worden zonder extra abonnement georganiseerd.",
-    recommended: true,
-    icon: "key",
-  },
-];
-recommendedChoices.passwords = "passwords-current";
+const passwordGroupIndex = choiceGroups.findIndex((item) => item.id === "passwords");
+if (passwordGroupIndex >= 0) choiceGroups.splice(passwordGroupIndex, 1);
+delete recommendedChoices.passwords;
+delete softwareGroupGuidance.passwords;
+
+const passwordTaskIndex = checklistItems.findIndex((item) => item.id === "passwords");
+if (passwordTaskIndex >= 0) checklistItems.splice(passwordTaskIndex, 1);
 
 const server = group("server");
 const productionServer = server.options.find((option) => option.id === "hetzner-production");
@@ -68,12 +65,5 @@ softwareGroupGuidance.payment = {
   drawbacks: ["De kaart moet tijdig worden opgewaardeerd.", "Saldo en terugkerende betalingen moeten maandelijks worden gecontroleerd."],
 };
 
-softwareGroupGuidance.passwords = {
-  simple: "Herstelcodes, tweestapsverificatie en tweede toegang moeten overdraagbaar zijn, maar daar is nu geen extra abonnement voor nodig.",
-  reason: "De bestaande beheerafspraken zijn voldoende zolang herstelcodes centraal worden vastgelegd en minimaal twee beheerders toegang hebben.",
-  benefits: ["Geen extra maandkosten.", "Bitwarden hoeft niet te worden ingericht of onderhouden.", "Toegang en herstel blijven wel aantoonbaar geregeld."],
-  drawbacks: ["De handmatige beheerafspraken moeten consequent worden gevolgd.", "Herstelcodes en wijzigingen moeten direct worden bijgewerkt."],
-};
-
-softwareGroupGuidance.workspace.reason = "Microsoft 365 vormt de centrale zakelijke omgeving voor mail, agenda en bestanden. Voor deze keuzehulp geldt het afgesproken bedrag van €14 per maand.";
+softwareGroupGuidance.workspace.reason = "Microsoft 365 vormt de centrale zakelijke omgeving voor mail, agenda en bestanden. Voor deze keuzehulp geldt het afgesproken bedrag van €14 per maand. Wachtwoorden blijven in Microsoft Edge, dus daar is geen extra tool of abonnement voor nodig.";
 softwareGroupGuidance.server.reason = "De Earth Spas-productieserver is begroot op €103 per maand voor de benodigde capaciteit, back-ups en monitoring.";
