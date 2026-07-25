@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { ArrowRight } from "@/lib/phosphor-icons";
+import { ArrowRight, Info } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
 import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup-gallery";
 
@@ -98,11 +98,29 @@ export function PageIntro({
 }
 
 export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string; accent?: Accent }) {
+  const showBudgetStrategy = title === "Advertenties, content en AI afzonderlijk instellen";
+
   return (
     <div data-reveal="up">
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="mt-3 max-w-4xl text-3xl uppercase leading-tight sm:text-4xl">{title}</h2>
       {text && <p className="mt-4 max-w-4xl text-lg leading-8 text-white/76">{text}</p>}
+      {showBudgetStrategy && (
+        <div className="budget-test-strategy mt-6">
+          <div className="budget-test-intro">
+            <Info className="h-6 w-6 shrink-0" />
+            <div>
+              <strong>Eerst voorzichtig testen, daarna pas opschalen</strong>
+              <p>De bedragen hieronder zijn werkbudgetten en maximale kaders, geen opdracht om op dag één alles uit te geven. We starten met kleine, duidelijke tests en meten niet alleen klikken, maar vooral leadkwaliteit, showroomafspraken, offertes en verkopen. Alleen aantoonbaar goed presterende campagnes krijgen extra budget.</p>
+            </div>
+          </div>
+          <div className="budget-test-steps">
+            <div><span>01</span><strong>Kleine test</strong><p>Beperkt budget, één doelgroep en één duidelijke boodschap per test.</p></div>
+            <div><span>02</span><strong>Resultaat meten</strong><p>Kosten per serieuze lead, afspraak, offerte en verkoop worden gevolgd.</p></div>
+            <div><span>03</span><strong>Bewust opschalen</strong><p>Winnaars krijgen meer budget; zwakke tests worden aangepast of gestopt.</p></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
