@@ -165,11 +165,16 @@ patchTextFile(
 
 patchTextFile(
   "components/integrations-block.tsx",
-  (source) => source.replace(
-    /<DialogTrigger\s+render=\{\s*<Button([^>]*)\/>\s*\}\s*>\s*([\s\S]*?)\s*<\/DialogTrigger>/g,
-    '<DialogTrigger asChild>\n            <Button$1>$2</Button>\n          </DialogTrigger>',
-  ),
-  "Adapted the 7Ovr DialogTrigger render pattern to Radix asChild.",
+  (source) => source
+    .replace(
+      /<DialogTrigger\s+render=\{\s*<Button([^>]*)\/>\s*\}\s*>\s*([\s\S]*?)\s*<\/DialogTrigger>/g,
+      '<DialogTrigger asChild>\n            <Button$1>$2</Button>\n          </DialogTrigger>',
+    )
+    .replace(
+      /<DialogClose\s+render=\{\s*<Button([^>]*)\/>\s*\}>\s*([\s\S]*?)\s*<\/DialogClose>/g,
+      '<DialogClose asChild>\n                <Button$1>$2</Button>\n              </DialogClose>',
+    ),
+  "Adapted the 7Ovr dialog controls to Radix asChild.",
 );
 
 for (const projectPath of [
@@ -218,5 +223,4 @@ const generated = collectFiles(join(root, "components"))
   .filter((path) => /(timeline|integration|how-it|stat-card|chart|funnel|pie|brush|legend|grid)/i.test(path))
   .sort();
 
-console.log("Generated registry files:");
-for (const file of generated) console.log(`  - ${file}`);
+console.log(`Generated ${generated.length} registry chart and block files.`);
