@@ -4,6 +4,7 @@ import "@/lib/choice-corrections";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { SiteShell } from "@/components/site-shell";
 import { SiteStateProvider } from "@/components/site-state";
+import { brandAssets } from "@/lib/brand-assets";
 
 export const metadata: Metadata = {
   title: {
@@ -19,9 +20,13 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/screens/favicon.ico",
-    shortcut: "/screens/favicon.ico",
-    apple: "/screens/logo-full-gold.png",
+    icon: [
+      { url: brandAssets.favicon16, sizes: "16x16", type: "image/png" },
+      { url: brandAssets.favicon32, sizes: "32x32", type: "image/png" },
+      { url: brandAssets.favicon },
+    ],
+    shortcut: brandAssets.favicon,
+    apple: [{ url: brandAssets.appleTouchIcon, sizes: "180x180", type: "image/png" }],
   },
 };
 
