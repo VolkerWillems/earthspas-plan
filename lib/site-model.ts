@@ -77,7 +77,7 @@ export const defaultSiteState: SiteState = {
   currentAnnualRevenue: 624000,
   currentAnnualSales: 102,
   grossMargin: 38,
-  acquisitionCostPerSale: 250,
+  acquisitionCostPerSale: 1200,
   incrementalCostPerSale: 0,
   involvement: "structured",
   hoursPerWeek: 24,
@@ -112,31 +112,33 @@ export function calculateSiteModel(state: SiteState) {
   const averageSalePrice = currentUnitsYear > 0 ? currentRevenue / currentUnitsYear : 0;
   const currentSalesPerWeek = currentUnitsYear / 52;
 
-  const readiness = Math.min(
-    1.18,
-    0.62 + selectedFeatures.length * 0.035 + (state.involvement === "structured" ? Math.min(state.hoursPerWeek, 20) * 0.018 : 0.02),
-  );
-  const effectiveGrowthBudgetMonthly =
-    adsMonthly +
-    state.contentBudget * 0.7 +
-    state.aiApiBudget * 0.55 +
-    state.aiDevelopmentBudget * 0.25 +
-    state.aiMediaBudget * 0.55 +
-    platformMonthly * 0.12;
-  const baseExtraSales = effectiveGrowthBudgetMonthly > 0
-    ? (effectiveGrowthBudgetMonthly * 12 / Math.max(state.acquisitionCostPerSale, 1)) * readiness
-    : 0;
-  const lowExtraSales = baseExtraSales * 0.65;
-  const highExtraSales = baseExtraSales * 1.35;
-  const baseExtraRevenue = baseExtraSales * averageSalePrice;
+  // Only spend that actively supports acquisition is used to predict extra sales.
+  // Fixed accounts, hosting and development tooling remain part of total break-even,
+  // but they do not magically produce customers by themselves.
+  const growthBudgetMonthly =
+    adsMonthly + state.contentBudget + state.aiApiBudget + state.aiMediaBudget;
+  const growthBudgetAnnual = growthBudgetMonthly * 12;
+  const baseAcquisitionCost = Math.max(state.acquisitionCostPerSale, 1);
+  const conservativeAcquisitionCost = baseAcquisitionCost * 1.25;
+  const strongAcquisitionCost = baseAcquisitionCost * 0.75;
+
+  const lowExtraSales = growthBudgetAnnual / conservativeAcquisitionCost;
+  const baseExtraSales = growthBudgetAnnual / baseAcquisitionCost;
+  const highExtraSales = growthBudgetAnnual / strongAcquisitionCost;
   const lowExtraRevenue = lowExtraSales * averageSalePrice;
+  const baseExtraRevenue = baseExtraSales * averageSalePrice;
   const highExtraRevenue = highExtraSales * averageSalePrice;
-  const growthPct = currentRevenue ? baseExtraRevenue / currentRevenue * 100 : 0;
+  const growthPct = currentRevenue ? (baseExtraRevenue / currentRevenue) * 100 : 0;
+
   const grossProfitPerSale = Math.max(
     0,
-    averageSalePrice / 1.2 * state.grossMargin / 100 - state.incrementalCostPerSale,
+    averageSalePrice / 1.21 * state.grossMargin / 100 - state.incrementalCostPerSale,
   );
   const breakEvenSales = grossProfitPerSale ? annualOperating / grossProfitPerSale : 0;
+  const marketingBreakEvenSales = grossProfitPerSale ? growthBudgetAnnual / grossProfitPerSale : 0;
+  const marketingContributionLow = lowExtraSales * grossProfitPerSale - growthBudgetAnnual;
+  const marketingContributionBase = baseExtraSales * grossProfitPerSale - growthBudgetAnnual;
+  const marketingContributionHigh = highExtraSales * grossProfitPerSale - growthBudgetAnnual;
   const expectedContribution = baseExtraSales * grossProfitPerSale - annualOperating;
   const contributionRoi = annualOperating ? expectedContribution / annualOperating * 100 : 0;
   const buildHoursLow = selectedFeatures.reduce((sum, feature) => sum + feature.hoursLow, 0);
@@ -156,6 +158,11 @@ export function calculateSiteModel(state: SiteState) {
     aiMonthly,
     totalMonthly,
     annualOperating,
+    growthBudgetMonthly,
+    growthBudgetAnnual,
+    baseAcquisitionCost,
+    conservativeAcquisitionCost,
+    strongAcquisitionCost,
     currentUnitsYear,
     currentRevenue,
     averageSalePrice,
@@ -169,6 +176,10 @@ export function calculateSiteModel(state: SiteState) {
     growthPct,
     grossProfitPerSale,
     breakEvenSales,
+    marketingBreakEvenSales,
+    marketingContributionLow,
+    marketingContributionBase,
+    marketingContributionHigh,
     expectedContribution,
     contributionRoi,
     buildHoursLow,
