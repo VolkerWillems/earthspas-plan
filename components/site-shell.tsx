@@ -15,7 +15,6 @@ import {
   X,
 } from "@/lib/phosphor-icons";
 import {
-  GrowthChoroplethCard,
   PrepaidDelegationBanner,
   SoftwareFlowDiagram,
 } from "@/components/blocks";
@@ -149,7 +148,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <div key={pathname} className="route-transition">
-        {pathname === "/" && <GrowthChoroplethCard />}
         {children}
         {pathname === "/software" && <SoftwareFlowDiagram />}
         {pathname === "/checklist" && <PrepaidDelegationBanner />}
