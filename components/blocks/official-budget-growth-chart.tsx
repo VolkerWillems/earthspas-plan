@@ -17,11 +17,20 @@ function euro(value: number) {
   }).format(value);
 }
 
-const scenarios = [
-  { key: "voorzichtig", label: "Voorzichtig", color: "var(--chart-3)" },
+type ScenarioKey = "voorzichtig" | "werkbasis" | "sterk";
+
+type Scenario = {
+  key: ScenarioKey;
+  label: string;
+  color: string;
+  primary: boolean;
+};
+
+const scenarios: Scenario[] = [
+  { key: "voorzichtig", label: "Voorzichtig", color: "var(--chart-3)", primary: false },
   { key: "werkbasis", label: "Werkbasis", color: "var(--chart-1)", primary: true },
-  { key: "sterk", label: "Sterk gemeten", color: "var(--chart-2)" },
-] as const;
+  { key: "sterk", label: "Sterk gemeten", color: "var(--chart-2)", primary: false },
+];
 
 export function OfficialBudgetGrowthChart() {
   const [monthlyBudget, setMonthlyBudget] = useState(1000);
