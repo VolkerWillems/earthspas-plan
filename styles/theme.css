@@ -1,6 +1,25 @@
+/* ==========================================================================
+   EARTH SPAS CSS DOCUMENTATIE
+
+   Inhoudsopgave
+   1. Design-token palette en semantische kleurrollen
+   2. Grafiekpalet en typografie
+   3. Fluid lettergroottes, regelhoogtes en tracking
+   4. Fluid spacing en componentafmetingen
+   5. Geometry, radius, borders en shadows
+   6. Tailwind/shadcn token bridge
+   7. Pagina- en sectiethema's
+
+   Onderhoudsregel
+   - Alleen de beschreven classgroep of tokenfamilie in deze sectie aanpassen.
+   - Fluid clamp-bereiken zijn omgerekend op basis van 1rem = 16px.
+   - Deze documentatie wijzigt geen selector, property, waarde of import.
+   ========================================================================== */
+
 /* Earth Spas theme contract.
    All visual constants live here. Components consume semantic variables only. */
 
+/* Globale design tokens: gebruikt door alle routes en componenten. */
 :root,
 .dark {
   color-scheme: dark;
@@ -101,20 +120,35 @@
   --font-weight-regular: 400;
 
   /* Fluid typography */
+  /* 10.24px - 11.52px */
   --font-size-2xs: clamp(0.64rem, 0.62rem + 0.08vw, 0.72rem);
+  /* 11.52px - 12.8px */
   --font-size-xs: clamp(0.72rem, 0.69rem + 0.1vw, 0.8rem);
+  /* 13.12px - 14.56px */
   --font-size-sm: clamp(0.82rem, 0.79rem + 0.12vw, 0.91rem);
+  /* 15.04px - 16.96px */
   --font-size-body: clamp(0.94rem, 0.89rem + 0.18vw, 1.06rem);
+  /* 16px - 18.24px */
   --font-size-body-lg: clamp(1rem, 0.94rem + 0.22vw, 1.14rem);
+  /* 15.68px - 18.4px */
   --font-size-card-title: clamp(0.98rem, 0.9rem + 0.28vw, 1.15rem);
+  /* 17.6px - 21.6px */
   --font-size-subtitle: clamp(1.1rem, 0.98rem + 0.42vw, 1.35rem);
+  /* 26.4px - 40.8px */
   --font-size-section: clamp(1.65rem, 1.22rem + 1.35vw, 2.55rem);
+  /* 32px - 56.8px */
   --font-size-page: clamp(2rem, 1.36rem + 2.05vw, 3.55rem);
+  /* 38.4px - 76.8px */
   --font-size-display: clamp(2.4rem, 1.55rem + 3.1vw, 4.8rem);
+  /* 24.8px - 34.4px */
   --font-size-metric-sm: clamp(1.55rem, 1.25rem + 0.8vw, 2.15rem);
+  /* 32px - 51.2px */
   --font-size-metric: clamp(2rem, 1.45rem + 1.45vw, 3.2rem);
+  /* 14.4px - 16.8px */
   --font-size-icon-sm: clamp(0.9rem, 0.82rem + 0.2vw, 1.05rem);
+  /* 17.6px - 22.4px */
   --font-size-icon: clamp(1.1rem, 0.96rem + 0.38vw, 1.4rem);
+  /* 21.6px - 28.8px */
   --font-size-icon-lg: clamp(1.35rem, 1.08rem + 0.65vw, 1.8rem);
 
   --line-height-tight: 1.05;
@@ -128,34 +162,59 @@
   --tracking-eyebrow: 0.25px;
 
   /* Fluid spacing scale */
+  /* 4px - 5.12px */
   --space-1: clamp(0.25rem, 0.22rem + 0.08vw, 0.32rem);
+  /* 7.2px - 9.28px */
   --space-2: clamp(0.45rem, 0.4rem + 0.14vw, 0.58rem);
+  /* 10.88px - 13.44px */
   --space-3: clamp(0.68rem, 0.59rem + 0.22vw, 0.84rem);
+  /* 14.4px - 17.92px */
   --space-4: clamp(0.9rem, 0.78rem + 0.3vw, 1.12rem);
+  /* 18.4px - 23.68px */
   --space-5: clamp(1.15rem, 0.96rem + 0.46vw, 1.48rem);
+  /* 22.4px - 31.2px */
   --space-6: clamp(1.4rem, 1.13rem + 0.72vw, 1.95rem);
+  /* 30.4px - 44.8px */
   --space-8: clamp(1.9rem, 1.45rem + 1.2vw, 2.8rem);
+  /* 39.2px - 60.8px */
   --space-10: clamp(2.45rem, 1.75rem + 1.85vw, 3.8rem);
+  /* 48px - 80px */
   --space-12: clamp(3rem, 2rem + 2.7vw, 5rem);
+  /* 64px - 112px */
   --space-16: clamp(4rem, 2.6rem + 3.8vw, 7rem);
+  /* 54.4px - 96px */
   --section-space: clamp(3.4rem, 2.25rem + 3.2vw, 6rem);
+  /* 40px - 68px */
   --section-space-compact: clamp(2.5rem, 1.75rem + 2.1vw, 4.25rem);
+  /* 16px - 48px */
   --content-gutter: clamp(1rem, 0.45rem + 2.2vw, 3rem);
+  /* 16px - 24.8px */
   --card-padding: clamp(1rem, 0.78rem + 0.72vw, 1.55rem);
+  /* 7.2px - 11.2px */
   --control-gap: clamp(0.45rem, 0.35rem + 0.25vw, 0.7rem);
 
   /* Fluid sizing */
   --content-max: 112.5rem;
   --reading-max: 66rem;
+  /* 72px - 82.4px */
   --header-height: clamp(4.5rem, 3.95rem + 1.5vw, 5.15rem);
+  /* 32px - 36.8px */
   --control-height-sm: clamp(2rem, 1.84rem + 0.4vw, 2.3rem);
+  /* 40.8px - 46.4px */
   --control-height: clamp(2.55rem, 2.32rem + 0.58vw, 2.9rem);
+  /* 46.4px - 53.6px */
   --control-height-lg: clamp(2.9rem, 2.62rem + 0.72vw, 3.35rem);
+  /* 32px - 37.6px */
   --icon-box-sm: clamp(2rem, 1.82rem + 0.44vw, 2.35rem);
+  /* 40px - 48px */
   --icon-box: clamp(2.5rem, 2.2rem + 0.75vw, 3rem);
+  /* 48px - 60px */
   --icon-box-lg: clamp(3rem, 2.55rem + 1vw, 3.75rem);
+  /* 14.72px - 16px */
   --checkbox-size: clamp(0.92rem, 0.86rem + 0.15vw, 1rem);
+  /* 544px - 720px */
   --flow-stage-height: clamp(34rem, 42vw, 45rem);
+  /* 240px - 384px */
   --visual-min-height: clamp(15rem, 24vw, 24rem);
 
   /* Geometry */
@@ -184,6 +243,7 @@
   --section-accent: var(--brand-primary);
 }
 
+/* Tailwind/shadcn bridge: koppelt utility tokens aan de core variables. */
 @theme inline {
   --color-white: var(--text-primary);
   --color-black: var(--palette-black);
@@ -219,6 +279,7 @@
   --radius-xl: var(--radius-xl);
 }
 
+/* Sectiethema's: wijzigen alleen semantische accenten per route. */
 .theme-primary {
   --section-accent: var(--brand-primary);
   --primary: var(--brand-primary);

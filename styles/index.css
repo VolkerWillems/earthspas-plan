@@ -1,3 +1,18 @@
+/* ==========================================================================
+   EARTH SPAS CSS DOCUMENTATIE
+
+   Inhoudsopgave
+   1. Imports van de drie uitvoerende stylesheets
+   2. Globale radius- en kleuraliassen
+   3. Projectbrede documentatie en uitzonderingen
+
+   Onderhoudsregel
+   - Alleen de beschreven classgroep of tokenfamilie in deze sectie aanpassen.
+   - Fluid clamp-bereiken zijn omgerekend op basis van 1rem = 16px.
+   - Deze documentatie wijzigt geen selector, property, waarde of import.
+   ========================================================================== */
+
+/* Importlaag: componentregels worden vóór responsive overrides geladen. */
 @import "./components.css";
 @import "./responsive.css";
 
@@ -9,6 +24,7 @@
 
 
 
+/* Aliasgroep: verwijst globale namen terug naar de centrale theme variables. */
 :root,
 .dark {
   --radius-base: var(--radius);
@@ -337,12 +353,19 @@ body {
 
 :root,
 .dark {
+  /* 21.6px - 24.8px */
   --badge-height: clamp(1.35rem, 1.28rem + 0.18vw, 1.55rem);
+  /* 7.68px - 9.92px */
   --badge-padding-inline: clamp(0.48rem, 0.43rem + 0.12vw, 0.62rem);
+  /* 9.6px - 10.56px */
   --badge-font-size: clamp(0.6rem, 0.58rem + 0.05vw, 0.66rem);
+  /* 34.4px - 40.8px */
   --timeline-marker-size: clamp(2.15rem, 1.98rem + 0.42vw, 2.55rem);
+  /* 272px - 352px */
   --chart-canvas-height: clamp(17rem, 24vw, 22rem);
+  /* 41.6px - 52px */
   --chart-brush-height: clamp(2.6rem, 3.6vw, 3.25rem);
+  /* 12.48px - 16px */
   --flow-card-padding: clamp(0.78rem, 0.68rem + 0.28vw, 1rem);
 }
 

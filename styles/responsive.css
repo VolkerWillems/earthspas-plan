@@ -1,7 +1,25 @@
+/* ==========================================================================
+   EARTH SPAS CSS DOCUMENTATIE
+
+   Inhoudsopgave
+   1. Fluid viewport-, type-, spacing- en layouttokens
+   2. Containers en container queries
+   3. Complexe grids en cardgedrag
+   4. Centrale typografische guards
+   5. Controls, registry-secties en brede visuals
+   6. Tablet-, mobiel- en printbreakpoints
+
+   Onderhoudsregel
+   - Alleen de beschreven classgroep of tokenfamilie in deze sectie aanpassen.
+   - Fluid clamp-bereiken zijn omgerekend op basis van 1rem = 16px.
+   - Deze documentatie wijzigt geen selector, property, waarde of import.
+   ========================================================================== */
+
 /* Earth Spas fluid responsive contract.
    This file owns viewport, container and component scaling.
    Visual colors, radii and shadows remain semantic theme tokens. */
 
+/* Fluid tokengroep: schaalt type, spacing en componentmaten per viewport. */
 :root,
 .dark {
   /* Viewport range */
@@ -14,46 +32,83 @@
     0.615rem + 0.08vw,
     0.72rem
   ); /* 10.24px - 11.52px */
+  /* 11.52px - 13.12px */
   --fluid-text-xs: clamp(0.72rem, 0.685rem + 0.11vw, 0.82rem);
+  /* 12.8px - 14.72px */
   --fluid-text-sm: clamp(0.8rem, 0.755rem + 0.14vw, 0.92rem);
+  /* 14.56px - 16.8px */
   --fluid-text-body: clamp(0.91rem, 0.855rem + 0.18vw, 1.05rem);
+  /* 15.68px - 18.4px */
   --fluid-text-body-lg: clamp(0.98rem, 0.9rem + 0.24vw, 1.15rem);
+  /* 15.68px - 18.56px */
   --fluid-text-card: clamp(0.98rem, 0.89rem + 0.28vw, 1.16rem);
+  /* 17.28px - 22.08px */
   --fluid-text-subtitle: clamp(1.08rem, 0.96rem + 0.42vw, 1.38rem);
+  /* 24px - 37.6px */
   --fluid-text-section: clamp(1.5rem, 1.14rem + 1.15vw, 2.35rem);
+  /* 30.4px - 52px */
   --fluid-text-page: clamp(1.9rem, 1.32rem + 1.85vw, 3.25rem);
+  /* 36px - 70.4px */
   --fluid-text-display: clamp(2.25rem, 1.45rem + 2.75vw, 4.4rem);
+  /* 23.2px - 33.6px */
   --fluid-text-metric-sm: clamp(1.45rem, 1.18rem + 0.8vw, 2.1rem);
+  /* 29.6px - 48px */
   --fluid-text-metric: clamp(1.85rem, 1.35rem + 1.35vw, 3rem);
 
   /* Fluid spacing */
+  /* 3.52px - 4.48px */
   --fluid-space-1: clamp(0.22rem, 0.2rem + 0.05vw, 0.28rem);
+  /* 6.72px - 8.64px */
   --fluid-space-2: clamp(0.42rem, 0.37rem + 0.12vw, 0.54rem);
+  /* 9.92px - 12.8px */
   --fluid-space-3: clamp(0.62rem, 0.54rem + 0.2vw, 0.8rem);
+  /* 13.44px - 17.28px */
   --fluid-space-4: clamp(0.84rem, 0.72rem + 0.3vw, 1.08rem);
+  /* 16.64px - 22.08px */
   --fluid-space-5: clamp(1.04rem, 0.86rem + 0.46vw, 1.38rem);
+  /* 20.48px - 29.12px */
   --fluid-space-6: clamp(1.28rem, 1.02rem + 0.68vw, 1.82rem);
+  /* 27.2px - 40.8px */
   --fluid-space-8: clamp(1.7rem, 1.28rem + 1.1vw, 2.55rem);
+  /* 33.6px - 53.6px */
   --fluid-space-10: clamp(2.1rem, 1.48rem + 1.6vw, 3.35rem);
+  /* 42.4px - 72px */
   --fluid-space-12: clamp(2.65rem, 1.72rem + 2.35vw, 4.5rem);
+  /* 53.6px - 96px */
   --fluid-space-16: clamp(3.35rem, 2.15rem + 3.25vw, 6rem);
 
   /* Fluid layout */
+  /* 16px - 52px */
   --fluid-gutter: clamp(1rem, 0.45rem + 2.05vw, 3.25rem);
+  /* 44.8px - 91.2px */
   --fluid-section: clamp(2.8rem, 1.8rem + 3.1vw, 5.7rem);
+  /* 33.6px - 61.6px */
   --fluid-section-compact: clamp(2.1rem, 1.45rem + 2vw, 3.85rem);
+  /* 15.2px - 24px */
   --fluid-card-padding: clamp(0.95rem, 0.72rem + 0.7vw, 1.5rem);
+  /* 14.4px - 24.8px */
   --fluid-layout-gap: clamp(0.9rem, 0.65rem + 0.8vw, 1.55rem);
+  /* 12.48px - 20.8px */
   --fluid-grid-gap: clamp(0.78rem, 0.56rem + 0.65vw, 1.3rem);
+  /* 72px - 84px */
   --fluid-header-height: clamp(4.5rem, 4.08rem + 1.2vw, 5.25rem);
+  /* 39.2px - 46.4px */
   --fluid-control-height: clamp(2.45rem, 2.25rem + 0.55vw, 2.9rem);
+  /* 32px - 36.8px */
   --fluid-control-height-sm: clamp(2rem, 1.84rem + 0.4vw, 2.3rem);
+  /* 30.4px - 36px */
   --fluid-icon-box-sm: clamp(1.9rem, 1.72rem + 0.45vw, 2.25rem);
+  /* 37.6px - 46.4px */
   --fluid-icon-box: clamp(2.35rem, 2.08rem + 0.72vw, 2.9rem);
+  /* 45.6px - 57.6px */
   --fluid-icon-box-lg: clamp(2.85rem, 2.42rem + 1.05vw, 3.6rem);
+  /* 14.72px - 16px */
   --fluid-check-size: clamp(0.92rem, 0.86rem + 0.16vw, 1rem);
+  /* 496px - 672px */
   --fluid-flow-height: clamp(31rem, 42vw, 42rem);
+  /* 368px - 544px */
   --fluid-map-height: clamp(23rem, 36vw, 34rem);
+  /* 240px - 384px */
   --fluid-visual-height: clamp(15rem, 24vw, 24rem);
 
   /* Semantic connections */
@@ -99,6 +154,7 @@
 }
 
 /* Containers */
+/* Containergroep: bewaakt breedte en schaalgedrag van pagina-inhoud. */
 .content-shell {
   width: min(calc(100% - (var(--content-gutter) * 2)), var(--content-max));
 }
@@ -277,6 +333,7 @@ button[aria-pressed] > span.flex > span:first-child svg,
 }
 
 /* Compact tablet layouts */
+/* Tabletbreakpoint: vereenvoudigt brede grids en samengestelde visuals. */
 @media (max-width: 74rem) {
   .software-flow-header,
   .agent-flow-header,
@@ -321,11 +378,15 @@ button[aria-pressed] > span.flex > span:first-child svg,
   }
 }
 
+/* Mobiel breakpoint: zet meerkolomscontent om naar compacte stapeling. */
 @media (max-width: 48rem) {
   :root,
   .dark {
+    /* 17.6px - 24px */
     --fluid-gutter: clamp(1.1rem, 0.85rem + 1.2vw, 1.5rem);
+    /* 37.6px - 53.6px */
     --fluid-section: clamp(2.35rem, 1.8rem + 2.5vw, 3.35rem);
+    /* 29.6px - 44px */
     --fluid-section-compact: clamp(1.85rem, 1.42rem + 2vw, 2.75rem);
   }
 

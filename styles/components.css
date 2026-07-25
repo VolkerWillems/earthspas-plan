@@ -1,3 +1,22 @@
+/* ==========================================================================
+   EARTH SPAS CSS DOCUMENTATIE
+
+   Inhoudsopgave
+   1. Base, reset en gedeelde typografie
+   2. Layoutcontainers en sectieritme
+   3. Cards, panels, badges en knoppen
+   4. Header, navigatie en mobiele menu's
+   5. Page intro, samenvattingen en hero-content
+   6. Keuzekaarten, checklists, tabellen en calculator
+   7. Marketing-, software- en developmentpresentatie
+   8. Modals, install prompts en printregels
+
+   Onderhoudsregel
+   - Alleen de beschreven classgroep of tokenfamilie in deze sectie aanpassen.
+   - Fluid clamp-bereiken zijn omgerekend op basis van 1rem = 16px.
+   - Deze documentatie wijzigt geen selector, property, waarde of import.
+   ========================================================================== */
+
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Barlow+Semi+Condensed:wght@300;400&display=swap");
 @import "tailwindcss";
 @import "./theme.css";
@@ -8,6 +27,7 @@
    Base
    -------------------------------------------------------------------------- */
 
+/* Basegroep: reset en standaardgedrag voor de volledige applicatie. */
 @layer base {
   *,
   *::before,
@@ -130,6 +150,7 @@
    Fluid layout and shared typography
    -------------------------------------------------------------------------- */
 
+/* Layoutgroep: centrale contentbreedte en horizontale paginauitlijning. */
 .content-shell {
   width: min(calc(100% - (var(--content-gutter) * 2)), var(--content-max));
   margin-inline: auto;
@@ -295,6 +316,7 @@ body [class*="font-medium"] {
   box-shadow: none;
 }
 
+/* Cardgroep: gedeelde basis voor normale contentpanelen. */
 .panel {
   min-width: 0;
 }
@@ -408,6 +430,7 @@ body [class*="font-medium"] {
    Header and navigation
    -------------------------------------------------------------------------- */
 
+/* Navigatiegroep: desktopheader, voortgang en hoofdmenu. */
 .site-header {
   position: sticky;
   top: 0;
@@ -641,6 +664,7 @@ body [class*="font-medium"] {
    Page intros and section composition
    -------------------------------------------------------------------------- */
 
+/* Introductiegroep: paginatitel, toelichting en hero-presentatie. */
 .page-intro {
   position: relative;
   overflow: hidden;
