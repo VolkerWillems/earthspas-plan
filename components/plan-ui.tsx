@@ -115,13 +115,41 @@ export function ProgressBar({ value }: { value: number; accent?: Accent }) {
   );
 }
 
-export function NumberField({ label, value, onChange, suffix }: { label: string; value: number; onChange: (value: number) => void; suffix?: string }) {
+export function NumberField({
+  label,
+  helper,
+  value,
+  onChange,
+  prefix,
+  suffix,
+  step = 1,
+  max,
+}: {
+  label: string;
+  helper?: string;
+  value: number;
+  onChange: (value: number) => void;
+  prefix?: string;
+  suffix?: string;
+  step?: number;
+  max?: number;
+}) {
   return (
     <label className="block">
       <span className="text-sm uppercase tracking-[0.13em] text-white/58">{label}</span>
+      {helper && <p className="mt-1 text-sm leading-5 text-white/52">{helper}</p>}
       <div className="mt-2 flex items-center rounded-md border border-border bg-background/70 focus-within:border-[var(--section-accent)]">
-        <input type="number" min={0} value={value} onChange={(event) => onChange(Math.max(0, Number(event.target.value)))} className="min-h-11 w-full bg-transparent px-3 text-lg text-white outline-none" />
-        {suffix && <span className="px-3 text-sm text-white/50">{suffix}</span>}
+        {prefix && <span className="pl-3 text-base text-white/55">{prefix}</span>}
+        <input
+          type="number"
+          min={0}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(event) => onChange(Math.max(0, Number(event.target.value)))}
+          className="min-h-11 w-full bg-transparent px-3 text-lg text-white outline-none"
+        />
+        {suffix && <span className="whitespace-nowrap px-3 text-sm text-white/50">{suffix}</span>}
       </div>
     </label>
   );
