@@ -33,7 +33,10 @@ export default function CalculatorPage() {
   const [copied, setCopied] = React.useState(false);
 
   const selectOption = (groupId: string, optionId: string) => {
-    setState((previous) => ({ ...previous, toolChoices: { ...previous.toolChoices, [groupId]: optionId } }));
+    setState((previous) => ({
+      ...previous,
+      toolChoices: { ...previous.toolChoices, [groupId]: optionId },
+    }));
   };
 
   const hoursPerWorkday = state.hoursPerWeek / 5;
@@ -49,17 +52,51 @@ export default function CalculatorPage() {
   };
 
   const rows = [
-    { item: "Accounts, tools en hosting", month: euro.format(model.platformMonthly), year: euro.format(model.platformMonthly * 12), result: `${choiceGroups.length} categorieën ingevuld` },
-    { item: "Meta en Google Ads", month: euro.format(model.adsMonthly), year: euro.format(model.adsMonthly * 12), result: `Meta ${euro.format(state.metaBudget)} + Google ${euro.format(state.googleBudget)}` },
-    { item: "AI-creditpotten", month: euro.format(model.aiMonthly), year: euro.format(model.aiMonthly * 12), result: `Agents ${euro.format(state.aiApiBudget)}, development ${euro.format(state.aiDevelopmentBudget)}, media ${euro.format(state.aiMediaBudget)}` },
-    { item: "Contentreserve", month: euro.format(state.contentBudget), year: euro.format(state.contentBudget * 12), result: "Externe fotografie, video of gespecialiseerde productie" },
-    { item: "Interne bouw en doorontwikkeling", month: "niet opgenomen", year: "apart vast te leggen", result: `${model.selectedFeatures.length} gekozen onderdelen, ${model.buildHoursLow}–${model.buildHoursHigh} uur indicatief` },
-    { item: "Totaal extern operationeel", month: euro.format(model.totalMonthly), year: euro.format(model.annualOperating), result: `${number.format(model.baseExtraSales)} extra spa's / ${euro.format(model.baseExtraRevenue)} extra omzet`, highlight: true },
+    {
+      item: "Accounts, tools en hosting",
+      month: euro.format(model.platformMonthly),
+      year: euro.format(model.platformMonthly * 12),
+      result: `${choiceGroups.length} categorieën ingevuld`,
+    },
+    {
+      item: "Meta en Google Ads",
+      month: euro.format(model.adsMonthly),
+      year: euro.format(model.adsMonthly * 12),
+      result: `Meta ${euro.format(state.metaBudget)} + Google ${euro.format(state.googleBudget)}`,
+    },
+    {
+      item: "AI-creditpotten",
+      month: euro.format(model.aiMonthly),
+      year: euro.format(model.aiMonthly * 12),
+      result: `Agents ${euro.format(state.aiApiBudget)}, development ${euro.format(state.aiDevelopmentBudget)}, media ${euro.format(state.aiMediaBudget)}`,
+    },
+    {
+      item: "Contentreserve",
+      month: euro.format(state.contentBudget),
+      year: euro.format(state.contentBudget * 12),
+      result: "Externe fotografie, video of gespecialiseerde productie",
+    },
+    {
+      item: "Interne bouw en doorontwikkeling",
+      month: "niet opgenomen",
+      year: "apart vast te leggen",
+      result: `${model.selectedFeatures.length} gekozen onderdelen, ${model.buildHoursLow}–${model.buildHoursHigh} uur indicatief`,
+    },
+    {
+      item: "Totaal extern operationeel",
+      month: euro.format(model.totalMonthly),
+      year: euro.format(model.annualOperating),
+      result: `${number.format(model.baseExtraSales)} extra spa's / ${euro.format(model.baseExtraRevenue)} extra omzet`,
+      highlight: true,
+    },
   ];
 
   const revenueData = [
     { name: "Huidig", omzet: model.currentRevenue },
-    { name: "Voorzichtig", omzet: model.currentRevenue + model.lowExtraRevenue },
+    {
+      name: "Voorzichtig",
+      omzet: model.currentRevenue + model.lowExtraRevenue,
+    },
     { name: "Verwacht", omzet: model.currentRevenue + model.baseExtraRevenue },
     { name: "Sterk", omzet: model.currentRevenue + model.highExtraRevenue },
   ];
@@ -75,15 +112,31 @@ export default function CalculatorPage() {
         imageAlt="Earth Spas productdetails en speciale functies"
         actions={
           <>
-            <button className="action-link" onClick={copySummary}>{copied ? <Check className="h-4 w-4" /> : <ClipboardText className="h-4 w-4" />}<span>{copied ? "Samenvatting gekopieerd" : "Kopieer samenvatting"}</span></button>
-            <button className="action-link" onClick={() => window.print()}><DownloadSimple className="h-4 w-4" /><span>Bewaar als PDF</span></button>
+            <button className="action-link" onClick={copySummary}>
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <ClipboardText className="h-4 w-4" />
+              )}
+              <span>
+                {copied ? "Samenvatting gekopieerd" : "Kopieer samenvatting"}
+              </span>
+            </button>
+            <button className="action-link" onClick={() => window.print()}>
+              <DownloadSimple className="h-4 w-4" />
+              <span>Bewaar als PDF</span>
+            </button>
           </>
         }
       />
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Bedrijfsbasis" title="Vul de werkelijke omzet- en verkoopcijfers in" text="De jaaromzet en het aantal verkochte spa's zijn de leidende invoer. De calculator leidt daar automatisch de gemiddelde verkoopprijs en gemiddelde weekverkoop uit af, zodat de basisgegevens onderling blijven kloppen." />
+          <SectionHeader
+            eyebrow="Bedrijfsbasis"
+            title="Vul de werkelijke omzet- en verkoopcijfers in"
+            text="De jaaromzet en het aantal verkochte spa's zijn de leidende invoer. De calculator leidt daar automatisch de gemiddelde verkoopprijs en gemiddelde weekverkoop uit af, zodat de basisgegevens onderling blijven kloppen."
+          />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
             <Panel className="p-6 sm:p-8">
               <div className="grid gap-6 md:grid-cols-2">
@@ -104,23 +157,72 @@ export default function CalculatorPage() {
                   suffix="spa's"
                   step={1}
                 />
-                <RangeField label="Brutomarge" helper="Marge na inkoopprijs van de spa" value={state.grossMargin} min={20} max={60} step={1} display={`${state.grossMargin}%`} onChange={(value) => update("grossMargin", value)} />
-                <RangeField label="Acquisitiekosten per extra verkoop" helper="Marketing- en groeibudget per extra gerealiseerde verkoop" value={state.acquisitionCostPerSale} min={250} max={4000} step={50} display={euro.format(state.acquisitionCostPerSale)} onChange={(value) => update("acquisitionCostPerSale", value)} />
+                <RangeField
+                  label="Brutomarge"
+                  helper="Marge na inkoopprijs van de spa"
+                  value={state.grossMargin}
+                  min={20}
+                  max={60}
+                  step={1}
+                  display={`${state.grossMargin}%`}
+                  onChange={(value) => update("grossMargin", value)}
+                />
+                <RangeField
+                  label="Acquisitiekosten per extra verkoop"
+                  helper="Marketing- en groeibudget per extra gerealiseerde verkoop"
+                  value={state.acquisitionCostPerSale}
+                  min={250}
+                  max={4000}
+                  step={50}
+                  display={euro.format(state.acquisitionCostPerSale)}
+                  onChange={(value) => update("acquisitionCostPerSale", value)}
+                />
                 <div className="md:col-span-2">
-                  <RangeField label="Extra uitvoeringskosten per spa" helper="Aanvullende administratie, levering of ondersteuning; mag €0 zijn" value={state.incrementalCostPerSale} min={0} max={1500} step={25} display={euro.format(state.incrementalCostPerSale)} onChange={(value) => update("incrementalCostPerSale", value)} />
+                  <RangeField
+                    label="Extra uitvoeringskosten per spa"
+                    helper="Aanvullende administratie, levering of ondersteuning; mag €0 zijn"
+                    value={state.incrementalCostPerSale}
+                    min={0}
+                    max={1500}
+                    step={25}
+                    display={euro.format(state.incrementalCostPerSale)}
+                    onChange={(value) =>
+                      update("incrementalCostPerSale", value)
+                    }
+                  />
                 </div>
               </div>
             </Panel>
             <div className="grid gap-4 sm:grid-cols-2">
-              <StatCard label="Gemiddelde verkoopprijs" value={euro.format(model.averageSalePrice)} detail="automatisch uit omzet ÷ verkopen" />
-              <StatCard label="Gemiddelde weekverkoop" value={`${number.format(model.currentSalesPerWeek)} spa's`} detail={`${number.format(model.currentUnitsYear)} per jaar`} />
-              <StatCard label="Brutobijdrage per extra spa" value={euro.format(model.grossProfitPerSale)} detail={`na ${euro.format(state.incrementalCostPerSale)} extra uitvoeringskosten`} />
-              <StatCard label="Break-even" value={`${number.format(model.breakEvenSales)} extra spa's`} detail="voor het volledige externe jaarbudget" />
+              <StatCard
+                label="Gemiddelde verkoopprijs"
+                value={euro.format(model.averageSalePrice)}
+                detail="automatisch uit omzet ÷ verkopen"
+              />
+              <StatCard
+                label="Gemiddelde weekverkoop"
+                value={`${number.format(model.currentSalesPerWeek)} spa's`}
+                detail={`${number.format(model.currentUnitsYear)} per jaar`}
+              />
+              <StatCard
+                label="Brutobijdrage per extra spa"
+                value={euro.format(model.grossProfitPerSale)}
+                detail={`na ${euro.format(state.incrementalCostPerSale)} extra uitvoeringskosten`}
+              />
+              <StatCard
+                label="Break-even"
+                value={`${number.format(model.breakEvenSales)} extra spa's`}
+                detail="voor het volledige externe jaarbudget"
+              />
             </div>
           </div>
           {state.currentAnnualSales === 0 && (
             <Panel className="mt-5 border-amber-300/35 p-5">
-              <p className="text-base leading-7 text-white/75">Vul minimaal één verkoop in. Zonder verkoopaantal kan geen gemiddelde verkoopprijs, omzetgroei of bijdrage per extra verkoop worden berekend.</p>
+              <p className="text-base leading-7 text-white/75">
+                Vul minimaal één verkoop in. Zonder verkoopaantal kan geen
+                gemiddelde verkoopprijs, omzetgroei of bijdrage per extra
+                verkoop worden berekend.
+              </p>
             </Panel>
           )}
         </div>
@@ -128,49 +230,164 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Accounts en providers" title="Selecteer één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Geen optie is vergrendeld. De maand- en jaarbedragen veranderen direct zodra een andere oplossing wordt geselecteerd." />
+          <SectionHeader
+            eyebrow="Accounts en providers"
+            title="Selecteer één route per onderdeel"
+            text="De aanbevolen keuze staat als eerste of is gemarkeerd. Geen optie is vergrendeld. De maand- en jaarbedragen veranderen direct zodra een andere oplossing wordt geselecteerd."
+          />
           <Panel className="mt-5 p-4 sm:p-5">
-            <p className="text-sm uppercase tracking-[0.13em] text-[var(--section-accent)]">Prijscontrole · {pricingReview.reviewedAt}</p>
-            <p className="mt-2 text-sm leading-6 text-white/68">{pricingReview.note}</p>
+            <p className="text-sm uppercase tracking-[0.13em] text-[var(--section-accent)]">
+              Prijscontrole · {pricingReview.reviewedAt}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-white/68">
+              {pricingReview.note}
+            </p>
           </Panel>
           <div className="mt-6 overflow-hidden rounded-[5px] border border-[var(--section-accent)]/35 bg-card">
-            <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] md:grid"><span>Onderdeel</span><span>Gekozen oplossing</span><span>Per maand</span></div>
+            <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] md:grid">
+              <span>Onderdeel</span>
+              <span>Gekozen oplossing</span>
+              <span>Per maand</span>
+            </div>
             {choiceGroups.map((group) => {
-              const selected = group.options.find((option) => option.id === state.toolChoices[group.id]) ?? group.options[0];
+              const selected =
+                group.options.find(
+                  (option) => option.id === state.toolChoices[group.id],
+                ) ?? group.options[0];
               return (
-                <div key={group.id} className="grid gap-3 border-b border-border/70 px-5 py-4 last:border-0 md:grid-cols-[1fr_1.25fr_.55fr] md:items-center">
-                  <div><p className="text-base text-white">{group.title}</p><p className="mt-1 text-sm leading-5 text-white/48">{group.description}</p></div>
-                  <select value={selected.id} onChange={(event) => selectOption(group.id, event.target.value)} className="min-h-11 w-full rounded-md border border-white/25 bg-background text-base text-white outline-none focus:border-[var(--section-accent)]">
-                    {group.options.map((option) => <option key={option.id} value={option.id}>{option.name}{option.recommended ? " · aanbevolen" : ""}</option>)}
+                <div
+                  key={group.id}
+                  className="grid gap-3 border-b border-border/70 px-5 py-4 last:border-0 md:grid-cols-[1fr_1.25fr_.55fr] md:items-center"
+                >
+                  <div>
+                    <p className="text-base text-white">{group.title}</p>
+                    <p className="mt-1 text-sm leading-5 text-white/48">
+                      {group.description}
+                    </p>
+                  </div>
+                  <select
+                    value={selected.id}
+                    onChange={(event) =>
+                      selectOption(group.id, event.target.value)
+                    }
+                    className="min-h-11 w-full rounded-md border border-white/25 bg-background text-base text-white outline-none focus:border-[var(--section-accent)]"
+                  >
+                    {group.options.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.name}
+                        {option.recommended ? " · aanbevolen" : ""}
+                      </option>
+                    ))}
                   </select>
-                  <div className="choice-price text-left md:text-right">{selected.monthly === 0 ? "€0" : euro.format(selected.monthly)}</div>
+                  <div className="choice-price text-left md:text-right">
+                    {selected.monthly === 0
+                      ? "€0"
+                      : euro.format(selected.monthly)}
+                  </div>
                 </div>
               );
             })}
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <StatCard label="Geselecteerde stack" value={`${euro.format(model.platformMonthly)} p/m`} detail={`${euro.format(model.platformMonthly * 12)} per jaar`} />
-            <StatCard label="Aanbevolen stack" value={`${euro.format(model.recommendedMonthly)} p/m`} detail="wanneer alle adviezen worden gekozen" />
-            <StatCard label="Verschil" value={euro.format(model.platformMonthly - model.recommendedMonthly)} detail="negatief is goedkoper dan advies" />
+            <StatCard
+              label="Geselecteerde stack"
+              value={`${euro.format(model.platformMonthly)} p/m`}
+              detail={`${euro.format(model.platformMonthly * 12)} per jaar`}
+            />
+            <StatCard
+              label="Aanbevolen stack"
+              value={`${euro.format(model.recommendedMonthly)} p/m`}
+              detail="wanneer alle adviezen worden gekozen"
+            />
+            <StatCard
+              label="Verschil"
+              value={euro.format(
+                model.platformMonthly - model.recommendedMonthly,
+              )}
+              detail="negatief is goedkoper dan advies"
+            />
           </div>
         </div>
       </section>
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Maandbudget" title="Advertenties, content en AI afzonderlijk instellen" text="De budgetten zijn bewust gescheiden. Hierdoor blijft zichtbaar welk deel naar bereik, productie, agents, development en vaste infrastructuur gaat." />
+          <SectionHeader
+            eyebrow="Maandbudget"
+            title="Advertenties, content en AI afzonderlijk instellen"
+            text="De budgetten zijn bewust gescheiden. Hierdoor blijft zichtbaar welk deel naar bereik, productie, agents, development en vaste infrastructuur gaat."
+          />
           <div className="mt-9 grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
             <Panel className="p-6 sm:p-8">
               <div className="space-y-8">
-                <RangeField label="Meta Ads" value={state.metaBudget} min={0} max={7500} step={50} display={euro.format(state.metaBudget)} onChange={(value) => update("metaBudget", value)} />
-                <RangeField label="Google Ads" value={state.googleBudget} min={0} max={7500} step={50} display={euro.format(state.googleBudget)} onChange={(value) => update("googleBudget", value)} />
-                <RangeField label="Externe contentreserve" value={state.contentBudget} min={0} max={3000} step={50} display={euro.format(state.contentBudget)} onChange={(value) => update("contentBudget", value)} />
-                <RangeField label="Agent- en API-credits" value={state.aiApiBudget} min={0} max={2500} step={25} display={euro.format(state.aiApiBudget)} onChange={(value) => update("aiApiBudget", value)} />
-                <RangeField label="Development-AI-credits" value={state.aiDevelopmentBudget} min={0} max={2500} step={25} display={euro.format(state.aiDevelopmentBudget)} onChange={(value) => update("aiDevelopmentBudget", value)} />
-                <RangeField label="Media-AI-credits" value={state.aiMediaBudget} min={0} max={2500} step={25} display={euro.format(state.aiMediaBudget)} onChange={(value) => update("aiMediaBudget", value)} />
+                <RangeField
+                  label="Meta Ads"
+                  value={state.metaBudget}
+                  min={0}
+                  max={7500}
+                  step={50}
+                  display={euro.format(state.metaBudget)}
+                  onChange={(value) => update("metaBudget", value)}
+                />
+                <RangeField
+                  label="Google Ads"
+                  value={state.googleBudget}
+                  min={0}
+                  max={7500}
+                  step={50}
+                  display={euro.format(state.googleBudget)}
+                  onChange={(value) => update("googleBudget", value)}
+                />
+                <RangeField
+                  label="Externe contentreserve"
+                  value={state.contentBudget}
+                  min={0}
+                  max={3000}
+                  step={50}
+                  display={euro.format(state.contentBudget)}
+                  onChange={(value) => update("contentBudget", value)}
+                />
+                <RangeField
+                  label="Agent- en API-credits"
+                  value={state.aiApiBudget}
+                  min={0}
+                  max={2500}
+                  step={25}
+                  display={euro.format(state.aiApiBudget)}
+                  onChange={(value) => update("aiApiBudget", value)}
+                />
+                <RangeField
+                  label="Development-AI-credits"
+                  value={state.aiDevelopmentBudget}
+                  min={0}
+                  max={2500}
+                  step={25}
+                  display={euro.format(state.aiDevelopmentBudget)}
+                  onChange={(value) => update("aiDevelopmentBudget", value)}
+                />
+                <RangeField
+                  label="Media-AI-credits"
+                  value={state.aiMediaBudget}
+                  min={0}
+                  max={2500}
+                  step={25}
+                  display={euro.format(state.aiMediaBudget)}
+                  onChange={(value) => update("aiMediaBudget", value)}
+                />
               </div>
             </Panel>
-            <Panel className="p-6 sm:p-8"><p className="eyebrow">Totale verdeling</p><BudgetChart total={euro.format(model.totalMonthly)} data={[{ name: "Tools", value: model.platformMonthly }, { name: "Advertenties", value: model.adsMonthly }, { name: "Content", value: state.contentBudget }, { name: "AI", value: model.aiMonthly }]} /></Panel>
+            <Panel className="p-6 sm:p-8">
+              <p className="eyebrow">Totale verdeling</p>
+              <BudgetChart
+                total={euro.format(model.totalMonthly)}
+                data={[
+                  { name: "Tools", value: model.platformMonthly },
+                  { name: "Advertenties", value: model.adsMonthly },
+                  { name: "Content", value: state.contentBudget },
+                  { name: "AI", value: model.aiMonthly },
+                ]}
+              />
+            </Panel>
           </div>
         </div>
       </section>
@@ -180,7 +397,7 @@ export default function CalculatorPage() {
           <SectionHeader
             eyebrow="Samenwerkingsvoorstel"
             title="Incidentele ondersteuning of volledig digitaal beheer"
-            text="Voor de verdere uitvoering zijn twee samenwerkingsvormen mogelijk. De keuze bepaalt hoeveel vaste capaciteit beschikbaar is voor alles wat online gebeurt. Wat daar financieel of persoonlijk tegenover staat, blijft buiten deze calculator en is afzonderlijk bespreekbaar."
+            text="Kies tussen incidentele ondersteuning of een structurele vorm met vaste uren per week."
           />
 
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
@@ -198,11 +415,27 @@ export default function CalculatorPage() {
                   </span>
                 )}
               </div>
-              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">Incidentele ondersteuning</h3>
-              <p className="mt-3 text-lg leading-8 text-white/76">Ik blijf werkzaamheden oppakken wanneer beschikbare tijd, urgentie en prioriteit dit toelaten. Er is geen vaste planning, responstijd of gegarandeerde wekelijkse capaciteit.</p>
+              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">
+                Incidentele ondersteuning
+              </h3>
+              <p className="mt-3 text-lg leading-8 text-white/76">
+                Ik blijf werkzaamheden oppakken wanneer beschikbare tijd,
+                urgentie en prioriteit dit toelaten. Er is geen vaste planning,
+                responstijd of gegarandeerde wekelijkse capaciteit.
+              </p>
               <div className="mt-5 space-y-3 border-t border-border/70 pt-5">
-                {["Ontwikkeling en fixes wanneer tijd beschikbaar is", "Ondersteuning bij urgente of noodzakelijke zaken", "Geen vaste frequentie voor content, campagnes en doorontwikkeling"].map((item) => (
-                  <div key={item} className="flex items-start gap-3 text-base leading-6 text-white/68"><Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" /><span>{item}</span></div>
+                {[
+                  "Ontwikkeling en fixes wanneer tijd beschikbaar is",
+                  "Ondersteuning bij urgente of noodzakelijke zaken",
+                  "Geen vaste frequentie voor content, campagnes en doorontwikkeling",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-start gap-3 text-base leading-6 text-white/68"
+                  >
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" />
+                    <span>{item}</span>
+                  </div>
                 ))}
               </div>
             </button>
@@ -216,15 +449,36 @@ export default function CalculatorPage() {
               <div className="flex items-start justify-between gap-4">
                 <RocketLaunch className="h-8 w-8 text-[var(--section-accent)]" />
                 <span className="inline-flex items-center gap-1.5 rounded-[5px] border border-[var(--section-accent)]/50 px-2.5 py-1 text-xs uppercase tracking-[0.12em] text-[var(--section-accent)]">
-                  {state.involvement === "structured" && <Check className="h-3.5 w-3.5" />}
-                  {state.involvement === "structured" ? "Gekozen voorstel" : "Voorkeursvoorstel"}
+                  {state.involvement === "structured" && (
+                    <Check className="h-3.5 w-3.5" />
+                  )}
+                  {state.involvement === "structured"
+                    ? "Gekozen voorstel"
+                    : "Voorkeursvoorstel"}
                 </span>
               </div>
-              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">Volledig digitaal beheer</h3>
-              <p className="mt-3 text-lg leading-8 text-white/76">Ik bied aan om de volledige online omgeving van Earth Spas structureel te regelen, onderhouden en verder uit te bouwen binnen een vast gereserveerd aantal uren per week.</p>
+              <h3 className="mt-5 text-2xl uppercase text-[var(--section-accent)]">
+                Volledig digitaal beheer
+              </h3>
+              <p className="mt-3 text-lg leading-8 text-white/76">
+                Ik bied aan om de volledige online omgeving van Earth Spas
+                structureel te regelen, onderhouden en verder uit te bouwen
+                binnen een vast gereserveerd aantal uren per week.
+              </p>
               <div className="mt-5 space-y-3 border-t border-border/70 pt-5">
-                {["Website, software en continue doorontwikkeling", "Social media, content, advertenties en marketinguitvoering", "Analytics, leads, AI-agents en automatiseringen", "Technisch beheer, monitoring, onderhoud en optimalisatie"].map((item) => (
-                  <div key={item} className="flex items-start gap-3 text-base leading-6 text-white/68"><Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" /><span>{item}</span></div>
+                {[
+                  "Website, software en continue doorontwikkeling",
+                  "Social media, content, advertenties en marketinguitvoering",
+                  "Analytics, leads, AI-agents en automatiseringen",
+                  "Technisch beheer, monitoring, onderhoud en optimalisatie",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-start gap-3 text-base leading-6 text-white/68"
+                  >
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-[var(--section-accent)]" />
+                    <span>{item}</span>
+                  </div>
                 ))}
               </div>
             </button>
@@ -244,13 +498,42 @@ export default function CalculatorPage() {
                   onChange={(value) => update("hoursPerWeek", value)}
                 />
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per werkdag</p><p className="mt-2 text-xl text-[var(--section-accent)]">{hoursPerWorkday.toFixed(1).replace(".", ",")} uur</p></div>
-                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per maand</p><p className="mt-2 text-xl text-[var(--section-accent)]">{number.format(hoursPerMonth)} uur</p></div>
-                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3"><p className="text-xs uppercase tracking-[0.1em] text-white/48">Per jaar</p><p className="mt-2 text-xl text-[var(--section-accent)]">{number.format(hoursPerYear)} uur</p></div>
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3">
+                    <p className="text-xs uppercase tracking-[0.1em] text-white/48">
+                      Per werkdag
+                    </p>
+                    <p className="mt-2 text-xl text-[var(--section-accent)]">
+                      {hoursPerWorkday.toFixed(1).replace(".", ",")} uur
+                    </p>
+                  </div>
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3">
+                    <p className="text-xs uppercase tracking-[0.1em] text-white/48">
+                      Per maand
+                    </p>
+                    <p className="mt-2 text-xl text-[var(--section-accent)]">
+                      {number.format(hoursPerMonth)} uur
+                    </p>
+                  </div>
+                  <div className="rounded-[5px] border border-[var(--section-accent)]/30 bg-background/50 p-3">
+                    <p className="text-xs uppercase tracking-[0.1em] text-white/48">
+                      Per jaar
+                    </p>
+                    <p className="mt-2 text-xl text-[var(--section-accent)]">
+                      {number.format(hoursPerYear)} uur
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="mt-6 border-t border-border/70 pt-5">
-                <p className="text-base leading-7 text-white/72"><strong className="font-normal text-white">Bespreekbaar voorstel:</strong> wanneer Earth Spas voor deze structurele vorm kiest, worden de precieze invulling, planning en tegenprestatie apart en onderling vastgelegd. Deze calculator rekent uitsluitend met de beschikbare uitvoeringscapaciteit.</p>
+                <p className="text-base leading-7 text-white/72">
+                  <strong className="font-normal text-white">
+                    Bespreekbaar voorstel:
+                  </strong>{" "}
+                  wanneer Earth Spas voor deze structurele vorm kiest, worden de
+                  precieze invulling, planning en tegenprestatie apart en
+                  onderling vastgelegd. Deze calculator rekent uitsluitend met
+                  de beschikbare uitvoeringscapaciteit.
+                </p>
               </div>
             </Panel>
           )}
@@ -259,23 +542,70 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Uitkomst" title="Totaalbudget en verwacht scenario" text="De uitkomst blijft een bandbreedte. Het model maakt zichtbaar welke aannames nodig zijn om de verhouding tussen budget, capaciteit, omzetgroei en break-even zakelijk te beoordelen." />
+          <SectionHeader
+            eyebrow="Uitkomst"
+            title="Totaalbudget en verwacht scenario"
+            text="De uitkomst blijft een bandbreedte. Het model maakt zichtbaar welke aannames nodig zijn om de verhouding tussen budget, capaciteit, omzetgroei en break-even zakelijk te beoordelen."
+          />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            <StatCard label="Extern budget" value={`${euro.format(model.totalMonthly)} p/m`} detail={`${euro.format(model.annualOperating)} per jaar`} />
-            <StatCard label="Extra verkopen" value={`${number.format(model.lowExtraSales)}–${number.format(model.highExtraSales)}`} detail={`${number.format(model.baseExtraSales)} verwacht`} />
-            <StatCard label="Extra omzet" value={euro.format(model.baseExtraRevenue)} detail={`${number.format(model.growthPct)}% omzetgroei`} />
-            <StatCard label="Bijdrage-ROI" value={`${number.format(model.contributionRoi)}%`} detail={`${euro.format(model.expectedContribution)} na extern budget`} />
-            <StatCard label="Externe bouwmarktwaarde" value={`${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}`} detail={`${model.selectedFeatures.length} gekozen functies`} />
+            <StatCard
+              label="Extern budget"
+              value={`${euro.format(model.totalMonthly)} p/m`}
+              detail={`${euro.format(model.annualOperating)} per jaar`}
+            />
+            <StatCard
+              label="Extra verkopen"
+              value={`${number.format(model.lowExtraSales)}–${number.format(model.highExtraSales)}`}
+              detail={`${number.format(model.baseExtraSales)} verwacht`}
+            />
+            <StatCard
+              label="Extra omzet"
+              value={euro.format(model.baseExtraRevenue)}
+              detail={`${number.format(model.growthPct)}% omzetgroei`}
+            />
+            <StatCard
+              label="Bijdrage-ROI"
+              value={`${number.format(model.contributionRoi)}%`}
+              detail={`${euro.format(model.expectedContribution)} na extern budget`}
+            />
+            <StatCard
+              label="Externe bouwmarktwaarde"
+              value={`${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}`}
+              detail={`${model.selectedFeatures.length} gekozen functies`}
+            />
           </div>
           <div className="mt-6 grid gap-6 xl:grid-cols-[.9fr_1.1fr]">
-            <Panel className="p-6"><p className="eyebrow">Omzetscenario's</p><RevenueScenarioChart data={revenueData} /></Panel>
-            <Panel className="overflow-hidden"><div className="border-b border-border p-5"><p className="eyebrow">Beslisoverzicht</p><h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">Alle kosten naast elkaar</h3></div><div className="p-4 md:p-0"><DecisionTable rows={rows} /></div></Panel>
+            <Panel className="p-6">
+              <p className="eyebrow">Omzetscenario's</p>
+              <RevenueScenarioChart data={revenueData} />
+            </Panel>
+            <Panel className="overflow-hidden">
+              <div className="border-b border-border p-5">
+                <p className="eyebrow">Beslisoverzicht</p>
+                <h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">
+                  Alle kosten naast elkaar
+                </h3>
+              </div>
+              <div className="p-4 md:p-0">
+                <DecisionTable rows={rows} />
+              </div>
+            </Panel>
           </div>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row"><PrimaryLink href="/checklist">Ga naar noodzakelijke actielijst</PrimaryLink><PrimaryLink href="/marketing">Terug naar marketingstrategie</PrimaryLink></div>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <PrimaryLink href="/checklist">
+              Ga naar noodzakelijke actielijst
+            </PrimaryLink>
+            <PrimaryLink href="/marketing">
+              Terug naar marketingstrategie
+            </PrimaryLink>
+          </div>
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Totaalcalculator · bedrijfsgegevens en keuzes worden automatisch op de andere pagina's gebruikt</footer>
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">
+        Totaalcalculator · bedrijfsgegevens en keuzes worden automatisch op de
+        andere pagina's gebruikt
+      </footer>
     </main>
   );
 }
