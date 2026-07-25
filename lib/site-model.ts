@@ -1,3 +1,4 @@
+import "@/lib/choice-runtime-additions";
 import {
   choiceGroups,
   checklistItems,
