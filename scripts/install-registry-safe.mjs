@@ -5,10 +5,15 @@ import { join } from "node:path";
 const root = process.cwd();
 const protectedCssFiles = [
   "app/globals.css",
+  "styles/index.css",
   "styles/global.css",
   "styles/theme.css",
   "styles/responsive.css",
+  "styles/components.css",
   "styles/motion.css",
+  "styles/motion-base.css",
+  "styles/flows.css",
+  "styles/charts.css",
 ];
 const snapshots = new Map();
 
