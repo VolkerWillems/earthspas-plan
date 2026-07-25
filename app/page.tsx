@@ -29,13 +29,31 @@ import {
   StatCard,
 } from "@/components/plan-ui";
 
-const performance = [
-  { value: "652", label: "actieve gebruikers", detail: "GA4, 1 januari tot 24 juli 2026" },
+const performanceSummary = [
+  { value: "652", label: "actieve websitegebruikers", detail: "GA4, 1 januari tot 24 juli 2026" },
   { value: "321", label: "organische Google-sessies", detail: "zonder structurele SEO-campagne" },
-  { value: "€0,13", label: "per landingspaginaweergave", detail: "eerste kleine Meta-test" },
-  { value: "10.874", label: "lokaal bereik", detail: "uit €15,90 advertentiebudget" },
-  { value: "504", label: "Google-klantinteracties", detail: "via het bedrijfsprofiel" },
-  { value: "5,0", label: "Google-score", detail: "op basis van 19 reviews" },
+  { value: "287", label: "landingspaginaweergaven", detail: "uit €35,90 aan eerste Meta-tests" },
+  { value: "€0,13", label: "gemiddeld per landingspaginaweergave", detail: "over alle websiteverkeer-tests samen" },
+  { value: "10.874", label: "lokaal bereik", detail: "uit €15,90 promotiebudget" },
+  { value: "5,0", label: "Google-score", detail: "19 reviews en 504 klantinteracties" },
+];
+
+const paidAdVariants = [
+  { name: "Variant 4", landingViews: 169, costPerView: "€0,11", spend: "€18,05", impressions: "5.091" },
+  { name: "Variant 1", landingViews: 68, costPerView: "€0,15", spend: "€10,42", impressions: "2.523" },
+  { name: "Variant 3", landingViews: 32, costPerView: "€0,13", spend: "€4,30", impressions: "815" },
+  { name: "Variant 6", landingViews: 16, costPerView: "€0,15", spend: "€2,34", impressions: "486" },
+  { name: "Variant 2", landingViews: 2, costPerView: "€0,39", spend: "€0,77", impressions: "97" },
+];
+
+const channelResults = [
+  { channel: "Website & GA4", metric: "9.742 gebeurtenissen", detail: "652 actieve gebruikers; directe en organische basis is al meetbaar." },
+  { channel: "Google organisch", metric: "321 sessies", detail: "Binnengekomen zonder structurele SEO-campagne of vaste contentproductie." },
+  { channel: "Google-bedrijfsprofiel", metric: "504 interacties", detail: "5,0 uit 19 reviews; sterkste bestaande social-proofkanaal." },
+  { channel: "Meta websiteverkeer", metric: "9.013 vertoningen", detail: "7.008 uniek bereik en 287 landingspaginaweergaven voor €35,90." },
+  { channel: "Meta lokaal bereik", metric: "14.206 vertoningen", detail: "10.874 mensen bereikt voor €15,90; €1,46 per 1.000 bereikte mensen." },
+  { channel: "Pinterest", metric: "164 maandweergaven", detail: "Profiel staat klaar, maar heeft nog 0 volgers en vrijwel geen structurele inzet gehad." },
+  { channel: "LinkedIn", metric: "20 zoekvermeldingen", detail: "+233,3% in zeven dagen; bedrijfspagina heeft momenteel 2 volgers." },
 ];
 
 const pageCards = [
@@ -93,16 +111,101 @@ export default function HomePage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Resultaten tot nu toe" title="Er is al genoeg bewijs dat de basis werkt" text="Geen van deze cijfers bewijst direct verkochte spa's uit advertenties. Ze bewijzen wel organische vindbaarheid, lokale interesse, een bruikbaar Google-profiel en opvallend goedkoop websiteverkeer." />
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {performance.map((item) => (
+          <SectionHeader eyebrow="Resultaten tot nu toe" title="De bestaande basis presteert beter dan een paar losse screenshots doen vermoeden" text="De cijfers hieronder zijn een momentopname uit GA4, Google, Meta, LinkedIn en Pinterest. Ze bewijzen nog geen verkochte spa's uit advertenties, maar wel organische vraag, goedkoop websiteverkeer, lokaal bereik en sterke Google-social-proof." />
+
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {performanceSummary.map((item) => (
               <Panel key={item.label} className="p-5 sm:p-6">
-                <p className="text-4xl text-[var(--section-accent)]">{item.value}</p>
-                <h3 className="mt-3 text-xl uppercase text-white">{item.label}</h3>
-                <p className="mt-2 text-base leading-6 text-white/65">{item.detail}</p>
+                <p className="font-[family-name:var(--font-heading)] text-4xl text-[var(--section-accent)]">{item.value}</p>
+                <h3 className="mt-3 text-lg uppercase text-white">{item.label}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/68">{item.detail}</p>
               </Panel>
             ))}
           </div>
+
+          <div className="mt-6 grid gap-6 xl:grid-cols-[1.08fr_.92fr]">
+            <Panel className="overflow-hidden">
+              <div className="border-b border-border p-5 sm:p-6">
+                <p className="eyebrow">Meta websiteverkeer-test</p>
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <h3 className="text-2xl uppercase text-[var(--section-accent)]">€35,90 leverde 287 landingspaginaweergaven op</h3>
+                    <p className="mt-2 max-w-3xl text-base leading-7 text-white/72">De campagne kwam uit op 9.013 vertoningen, 7.008 uniek bereik en gemiddeld €0,13 per landingspaginaweergave.</p>
+                  </div>
+                  <div className="shrink-0 rounded-[5px] border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_9%,transparent)] px-4 py-3 text-right">
+                    <p className="text-xs uppercase tracking-[0.13em] text-white/58">beste variant</p>
+                    <p className="mt-1 font-[family-name:var(--font-heading)] text-3xl text-[var(--section-accent)]">€0,11</p>
+                    <p className="text-sm text-white/68">per landing</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[650px] border-collapse text-left text-sm">
+                  <thead className="bg-white/[.025] text-xs uppercase tracking-[0.12em] text-white/68">
+                    <tr>
+                      <th className="px-5 py-3">Advertentie</th>
+                      <th className="px-5 py-3">Landingspagina</th>
+                      <th className="px-5 py-3">Kosten per view</th>
+                      <th className="px-5 py-3">Besteed</th>
+                      <th className="px-5 py-3">Vertoningen</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/70">
+                    {paidAdVariants.map((item, index) => (
+                      <tr key={item.name} className={index === 0 ? "bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)]" : ""}>
+                        <td className="px-5 py-3 text-white">{item.name}{index === 0 && <span className="ml-2 text-xs uppercase tracking-[0.1em] text-[var(--section-accent)]">beste</span>}</td>
+                        <td className="px-5 py-3 font-[family-name:var(--font-heading)] text-lg text-white">{item.landingViews}</td>
+                        <td className="px-5 py-3 font-[family-name:var(--font-heading)] text-lg text-[var(--section-accent)]">{item.costPerView}</td>
+                        <td className="px-5 py-3 text-white/88">{item.spend}</td>
+                        <td className="px-5 py-3 text-white/88">{item.impressions}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Panel>
+
+            <div className="space-y-4">
+              <Panel className="p-5 sm:p-6">
+                <p className="eyebrow">Lokale bereikcampagne</p>
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
+                  <div><p className="font-[family-name:var(--font-heading)] text-3xl text-[var(--section-accent)]">10.874</p><p className="mt-1 text-sm text-white/65">bereikte mensen</p></div>
+                  <div><p className="font-[family-name:var(--font-heading)] text-3xl text-[var(--section-accent)]">14.206</p><p className="mt-1 text-sm text-white/65">vertoningen</p></div>
+                  <div><p className="font-[family-name:var(--font-heading)] text-3xl text-[var(--section-accent)]">€15,90</p><p className="mt-1 text-sm text-white/65">totaal besteed</p></div>
+                  <div><p className="font-[family-name:var(--font-heading)] text-3xl text-[var(--section-accent)]">€1,46</p><p className="mt-1 text-sm text-white/65">per 1.000 bereikt</p></div>
+                </div>
+              </Panel>
+
+              <Panel className="overflow-hidden">
+                <div className="border-b border-border p-5 sm:p-6">
+                  <p className="eyebrow">Kanaaloverzicht</p>
+                  <h3 className="mt-2 text-2xl uppercase text-[var(--section-accent)]">Organische basis en socialprofielen</h3>
+                </div>
+                <div className="divide-y divide-border/70">
+                  {channelResults.map((item) => (
+                    <div key={item.channel} className="grid gap-2 px-5 py-4 sm:grid-cols-[.8fr_1fr] sm:items-start">
+                      <div>
+                        <p className="text-base text-white">{item.channel}</p>
+                        <p className="mt-1 font-[family-name:var(--font-heading)] text-xl text-[var(--section-accent)]">{item.metric}</p>
+                      </div>
+                      <p className="text-sm leading-6 text-white/68">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+          </div>
+
+          <Panel className="mt-6 border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_7%,var(--card))] p-5 sm:p-6">
+            <div className="flex items-start gap-4">
+              <ChartBar className="mt-1 h-7 w-7 shrink-0 text-[var(--section-accent)]" />
+              <div>
+                <h3 className="text-xl uppercase text-[var(--section-accent)]">Eerlijke conclusie</h3>
+                <p className="mt-2 text-base leading-7 text-white/78">Google en de website leveren nu de meeste aantoonbare waarde. Meta toont dat verkeer en lokaal bereik goedkoop ingekocht kunnen worden. LinkedIn en Pinterest zijn technisch aanwezig, maar nog nauwelijks ontwikkeld. De ontbrekende schakel is volledige meting van advertentie naar lead, afspraak, offerte en verkoop.</p>
+              </div>
+            </div>
+          </Panel>
         </div>
       </section>
 
@@ -117,7 +220,7 @@ export default function HomePage() {
                 <NumberField label="Marketing & analytics" value={state.workedHours.marketing} onChange={(value) => updateWorkedHours("marketing", value)} suffix="uur" />
                 <NumberField label="Agents & automatisering" value={state.workedHours.automation} onChange={(value) => updateWorkedHours("automation", value)} suffix="uur" />
                 <NumberField label="Accounts & infrastructuur" value={state.workedHours.infrastructure} onChange={(value) => updateWorkedHours("infrastructure", value)} suffix="uur" />
-                <div className="rounded-md border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] p-4">
+                <div className="rounded-[5px] border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] p-4">
                   <p className="text-sm uppercase tracking-[0.13em] text-white/55">Totaal geregistreerd</p>
                   <p className="mt-2 text-4xl text-[var(--section-accent)]">{number.format(model.totalWorkedHours)} uur</p>
                 </div>
@@ -162,7 +265,7 @@ export default function HomePage() {
               return (
                 <Panel key={groupId} className="p-5">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-md border border-[var(--section-accent)]/35 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-5 w-5" /></div>
+                    <div className="grid h-10 w-10 place-items-center rounded-[5px] border border-[var(--section-accent)]/35 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-5 w-5" /></div>
                     <span className={`rounded-full border px-2 py-1 text-xs uppercase tracking-[0.1em] ${completed ? "border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_10%,transparent)] text-[var(--section-accent)]" : "border-white/15 text-white/48"}`}>{completed ? "geregeld" : "te regelen"}</span>
                   </div>
                   <p className="mt-4 text-sm uppercase tracking-[0.13em] text-white/48">{group.title}</p>
@@ -187,7 +290,7 @@ export default function HomePage() {
                   <div className="plan-card-image"><img src={item.image} alt="" /></div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-5">
-                      <div className="grid h-12 w-12 place-items-center rounded-md border border-[var(--section-accent)]/40 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-6 w-6" /></div>
+                      <div className="grid h-12 w-12 place-items-center rounded-[5px] border border-[var(--section-accent)]/40 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)] text-[var(--section-accent)]"><Icon className="h-6 w-6" /></div>
                       <span className="text-sm tracking-[0.18em] text-white/38">{item.number}</span>
                     </div>
                     <h3 className="mt-6 text-2xl uppercase text-[var(--section-accent)]">{item.title}</h3>
