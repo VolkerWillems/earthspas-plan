@@ -31,16 +31,28 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => setOpen(false), [pathname]);
 
+  React.useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   return (
     <>
       <header className="site-header">
-        <div className="content-shell flex h-[74px] items-center justify-between gap-5">
-          <Link href="/" className="flex min-w-0 items-center gap-4">
-            <img src="/screens/logo-full-gold.png" alt="Earth Spas" className="h-10 w-auto max-w-[190px] object-contain" />
-            <span className="hidden border-l border-border/80 pl-4 text-sm uppercase tracking-[0.18em] text-white/65 xl:block">digitale keuzehulp</span>
+        <div className="content-shell site-header-inner">
+          <Link href="/" className="site-brand" aria-label="Earth Spas keuzehulp homepage">
+            <img src="/screens/logo-full-gold.png" alt="Earth Spas" />
+            <span>Digitale keuzehulp</span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="desktop-nav" aria-label="Hoofdnavigatie">
             {navigation.map((item) => {
               const Icon = item.icon;
               const active = pathname === item.href;
@@ -48,6 +60,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn("nav-link", active && "nav-link-active")}
                 >
                   <Icon className="h-4 w-4" weight="regular" />
@@ -57,54 +70,55 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          <div className="hidden lg:block">
-            <button onClick={reset} className="icon-button" title="Alles resetten">
+          <div className="desktop-actions">
+            <button onClick={reset} className="icon-button" title="Alles resetten" aria-label="Alle keuzes resetten">
               <ArrowClockwise className="h-5 w-5" />
             </button>
           </div>
 
-          <button className="mobile-menu-button lg:hidden" onClick={() => setOpen((value) => !value)} aria-label="Navigatie openen" aria-expanded={open}>
+          <button
+            className="mobile-menu-button"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? "Navigatie sluiten" : "Navigatie openen"}
+            aria-expanded={open}
+            aria-controls="mobile-site-menu"
+          >
             {open ? <X className="h-6 w-6" /> : <List className="h-7 w-7" />}
           </button>
         </div>
+      </header>
 
-        {open && (
-          <div className="mobile-menu lg:hidden">
-            <nav className="content-shell py-4">
-              {navigation.map((item) => {
+      {open && (
+        <div id="mobile-site-menu" className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobiele navigatie">
+          <button className="mobile-menu-backdrop" aria-label="Navigatie sluiten" onClick={() => setOpen(false)} />
+          <div className="mobile-menu-panel">
+            <div className="mobile-menu-heading">
+              <p>Earth Spas</p>
+              <span>Kies een onderdeel</span>
+            </div>
+            <nav>
+              {navigation.map((item, index) => {
                 const Icon = item.icon;
                 const active = pathname === item.href;
                 return (
-                  <Link key={item.href} href={item.href} className={cn("mobile-nav-link", active && "mobile-nav-link-active")}>
-                    <Icon className="h-5 w-5" />
+                  <Link key={item.href} href={item.href} aria-current={active ? "page" : undefined} className={cn("mobile-nav-link", active && "mobile-nav-link-active")}>
+                    <span className="mobile-nav-number">0{index + 1}</span>
+                    <Icon className="h-6 w-6" weight="regular" />
                     <span className="flex-1">{item.label}</span>
-                    <span className="text-sm text-white/45">0{navigation.indexOf(item) + 1}</span>
                   </Link>
                 );
               })}
-              <button onClick={reset} className="mobile-nav-link mt-3 w-full text-left">
-                <ArrowClockwise className="h-5 w-5" />
-                <span>Alle keuzes resetten</span>
+              <button onClick={reset} className="mobile-nav-link mobile-reset-button">
+                <span className="mobile-nav-number">R</span>
+                <ArrowClockwise className="h-6 w-6" />
+                <span className="flex-1">Alle keuzes resetten</span>
               </button>
             </nav>
           </div>
-        )}
-      </header>
+        </div>
+      )}
 
       {children}
-
-      <nav className="mobile-bottom-nav lg:hidden">
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          const active = pathname === item.href;
-          return (
-            <Link key={item.href} href={item.href} className={cn("mobile-bottom-link", active && "mobile-bottom-link-active")}>
-              <Icon className="h-5 w-5" weight={active ? "fill" : "regular"} />
-              <span>{item.short}</span>
-            </Link>
-          );
-        })}
-      </nav>
     </>
   );
 }
