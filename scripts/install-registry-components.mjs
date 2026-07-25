@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
@@ -69,8 +69,29 @@ console.log("ChartBrush ships with @bklit/line-chart and is not a separate regis
 execFileSync(
   "npx",
   ["--yes", "shadcn@latest", "add", ...items, "-y"],
-  { cwd: root, stdio: "inherit", shell: process.platform === "win32" },
+  {
+    cwd: root,
+    stdio: "inherit",
+    shell: process.platform === "win32",
+    env: {
+      ...process.env,
+      npm_config_ignore_scripts: "true",
+    },
+  },
 );
+
+const trendBadgePath = join(root, "components", "trend-badge.tsx");
+if (existsSync(trendBadgePath)) {
+  let source = readFileSync(trendBadgePath, "utf8");
+  source = source.replace('import { CentralIcon } from "@central-icons-react/all";\n', "");
+  source = source.replace(
+    /\s*<CentralIcon[\s\S]*?\/>/m,
+    '\n      <span aria-hidden="true" className="text-[11px] leading-none">{positive ? "↑" : "↓"}</span>',
+  );
+  source = source.replace(/font-semibold/g, "font-normal");
+  writeFileSync(trendBadgePath, source);
+  console.log("Replaced the licensed Central Icons trend glyph with a local arrow.");
+}
 
 function collectFiles(directory, output = []) {
   if (!existsSync(directory)) return output;
