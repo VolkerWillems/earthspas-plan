@@ -109,10 +109,10 @@ export default function CalculatorPage() {
               return (
                 <div key={group.id} className="grid gap-3 border-b border-border/70 px-5 py-4 last:border-0 md:grid-cols-[1fr_1.25fr_.55fr] md:items-center">
                   <div><p className="text-base text-white">{group.title}</p><p className="mt-1 text-sm leading-5 text-white/48">{group.description}</p></div>
-                  <select value={selected.id} onChange={(event) => selectOption(group.id, event.target.value)} className="min-h-11 w-full rounded-md border border-white/25 bg-background px-3 text-base text-white outline-none focus:border-[var(--section-accent)]">
+                  <select value={selected.id} onChange={(event) => selectOption(group.id, event.target.value)} className="min-h-11 w-full rounded-md border border-white/25 bg-background text-base text-white outline-none focus:border-[var(--section-accent)]">
                     {group.options.map((option) => <option key={option.id} value={option.id}>{option.name}{option.recommended ? " · aanbevolen" : ""}</option>)}
                   </select>
-                  <div className="text-left text-lg text-[var(--section-accent)] md:text-right">{selected.monthly === 0 ? "€0" : euro.format(selected.monthly)}</div>
+                  <div className="choice-price text-left md:text-right">{selected.monthly === 0 ? "€0" : euro.format(selected.monthly)}</div>
                 </div>
               );
             })}
