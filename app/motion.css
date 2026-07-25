@@ -278,11 +278,6 @@
   transition: stroke var(--motion-duration-base) var(--motion-ease-standard);
 }
 
-.flow-node-card:hover,
-.flow-hub:hover {
-  transform: translateY(calc(var(--motion-distance-sm) * -1));
-}
-
 .flow-node-card::after {
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
@@ -328,90 +323,43 @@
 }
 
 @keyframes route-enter {
-  from {
-    opacity: 0;
-    transform: translateY(var(--motion-distance-sm));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(var(--motion-distance-sm)); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes value-in {
-  from {
-    opacity: 0.45;
-    transform: translateY(var(--motion-distance-sm));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0.45; transform: translateY(var(--motion-distance-sm)); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes progress-shine {
-  0%,
-  55% {
-    transform: translateX(-110%);
-  }
-  100% {
-    transform: translateX(110%);
-  }
+  0%, 55% { transform: translateX(-110%); }
+  100% { transform: translateX(110%); }
 }
 
 @keyframes border-sweep {
-  0%,
-  35% {
-    background-position: 150% 0;
-  }
-  65%,
-  100% {
-    background-position: -50% 0;
-  }
+  0%, 35% { background-position: 150% 0; }
+  65%, 100% { background-position: -50% 0; }
 }
 
 @keyframes mockup-swap {
-  from {
-    opacity: 0.35;
-    transform: translateY(var(--motion-distance-sm)) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0.35; transform: translateY(var(--motion-distance-sm)) scale(0.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes mockup-copy {
-  from {
-    opacity: 0;
-    transform: translateY(var(--motion-distance-sm));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(var(--motion-distance-sm)); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes lightbox-in {
-  from {
-    opacity: 0;
-    transform: translateY(var(--motion-distance)) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(var(--motion-distance)) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes card-enter {
-  from {
-    opacity: 0.25;
-    transform: translateY(var(--motion-distance));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0.25; transform: translateY(var(--motion-distance)); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes autoplay-progress {
@@ -420,45 +368,29 @@
 }
 
 @keyframes task-plan-enter {
-  from {
-    opacity: 0;
-    transform: translateY(calc(var(--motion-distance-sm) * -1));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(calc(var(--motion-distance-sm) * -1)); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes dash-flow {
   to { stroke-dashoffset: -80; }
 }
 
-@keyframes map-pulse,
+@keyframes map-pulse {
+  from { offset-distance: 0%; opacity: 0; }
+  10%, 85% { opacity: 1; }
+  to { offset-distance: 100%; opacity: 0; }
+}
+
 @keyframes flow-packet {
-  from {
-    offset-distance: 0%;
-    opacity: 0;
-  }
-  10%,
-  85% {
-    opacity: 1;
-  }
-  to {
-    offset-distance: 100%;
-    opacity: 0;
-  }
+  from { offset-distance: 0%; opacity: 0; }
+  10%, 85% { opacity: 1; }
+  to { offset-distance: 100%; opacity: 0; }
 }
 
 @keyframes install-card-in {
-  from {
-    opacity: 0;
-    transform: translateY(calc(var(--motion-distance) * 2)) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(calc(var(--motion-distance) * 2)) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes flow-grid-breathe {
