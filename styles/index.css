@@ -18,6 +18,10 @@
   --radius-base: 0.75rem;
   --radius-soft: 1rem;
   --radius-pill: 999px;
+  --radius-sm: var(--radius-base);
+  --radius-md: var(--radius-base);
+  --radius-lg: var(--radius-soft);
+  --radius-xl: var(--radius-soft);
 
   --font-size-body: clamp(1.05rem, 1rem + 0.18vw, 1.18rem);
   --font-size-sm: clamp(0.9rem, 0.86rem + 0.14vw, 1rem);
@@ -158,6 +162,15 @@ body {
   color: inherit;
 }
 
+.metric-panel:has(> .panel-metric-icon + :not(p)) {
+  min-height: 0;
+  padding-right: var(--card-padding) !important;
+}
+
+.metric-panel:has(> .panel-metric-icon + :not(p)) > .panel-metric-icon {
+  display: none !important;
+}
+
 .stat-card {
   min-height: clamp(11.5rem, 13vw, 13.75rem) !important;
   display: flex;
@@ -227,6 +240,10 @@ body {
 /* --------------------------------------------------------------------------
    PREMIUM CONTROLS
    -------------------------------------------------------------------------- */
+
+[data-slot="button"] {
+  border-radius: var(--radius-base) !important;
+}
 
 .action-link {
   min-height: 3.2rem !important;
@@ -411,6 +428,10 @@ body {
   .stat-card {
     min-height: auto !important;
     padding-right: 4.5rem !important;
+  }
+
+  .metric-panel:has(> .panel-metric-icon + :not(p)) {
+    padding-right: var(--card-padding) !important;
   }
 
   .panel-metric-icon {
