@@ -14,6 +14,8 @@ import {
   Target,
   X,
 } from "@/lib/phosphor-icons";
+import { GrowthChoroplethCard } from "@/components/blocks/growth-choropleth-card";
+import { SoftwareFlowDiagram } from "@/components/blocks/software-flow-diagram";
 import { MotionController } from "@/components/motion-controller";
 import { PageBottomSummary } from "@/components/page-bottom-summary";
 import { PrepaidDelegationBanner } from "@/components/prepaid-delegation-banner";
@@ -144,7 +146,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <div key={pathname} className={cn("route-transition", pathname === "/checklist" && "checklist-route")}>
+        {pathname === "/" && <GrowthChoroplethCard />}
         {children}
+        {pathname === "/software" && <SoftwareFlowDiagram />}
         {pathname === "/checklist" && <PrepaidDelegationBanner />}
         <PageBottomSummary />
       </div>
