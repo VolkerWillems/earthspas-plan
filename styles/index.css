@@ -1,17 +1,11 @@
 /* Canonical Earth Spas stylesheet entrypoint.
-   Imports are ordered from foundations to route-specific presentation.
-   The final block is the approved visual stability contract. */
+   Foundations load first; this file only defines the shared visual contract. */
 
 @import "./components.css";
 @import "./responsive.css";
 @import "./flows.css";
 @import "./charts.css";
 @import "./ui.css";
-
-/* --------------------------------------------------------------------------
-   QUICK EDIT CONTRACT
-   This is the only file to edit for the shared visual baseline.
-   -------------------------------------------------------------------------- */
 
 :root,
 .dark {
@@ -51,66 +45,46 @@ body {
 }
 
 :where(.page-intro-subtitle, .section-header > p:last-child, .route-visual-chart-heading > p:last-child) {
-  color: var(--text-secondary) !important;
-  font-size: var(--font-size-body) !important;
-  line-height: 1.65 !important;
-  letter-spacing: 0.005em !important;
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+  letter-spacing: 0.005em;
 }
 
 :where(.eyebrow, .badge-label, .card-eyebrow) {
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.12em;
 }
 
 :where(.panel h3, [data-slot="card-title"], .heading-card) {
-  letter-spacing: 0.006em !important;
+  letter-spacing: 0.006em;
 }
 
-/* --------------------------------------------------------------------------
-   PREMIUM CARD SYSTEM
-   -------------------------------------------------------------------------- */
+/* Shared card surface */
 
-:where(.panel:not(.premium-statement-card), .stat-card, [data-slot="card"]) {
-  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, var(--card-border)) !important;
-  border-radius: var(--radius-soft) !important;
+:where(.panel:not(.premium-statement-card), [data-slot="card"]) {
+  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, var(--card-border));
+  border-radius: var(--radius-soft);
   background:
     linear-gradient(
       145deg,
       color-mix(in srgb, var(--section-accent) 5%, var(--card-blue-1)) 0%,
       var(--card-blue-2) 54%,
       var(--card-blue-3) 100%
-    ) !important;
+    );
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.055),
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 1.25rem 3.4rem rgba(0, 0, 0, 0.34) !important;
+    0 1.25rem 3.4rem rgba(0, 0, 0, 0.34);
 }
 
-.grid > :where(.panel:not(.premium-statement-card), [data-slot="card"]):nth-child(3n + 2) {
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--section-accent) 4%, #0e2633) 0%,
-      #091a24 56%,
-      #061018 100%
-    ) !important;
-}
-
-.grid > :where(.panel:not(.premium-statement-card), [data-slot="card"]):nth-child(3n + 3) {
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--section-accent) 4%, #0a1a25) 0%,
-      #07141d 56%,
-      #040b11 100%
-    ) !important;
-}
-
-:where(.panel:not(.premium-statement-card), .stat-card, [data-slot="card"]):hover {
-  border-color: color-mix(in srgb, var(--section-accent) 58%, var(--card-border-hover)) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 1.65rem 4.2rem rgba(0, 0, 0, 0.4),
-    0 0 0 1px color-mix(in srgb, var(--section-accent) 8%, transparent) !important;
+@media (hover: hover) {
+  :where(.panel:not(.premium-statement-card), [data-slot="card"]):hover {
+    border-color: color-mix(in srgb, var(--section-accent) 58%, var(--card-border-hover));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 1.65rem 4.2rem rgba(0, 0, 0, 0.4),
+      0 0 0 1px color-mix(in srgb, var(--section-accent) 8%, transparent);
+  }
 }
 
 .panel::before,
@@ -126,15 +100,18 @@ body {
 .metric-panel.motion-card::after,
 .stat-card.motion-card::before,
 .stat-card.motion-card::after {
-  display: none !important;
-  content: none !important;
+  display: none;
+  content: none;
 }
 
-.metric-panel {
+/* Metric cards */
+
+.metric-panel,
+.stat-card {
   position: relative;
-  min-height: clamp(12rem, 13vw, 14rem);
-  padding: var(--card-padding) !important;
-  padding-right: clamp(4.75rem, 5vw, 6rem) !important;
+  min-height: clamp(11.5rem, 13vw, 14rem);
+  padding: var(--card-padding);
+  padding-right: clamp(4.75rem, 5vw, 6rem);
 }
 
 .panel-metric-icon {
@@ -148,8 +125,11 @@ body {
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--section-accent) 44%, var(--card-border));
   border-radius: var(--radius-base);
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 18%, var(--card-blue-raised)), var(--card-blue-2));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--section-accent) 18%, var(--card-blue-raised)),
+    var(--card-blue-2)
+  );
   color: var(--section-accent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
@@ -162,116 +142,98 @@ body {
   color: inherit;
 }
 
-.metric-panel:has(> .panel-metric-icon + :not(p)) {
-  min-height: 0;
-  padding-right: var(--card-padding) !important;
-}
-
-.metric-panel:has(> .panel-metric-icon + :not(p)) > .panel-metric-icon {
-  display: none !important;
-}
-
 .stat-card {
-  min-height: clamp(11.5rem, 13vw, 13.75rem) !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--card-padding) !important;
-  padding-right: clamp(4.75rem, 5vw, 6rem) !important;
 }
 
 .stat-card > p:first-of-type {
-  color: var(--text-muted) !important;
-  font-family: var(--font-sans) !important;
-  font-size: 0.88rem !important;
-  font-weight: 400 !important;
-  line-height: 1.35 !important;
-  letter-spacing: 0.095em !important;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.095em;
   text-transform: uppercase;
 }
 
 .stat-card .value-change,
+.stat-card .metric-value,
+.metric-panel:not(.stat-card) > p:first-of-type:not(.eyebrow) {
+  color: var(--metric-gold);
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 1.9rem + 1vw, 3.2rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.stat-card .value-change,
 .stat-card .metric-value {
-  margin-top: 0.8rem !important;
-  color: var(--metric-gold) !important;
-  font-family: var(--font-heading) !important;
-  font-size: clamp(2.25rem, 1.9rem + 1vw, 3.2rem) !important;
-  font-weight: 400 !important;
-  line-height: 0.98 !important;
-  letter-spacing: 0 !important;
+  margin-top: 0.8rem;
 }
 
 .stat-card > p:last-of-type:not(:first-of-type) {
-  margin-top: 0.9rem !important;
-  color: var(--text-secondary) !important;
-  font-size: 1rem !important;
-  line-height: 1.55 !important;
+  margin-top: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
-.metric-panel:has(> p:first-of-type + h3) > p:first-of-type {
-  color: var(--metric-gold) !important;
-  font-family: var(--font-heading) !important;
-  font-size: clamp(2.35rem, 1.9rem + 1.1vw, 3.25rem) !important;
-  line-height: 0.98 !important;
-  letter-spacing: 0 !important;
+.metric-panel:not(.stat-card) > h3 {
+  margin-top: 0.9rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 0.9rem + 0.16vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.035em;
 }
 
-.metric-panel:has(> p:first-of-type + h3) > h3 {
-  margin-top: 0.9rem !important;
-  color: var(--text-primary) !important;
-  font-family: var(--font-sans) !important;
-  font-size: clamp(0.95rem, 0.9rem + 0.16vw, 1.08rem) !important;
-  font-weight: 400 !important;
-  line-height: 1.35 !important;
-  letter-spacing: 0.035em !important;
-}
-
-.metric-panel:has(> p:first-of-type + h3) > p:last-of-type {
-  margin-top: 0.75rem !important;
-  color: var(--text-secondary) !important;
-  font-size: 0.98rem !important;
-  line-height: 1.55 !important;
+.metric-panel:not(.stat-card) > p:last-of-type:not(:first-of-type) {
+  margin-top: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 :where(.panel > p:not(.eyebrow):not(.value-change), .panel li) {
   line-height: 1.6;
 }
 
-/* --------------------------------------------------------------------------
-   PREMIUM CONTROLS
-   -------------------------------------------------------------------------- */
+/* Buttons and links */
 
 [data-slot="button"] {
-  border-radius: var(--radius-base) !important;
+  border-radius: var(--radius-base);
 }
 
 .action-link {
-  min-height: 3.2rem !important;
-  border: 1px solid color-mix(in srgb, var(--section-accent) 82%, white 8%) !important;
-  border-radius: 0.9rem !important;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--section-accent) 90%, white 10%),
-      color-mix(in srgb, var(--section-accent) 82%, #a88f4c)
-    ) !important;
-  color: #061017 !important;
-  padding-inline: 1.35rem !important;
-  font-family: var(--font-sans) !important;
-  font-size: 1rem !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.005em !important;
+  min-height: 3.2rem;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 82%, white 8%);
+  border-radius: 0.9rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--section-accent) 90%, white 10%),
+    color-mix(in srgb, var(--section-accent) 82%, #a88f4c)
+  );
+  color: #061017;
+  padding-inline: 1.35rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.005em;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 0.85rem 2rem color-mix(in srgb, var(--section-accent) 18%, transparent) !important;
+    0 0.85rem 2rem color-mix(in srgb, var(--section-accent) 18%, transparent);
 }
 
 .action-link > span,
 .action-link > svg {
   position: relative;
   z-index: 1;
-  color: inherit !important;
-  opacity: 1 !important;
+  color: inherit;
+  opacity: 1;
 }
 
 .action-link > svg {
@@ -281,24 +243,27 @@ body {
 
 .action-group .action-link:nth-child(n + 2),
 .action-link + .action-link {
-  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--card-border)) !important;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 7%, var(--card-blue-1)), var(--card-blue-3)) !important;
-  color: var(--section-accent) !important;
+  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--card-border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--section-accent) 7%, var(--card-blue-1)),
+    var(--card-blue-3)
+  );
+  color: var(--section-accent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0.75rem 1.8rem rgba(0, 0, 0, 0.25) !important;
+    0 0.75rem 1.8rem rgba(0, 0, 0, 0.25);
 }
 
-.action-link:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--section-accent) 78%, white 8%) !important;
-  filter: brightness(1.06);
+@media (hover: hover) {
+  .action-link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--section-accent) 78%, white 8%);
+    filter: brightness(1.06);
+  }
 }
 
-/* --------------------------------------------------------------------------
-   ROUTE VISUALS: MAPS, CHARTS AND FLOWS
-   -------------------------------------------------------------------------- */
+/* Route-specific visual sections */
 
 .route-visual-slot,
 .route-visual-restoration {
@@ -316,9 +281,7 @@ body {
 .route-visual-restoration .growth-map-section,
 .route-visual-restoration .software-flow-section,
 .route-visual-restoration .agent-flow-section {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: block;
 }
 
 .route-visual-chart-section {
@@ -354,64 +317,59 @@ body {
   .flow-stage,
   .registry-flow-stack > *
 ) {
-  border-radius: var(--radius-soft) !important;
-  border-color: color-mix(in srgb, var(--section-accent) 30%, var(--card-border)) !important;
-  background-color: var(--card-blue-2) !important;
+  border-radius: var(--radius-soft);
+  border-color: color-mix(in srgb, var(--section-accent) 30%, var(--card-border));
+  background-color: var(--card-blue-2);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 1.5rem 4rem rgba(0, 0, 0, 0.34) !important;
+    0 1.5rem 4rem rgba(0, 0, 0, 0.34);
 }
 
 .growth-map-card {
   overflow: hidden;
-  background:
-    linear-gradient(135deg, #0c2230 0%, #081721 46%, #050e15 100%) !important;
+  background: linear-gradient(135deg, #0c2230 0%, #081721 46%, #050e15 100%);
 }
 
-.growth-map-metrics > div {
-  border-radius: var(--radius-base) !important;
-  background: linear-gradient(145deg, #0e2633, #07131c) !important;
+.growth-map-metrics > div,
+.growth-map-legend button {
+  border-radius: var(--radius-base);
+  background: linear-gradient(145deg, #0e2633, #07131c);
 }
 
 .growth-map-metrics strong,
 .growth-map-legend button > span:first-child,
 .budget-growth-chart__result strong {
-  color: var(--metric-gold) !important;
+  color: var(--metric-gold);
 }
 
 .growth-map-icon,
 .software-flow-automation-icon,
 .flow-node-icon,
 .flow-hub-icon {
-  border-radius: var(--radius-base) !important;
-  color: var(--section-accent) !important;
+  border-radius: var(--radius-base);
+  color: var(--section-accent);
 }
 
 .growth-map-visual {
   background:
     radial-gradient(circle at 58% 42%, color-mix(in srgb, var(--metric-gold) 10%, transparent), transparent 34%),
-    linear-gradient(145deg, #07141d, #030a0f) !important;
+    linear-gradient(145deg, #07141d, #030a0f);
 }
 
 .growth-map-region path {
-  fill: #0b202c !important;
-  stroke: color-mix(in srgb, var(--brand-primary) 72%, #9fc0cc) !important;
-  stroke-width: 1.6 !important;
+  fill: #0b202c;
+  stroke: color-mix(in srgb, var(--brand-primary) 72%, #9fc0cc);
+  stroke-width: 1.6;
 }
 
 .growth-map-region.is-active path {
-  fill: color-mix(in srgb, var(--metric-gold) 24%, #0b202c) !important;
-  stroke: var(--metric-gold) !important;
-}
-
-.growth-map-legend button {
-  border-radius: var(--radius-base) !important;
-  background: #06121a !important;
+  fill: color-mix(in srgb, var(--metric-gold) 24%, #0b202c);
+  stroke: var(--metric-gold);
 }
 
 .growth-map-legend button.is-active {
-  border-color: color-mix(in srgb, var(--metric-gold) 62%, var(--card-border)) !important;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--metric-gold) 9%, #0d2029), #07131b) !important;
+  border-color: color-mix(in srgb, var(--metric-gold) 62%, var(--card-border));
+  background: linear-gradient(145deg, color-mix(in srgb, var(--metric-gold) 9%, #0d2029), #07131b);
 }
 
 :where(.software-flow-node, .flow-node-card, .flow-mobile-step) svg,
@@ -420,18 +378,14 @@ body {
 }
 
 @media (max-width: 48rem) {
-  :where(.panel, .stat-card, [data-slot="card"]) {
-    border-radius: var(--radius-base) !important;
+  :where(.panel, [data-slot="card"]) {
+    border-radius: var(--radius-base);
   }
 
   .metric-panel,
   .stat-card {
-    min-height: auto !important;
-    padding-right: 4.5rem !important;
-  }
-
-  .metric-panel:has(> .panel-metric-icon + :not(p)) {
-    padding-right: var(--card-padding) !important;
+    min-height: auto;
+    padding-right: 4.5rem;
   }
 
   .panel-metric-icon {
@@ -446,5 +400,14 @@ body {
 
   .action-link {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action-link,
+  .panel,
+  [data-motion-card] {
+    transition: none;
+    transform: none;
   }
 }
