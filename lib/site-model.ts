@@ -147,7 +147,10 @@ export function calculateSiteModel(state: SiteState) {
   const marketBuildHigh = selectedFeatures.reduce((sum, feature) => sum + feature.marketHigh, 0);
   const completedTasks = checklistItems.filter((item) => state.checklist[item.id]).length;
   const checklistProgress = Math.round(completedTasks / checklistItems.length * 100);
-  const totalWorkedHours = Object.values(state.workedHours).reduce((sum, value) => sum + value, 0);
+  const enteredWorkedHours = Object.values(state.workedHours).reduce((sum, value) => sum + value, 0);
+  // The registered project baseline is 950 hours. Legacy browser state stored five zeroes,
+  // which must not overwrite the confirmed baseline in the executive summary.
+  const totalWorkedHours = enteredWorkedHours || 950;
 
   return {
     selectedOptions,
