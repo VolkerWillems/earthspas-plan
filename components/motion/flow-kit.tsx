@@ -62,10 +62,10 @@ export function FlowStage({ label, children, mobileSteps, className }: FlowStage
             <React.Fragment key={`${step.number}-${step.title}`}>
               <motion.li
                 className="flow-mobile-step"
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.48, delay: index * 0.04 }}
+                transition={{ duration: 0.42, delay: index * 0.035 }}
               >
                 <span className="flow-mobile-step-icon"><Icon aria-hidden weight="duotone" /></span>
                 <span className="flow-mobile-step-copy">
@@ -94,6 +94,7 @@ export function FlowNode({
   variant = "card",
   delay = 0,
 }: FlowNodeProps) {
+  const reducedMotion = useReducedMotion();
   const positionStyle = {
     "--flow-x": `${x}%`,
     "--flow-y": `${y}%`,
@@ -105,11 +106,11 @@ export function FlowNode({
       <div className="flow-node-position" style={positionStyle}>
         <motion.div
           className="flow-hub"
-          initial={{ opacity: 0, scale: 0.76 }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.88 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.55 }}
-          transition={{ type: "spring", stiffness: 180, damping: 18, delay }}
-          whileHover={{ y: -5, scale: 1.025 }}
+          transition={{ duration: 0.42, delay, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={reducedMotion ? undefined : { y: -3, scale: 1.012 }}
         >
           <span className="flow-hub-orb"><Icon aria-hidden weight="duotone" /></span>
           {eyebrow && <span className="flow-hub-eyebrow">{eyebrow}</span>}
@@ -124,11 +125,11 @@ export function FlowNode({
     <div className="flow-node-position" style={positionStyle}>
       <motion.article
         className={["flow-node-card", variant === "output" ? "flow-node-output" : ""].filter(Boolean).join(" ")}
-        initial={{ opacity: 0, y: 16, scale: 0.97 }}
+        initial={reducedMotion ? false : { opacity: 0, y: 12, scale: 0.985 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ y: -7, scale: 1.012 }}
+        transition={{ duration: 0.46, delay, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={reducedMotion ? undefined : { y: -4, rotateX: 0.8, scale: 1.006 }}
       >
         <span className="flow-node-icon"><Icon aria-hidden weight="duotone" /></span>
         <span className="flow-node-copy">
@@ -143,67 +144,48 @@ export function FlowNode({
 
 export function AnimatedConnectorLayer({ connectors, viewBox = "0 0 1000 620" }: AnimatedConnectorLayerProps) {
   const reducedMotion = useReducedMotion();
-  const instanceId = React.useId().replace(/:/g, "");
-  const glowId = `flow-glow-${instanceId}`;
 
   return (
     <svg className="flow-connector-layer" viewBox={viewBox} preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <filter id={glowId} x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
       {connectors.map((connector, index) => {
         const accent = connector.accent ?? "var(--brand-primary)";
-        const duration = connector.duration ?? 1.15;
-        const dashOffset = connector.reverse ? 70 : -70;
+        const duration = connector.duration ?? 0.95;
+        const dashOffset = connector.reverse ? 360 : -360;
 
         return (
           <g key={connector.id}>
             <path className="flow-connector-base" d={connector.path} />
             <motion.path
+              className="flow-connector-active"
               d={connector.path}
               fill="none"
               stroke={accent}
-              strokeLinecap="round"
-              strokeWidth="2"
+              strokeLinecap="square"
+              strokeLinejoin="round"
+              strokeWidth="1.6"
               initial={reducedMotion ? false : { pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.72 }}
+              whileInView={{ pathLength: 1, opacity: 0.78 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration, delay: connector.delay ?? index * 0.035, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration, delay: connector.delay ?? index * 0.03, ease: [0.22, 1, 0.36, 1] }}
             />
             {!reducedMotion && (
               <motion.path
+                className="flow-connector-active"
                 d={connector.path}
                 fill="none"
                 stroke={accent}
-                strokeDasharray="3 18"
-                strokeLinecap="round"
-                strokeWidth="3"
-                filter={`url(#${glowId})`}
+                strokeDasharray="72 420"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 initial={{ strokeDashoffset: 0, opacity: 0 }}
-                whileInView={{ opacity: 0.9 }}
+                whileInView={{ opacity: 0.46 }}
                 animate={{ strokeDashoffset: dashOffset }}
                 transition={{
-                  opacity: { duration: 0.35, delay: (connector.delay ?? 0) + 0.35 },
-                  strokeDashoffset: { duration: 1.9, ease: "linear", repeat: Infinity },
+                  opacity: { duration: 0.3, delay: (connector.delay ?? 0) + 0.25 },
+                  strokeDashoffset: { duration: 5.2, ease: "linear", repeat: Infinity },
                 }}
               />
-            )}
-            {!reducedMotion && connector.showPacket !== false && (
-              <circle r="4.5" fill={accent} filter={`url(#${glowId})`}>
-                <animateMotion
-                  begin={`${(connector.delay ?? index * 0.04) + 0.55}s`}
-                  dur={`${2.8 + (index % 3) * 0.35}s`}
-                  path={connector.path}
-                  repeatCount="indefinite"
-                />
-              </circle>
             )}
           </g>
         );
