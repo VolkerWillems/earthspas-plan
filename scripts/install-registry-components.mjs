@@ -41,6 +41,17 @@ function restoreSnapshot(snapshot) {
   }
 }
 
+function patchTextFile(projectPath, transform, message) {
+  const absolute = join(root, projectPath);
+  if (!existsSync(absolute)) return;
+  const before = readFileSync(absolute, "utf8");
+  const after = transform(before);
+  if (after !== before) {
+    writeFileSync(absolute, after);
+    console.log(message);
+  }
+}
+
 const sourceSnapshot = new Map();
 for (const directory of ["app", "components", "lib", "data"]) {
   snapshotDirectory(join(root, directory), sourceSnapshot);
@@ -131,17 +142,40 @@ execFileSync("npm", ["install", "--include=dev", "--ignore-scripts"], {
 });
 console.log("Restored production and build dependencies after registry installation.");
 
-const trendBadgePath = join(root, "components", "trend-badge.tsx");
-if (existsSync(trendBadgePath)) {
-  let source = readFileSync(trendBadgePath, "utf8");
-  source = source.replace('import { CentralIcon } from "@central-icons-react/all";\n', "");
-  source = source.replace(
-    /\s*<CentralIcon[\s\S]*?\/>/m,
-    '\n      <span aria-hidden="true" className="text-[11px] leading-none">{positive ? "↑" : "↓"}</span>',
+patchTextFile(
+  "components/trend-badge.tsx",
+  (source) => source
+    .replace('import { CentralIcon } from "@central-icons-react/all";\n', "")
+    .replace(
+      /\s*<CentralIcon[\s\S]*?\/>/m,
+      '\n      <span aria-hidden="true" className="text-[11px] leading-none">{positive ? "↑" : "↓"}</span>',
+    )
+    .replace(/font-semibold/g, "font-normal"),
+  "Replaced the licensed Central Icons trend glyph with a local arrow.",
+);
+
+patchTextFile(
+  "components/charts/chart-loading-label.tsx",
+  (source) => source.replace(
+    'from "../components/shimmering-text"',
+    'from "../shimmering-text"',
+  ),
+  "Corrected the Bklit shimmering-text import path.",
+);
+
+for (const projectPath of [
+  "components/stat-card-chart.tsx",
+  "components/stat-card-area.tsx",
+  "components/stat-card-choropleth.tsx",
+  "components/timeline-block.tsx",
+  "components/integrations-block.tsx",
+  "components/how-it-works-block.tsx",
+]) {
+  patchTextFile(
+    projectPath,
+    (source) => source.replace(/font-(?:semibold|bold|extrabold)/g, "font-normal"),
+    `Normalized Barlow font weights in ${projectPath}.`,
   );
-  source = source.replace(/font-semibold/g, "font-normal");
-  writeFileSync(trendBadgePath, source);
-  console.log("Replaced the licensed Central Icons trend glyph with a local arrow.");
 }
 
 function collectFiles(directory, output = []) {
