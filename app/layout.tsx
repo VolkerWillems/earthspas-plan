@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import "./design-system.css";
 import "@/lib/choice-corrections";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { SiteShell } from "@/components/site-shell";
