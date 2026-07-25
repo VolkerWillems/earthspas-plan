@@ -37,23 +37,49 @@ export type SiteState = {
   workedHours: WorkHours;
 };
 
+const approvedDefaultToolChoices: Record<string, string> = {
+  ...recommendedChoices,
+  payment: "prepaid-card",
+  workspace: "m365",
+  source: "github-team",
+  dns: "cloudflare",
+  server: "hetzner-production",
+  cms: "directus",
+  automation: "make",
+  secrets: "doppler",
+  database: "supabase-pro",
+  frontend: "vercel-pro",
+  "transactional-email": "resend-pro",
+  "ai-workspace": "chatgpt-pro5",
+  design: "figma-pro",
+  "social-content": "canva-pro",
+  "coding-ai": "copilot-proplus",
+  stock: "free-assets",
+  voice: "elevenlabs",
+  "video-ai": "runway",
+};
+
+const approvedDefaultFeatures = Object.fromEntries(
+  Object.keys(defaultFeatureSelections).map((featureId) => [featureId, true]),
+);
+
 export const defaultSiteState: SiteState = {
-  toolChoices: recommendedChoices,
-  featureSelections: defaultFeatureSelections,
+  toolChoices: approvedDefaultToolChoices,
+  featureSelections: approvedDefaultFeatures,
   checklist: defaultChecklist,
-  metaBudget: 1000,
-  googleBudget: 1500,
+  metaBudget: 500,
+  googleBudget: 0,
   contentBudget: 250,
-  aiApiBudget: 250,
-  aiDevelopmentBudget: 150,
+  aiApiBudget: 100,
+  aiDevelopmentBudget: 0,
   aiMediaBudget: 150,
   currentAnnualRevenue: 624000,
-  currentAnnualSales: 104,
+  currentAnnualSales: 102,
   grossMargin: 38,
-  acquisitionCostPerSale: 1500,
-  incrementalCostPerSale: 150,
+  acquisitionCostPerSale: 250,
+  incrementalCostPerSale: 0,
   involvement: "structured",
-  hoursPerWeek: 10,
+  hoursPerWeek: 24,
   clientName: "",
   notes: "",
   workedHours: {
