@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Check, X } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
-import "./hero-mockup-gallery.module.css";
+import styles from "./hero-mockup-gallery.module.css";
 
 export type HeroMockupItem = {
   id: string;
@@ -42,7 +42,7 @@ export function HeroMockupGallery({
   if (!active) return null;
 
   return (
-    <div className="hero-mockup" aria-label={eyebrow}>
+    <div className={cn(styles.root, "hero-mockup")} aria-label={eyebrow}>
       <div className="hero-mockup-heading">
         <div>
           <p className="hero-mockup-eyebrow">{eyebrow}</p>
