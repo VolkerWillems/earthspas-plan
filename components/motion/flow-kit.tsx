@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
-import styles from "./motion-flow.module.css";
 
 export type FlowIcon = React.ComponentType<{
   className?: string;
@@ -53,29 +52,29 @@ type AnimatedConnectorLayerProps = {
 
 export function FlowStage({ label, children, mobileSteps, className }: FlowStageProps) {
   return (
-    <div className={[styles.stage, className].filter(Boolean).join(" ")} aria-label={label} role="group">
-      <div className={styles.grid} aria-hidden="true" />
-      <div className={styles.desktopCanvas}>{children}</div>
-      <ol className={styles.mobileFlow} aria-label={`${label} in stappen`}>
+    <div className={["flow-stage", className].filter(Boolean).join(" ")} aria-label={label} role="group">
+      <div className="flow-grid" aria-hidden="true" />
+      <div className="flow-desktop-canvas">{children}</div>
+      <ol className="flow-mobile" aria-label={`${label} in stappen`}>
         {mobileSteps.map((step, index) => {
           const Icon = step.icon;
           return (
             <React.Fragment key={`${step.number}-${step.title}`}>
               <motion.li
-                className={styles.mobileStep}
+                className="flow-mobile-step"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.48, delay: index * 0.04 }}
               >
-                <span className={styles.mobileStepIcon}><Icon aria-hidden weight="duotone" /></span>
-                <span className={styles.mobileStepCopy}>
+                <span className="flow-mobile-step-icon"><Icon aria-hidden weight="duotone" /></span>
+                <span className="flow-mobile-step-copy">
                   <span>{step.number}</span>
                   <strong>{step.title}</strong>
                   <small>{step.text}</small>
                 </span>
               </motion.li>
-              {index < mobileSteps.length - 1 && <li className={styles.mobileArrow} aria-hidden="true">↓</li>}
+              {index < mobileSteps.length - 1 && <li className="flow-mobile-arrow" aria-hidden="true">↓</li>}
             </React.Fragment>
           );
         })}
@@ -103,17 +102,17 @@ export function FlowNode({
 
   if (variant === "hub") {
     return (
-      <div className={styles.nodePosition} style={positionStyle}>
+      <div className="flow-node-position" style={positionStyle}>
         <motion.div
-          className={styles.hubNode}
+          className="flow-hub"
           initial={{ opacity: 0, scale: 0.76 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.55 }}
           transition={{ type: "spring", stiffness: 180, damping: 18, delay }}
           whileHover={{ y: -5, scale: 1.025 }}
         >
-          <span className={styles.hubOrb}><Icon aria-hidden weight="duotone" /></span>
-          {eyebrow && <span className={styles.hubEyebrow}>{eyebrow}</span>}
+          <span className="flow-hub-orb"><Icon aria-hidden weight="duotone" /></span>
+          {eyebrow && <span className="flow-hub-eyebrow">{eyebrow}</span>}
           <strong>{title}</strong>
           {text && <small>{text}</small>}
         </motion.div>
@@ -122,17 +121,17 @@ export function FlowNode({
   }
 
   return (
-    <div className={styles.nodePosition} style={positionStyle}>
+    <div className="flow-node-position" style={positionStyle}>
       <motion.article
-        className={[styles.nodeCard, variant === "output" ? styles.outputNode : ""].filter(Boolean).join(" ")}
+        className={["flow-node-card", variant === "output" ? "flow-node-output" : ""].filter(Boolean).join(" ")}
         initial={{ opacity: 0, y: 16, scale: 0.97 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.45 }}
         transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ y: -7, scale: 1.012 }}
       >
-        <span className={styles.nodeIcon}><Icon aria-hidden weight="duotone" /></span>
-        <span className={styles.nodeCopy}>
+        <span className="flow-node-icon"><Icon aria-hidden weight="duotone" /></span>
+        <span className="flow-node-copy">
           {eyebrow && <span>{eyebrow}</span>}
           <strong>{title}</strong>
           {text && <small>{text}</small>}
@@ -148,7 +147,7 @@ export function AnimatedConnectorLayer({ connectors, viewBox = "0 0 1000 620" }:
   const glowId = `flow-glow-${instanceId}`;
 
   return (
-    <svg className={styles.connectorLayer} viewBox={viewBox} preserveAspectRatio="none" aria-hidden="true">
+    <svg className="flow-connector-layer" viewBox={viewBox} preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <filter id={glowId} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="4" result="blur" />
@@ -166,7 +165,7 @@ export function AnimatedConnectorLayer({ connectors, viewBox = "0 0 1000 620" }:
 
         return (
           <g key={connector.id}>
-            <path className={styles.connectorBase} d={connector.path} />
+            <path className="flow-connector-base" d={connector.path} />
             <motion.path
               d={connector.path}
               fill="none"
