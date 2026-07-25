@@ -123,7 +123,7 @@ const installEnvironment = {
   npm_config_production: "false",
 };
 
-execFileSync("npx", ["--no-install", "shadcn", "add", ...items, "-y"], {
+execFileSync("npx", ["--no-install", "shadcn", "add", ...items, "-y", "--overwrite"], {
   cwd: root,
   input: "n\n".repeat(200),
   stdio: ["pipe", "inherit", "inherit"],
