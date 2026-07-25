@@ -25,33 +25,25 @@ const softwareMockups: HeroMockupItem[] = [
     id: "crm",
     label: "CRM",
     title: "CRM en commerciële pipeline",
-    description: "Leads, contacten, afspraken, offertes, kansen en omzet worden zichtbaar in één commerciële omgeving met duidelijke opvolging.",
+    description: "Leads, contacten, afspraken, offertes, kansen en omzet worden zichtbaar in het commerciële dashboard van dezelfde Earth Spas-app.",
     image: "/mockup/crm.png",
     imageAlt: "Canva-concept van een premium CRM- en verkoopdashboard",
   },
   {
     id: "support",
-    label: "Support AI",
-    title: "AI-ondersteund service- en supportplatform",
-    description: "Servicevragen, kennisbank, responstijden, escalaties en automatische afhandeling worden centraal beheerd en gemeten.",
+    label: "Support",
+    title: "Service- en supportdashboard",
+    description: "Tickets, kennisbank, klantstatus, servicegeschiedenis en AI-ondersteuning worden beheerd in het supportdashboard van dezelfde app.",
     image: "/mockup/support.png",
-    imageAlt: "Canva-concept van een premium AI support- en servicedashboard",
+    imageAlt: "Canva-concept van een premium support- en servicedashboard",
   },
   {
-    id: "mobile-management",
-    label: "Managementapp",
-    title: "Mobiele managementomgeving",
-    description: "Een compacte mobiele toepassing voor actuele cijfers, leads, meldingen en operationele beslissingen onderweg.",
+    id: "management",
+    label: "Management",
+    title: "Managementdashboard",
+    description: "Kerncijfers, meldingen, teamoverzicht en commerciële voortgang blijven in het managementdashboard van dezelfde app direct inzichtelijk, ook mobiel.",
     image: "/mockup/App2.png",
-    imageAlt: "Canva-concept van een mobiele Earth Spas managementapp",
-  },
-  {
-    id: "mobile-support",
-    label: "Supportapp",
-    title: "Mobiele service- en supportomgeving",
-    description: "Tickets, klantstatus, kennisbank en AI-inzichten blijven ook op mobiel overzichtelijk en direct beschikbaar.",
-    image: "/mockup/app.png",
-    imageAlt: "Canva-concept van een mobiele Earth Spas supportapp",
+    imageAlt: "Canva-concept van het mobiele Earth Spas managementdashboard",
   },
 ];
 
@@ -78,7 +70,7 @@ export function PageIntro({
   const mockupConfig = pathname === "/marketing"
     ? { eyebrow: "Concept · centrale marketingsturing", items: marketingMockups }
     : pathname === "/software"
-      ? { eyebrow: "Concept · mogelijke applicaties", items: softwareMockups }
+      ? { eyebrow: "Concept · één app, drie dashboards", items: softwareMockups }
       : null;
 
   return (
@@ -86,7 +78,7 @@ export function PageIntro({
       <div className={cn("content-shell page-intro-inner", (image || mockupConfig) && "page-intro-split")}>
         <div className="page-intro-copy" data-reveal="up">
           <p className="eyebrow">{eyebrow}</p>
-          <h1 className="mt-4 max-w-5xl text-4xl uppercase leading-[1.02] sm:text-5xl lg:text-6xl">{title}</h1>
+          <h1 className="mt-4 max-w-5xl text-3xl uppercase leading-[1.02] sm:text-4xl lg:text-5xl">{title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 sm:text-xl">{text}</p>
           {actions && <div className="action-group mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>}
         </div>
