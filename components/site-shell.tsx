@@ -14,6 +14,7 @@ import {
   X,
 } from "@/lib/phosphor-icons";
 import { MotionController } from "@/components/motion-controller";
+import { PageBottomSummary } from "@/components/page-bottom-summary";
 import { useSiteState } from "@/components/site-state";
 import { cn } from "@/lib/utils";
 
@@ -139,8 +140,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      <div key={pathname} className="route-transition">
+      <div key={pathname} className={cn("route-transition", pathname === "/checklist" && "checklist-route")}>
         {children}
+        <PageBottomSummary />
       </div>
     </>
   );
