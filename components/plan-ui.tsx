@@ -9,6 +9,15 @@ import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup
 
 type Accent = "primary" | "secondary";
 
+const routeHeaderCopy: Record<string, { title: string; kicker: string }> = {
+  "/": { title: "Digitale basis en groeiplan", kicker: "Huidige stand, resultaat en vervolgstappen" },
+  "/strategie": { title: "Premium groei vanuit Venlo", kicker: "Positionering, markten en fasering" },
+  "/marketing": { title: "Meetbaar groeien", kicker: "Campagnes, content en commerciële opvolging" },
+  "/software": { title: "Eén platform voor verkoop en service", kicker: "Eigenaarschap, data en automatisering" },
+  "/calculator": { title: "Keuzes en groeiscenario's", kicker: "Kosten, capaciteit en resultaatbandbreedtes" },
+  "/checklist": { title: "Overdracht en uitvoering", kicker: "Accounts, eigenaarschap en acceptatie" },
+};
+
 const marketingMockups: HeroMockupItem[] = [
   {
     id: "marketing",
@@ -67,6 +76,7 @@ export function PageIntro({
   imagePosition?: string;
 }) {
   const pathname = usePathname();
+  const headerCopy = routeHeaderCopy[pathname];
   const mockupConfig = pathname === "/marketing"
     ? { eyebrow: "Concept · centrale marketingsturing", items: marketingMockups }
     : pathname === "/software"
@@ -78,9 +88,10 @@ export function PageIntro({
       <div className={cn("content-shell page-intro-inner", (image || mockupConfig) && "page-intro-split")}>
         <div className="page-intro-copy" data-reveal="up">
           <p className="eyebrow">{eyebrow}</p>
-          <h1 className="mt-4 max-w-5xl text-3xl uppercase leading-[1.02] sm:text-4xl lg:text-5xl">{title}</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 sm:text-xl">{text}</p>
-          {actions && <div className="action-group mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>}
+          <p className="page-intro-kicker">{headerCopy?.kicker ?? title}</p>
+          <h1>{headerCopy?.title ?? title}</h1>
+          <p className="page-intro-subtitle">{text}</p>
+          {actions && <div className="action-group">{actions}</div>}
         </div>
         {mockupConfig ? (
           <div data-reveal="scale" data-reveal-delay="90">
@@ -101,12 +112,12 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
   const showBudgetStrategy = title === "Advertenties, content en AI afzonderlijk instellen";
 
   return (
-    <div data-reveal="up">
+    <div className="section-header" data-reveal="up">
       <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-3 max-w-4xl text-3xl uppercase leading-tight sm:text-4xl">{title}</h2>
-      {text && <p className="mt-4 max-w-4xl text-lg leading-8 text-white/76">{text}</p>}
+      <h2>{title}</h2>
+      {text && <p>{text}</p>}
       {showBudgetStrategy && (
-        <div className="budget-test-strategy mt-6">
+        <div className="budget-test-strategy">
           <div className="budget-test-intro">
             <Info className="h-6 w-6 shrink-0" />
             <div>
