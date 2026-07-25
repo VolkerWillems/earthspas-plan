@@ -7,10 +7,10 @@ import { calculateSiteModel } from "@/lib/site-model";
 import { euro, number } from "@/lib/utils";
 
 const markets = [
-  { id: "nl", label: "Nederland", status: "Direct actief", share: 45, path: "M87 89l22-12 20 8 7 19-8 22-20 6-18-13-8-18z", labelX: 108, labelY: 106 },
-  { id: "de", label: "Duitsland · NRW", status: "Groeiprioriteit", share: 35, path: "M140 74l47-11 34 18 9 37-18 41-39 12-31-22-13-37z", labelX: 181, labelY: 114 },
-  { id: "be", label: "België", status: "Tweede fase", share: 12, path: "M66 126l39-5 20 18-10 23-35 2-20-16z", labelX: 91, labelY: 146 },
-  { id: "lu", label: "Luxemburg", status: "Compacte premiumtest", share: 8, path: "M122 153l15-3 10 12-7 16-15-2-7-11z", labelX: 133, labelY: 166 },
+  { id: "nl", label: "Nederland", status: "Direct actief", share: 55, path: "M87 89l22-12 20 8 7 19-8 22-20 6-18-13-8-18z", labelX: 108, labelY: 106 },
+  { id: "de", label: "Duitsland · NRW", status: "Groeiprioriteit", share: 45, path: "M140 74l47-11 34 18 9 37-18 41-39 12-31-22-13-37z", labelX: 181, labelY: 114 },
+  { id: "be", label: "België", status: "Later · onderzoek", share: 0, path: "M66 126l39-5 20 18-10 23-35 2-20-16z", labelX: 91, labelY: 146 },
+  { id: "lu", label: "Luxemburg", status: "Needs review · redirect-only", share: 0, path: "M122 153l15-3 10 12-7 16-15-2-7-11z", labelX: 133, labelY: 166 },
 ] as const;
 
 type MarketId = (typeof markets)[number]["id"];
@@ -36,7 +36,7 @@ export function GrowthChoroplethCard() {
               </div>
             </div>
 
-            <p className="growth-map-intro">De kaart vertaalt het huidige werkbudget naar een voorzichtig groeiscenario. Nederland en NRW staan voorop; België en Luxemburg volgen pas wanneer tracking, opvolging en conversie aantoonbaar werken.</p>
+            <p className="growth-map-intro">De kaart vertaalt het huidige advertentiebudget naar een voorzichtig groeiscenario. Nederland en NRW staan voorop. België blijft een latere onderzoekslaag en Luxemburg blijft redirect-only totdat de marktbeslissing expliciet is bevestigd.</p>
 
             <div className="growth-map-metrics" aria-label="Berekend groeiscenario">
               <div><span>Werkbasis</span><strong>+{number.format(model.baseExtraSales)} spa&apos;s</strong><small>berekende extra verkopen per jaar</small></div>
@@ -46,10 +46,10 @@ export function GrowthChoroplethCard() {
 
             <div className="growth-map-market-detail" aria-live="polite">
               <div><span>{activeMarket.status}</span><h3 className="mt-1 text-[1.6rem] uppercase text-white">{activeMarket.label}</h3></div>
-              <div className="growth-map-market-result"><ArrowRight aria-hidden="true" /><p><strong>circa {number.format(marketSales)} verkopen</strong><span>{euro.format(marketRevenue)} extra omzet in de werkbasis</span></p></div>
+              <div className="growth-map-market-result"><ArrowRight aria-hidden="true" /><p><strong>{activeMarket.share > 0 ? `circa ${number.format(marketSales)} verkopen` : "Nog geen actief budget"}</strong><span>{activeMarket.share > 0 ? `${euro.format(marketRevenue)} extra omzet in de werkbasis` : "Eerst besluit, lokalisatie en opvolging bevestigen"}</span></p></div>
             </div>
 
-            <p className="growth-map-note"><Target aria-hidden="true" /> De verdeling is een planningsaanname. Budget verschuift naar regio&apos;s die daadwerkelijk afspraken, offertes en verkopen opleveren.</p>
+            <p className="growth-map-note"><Target aria-hidden="true" /> De verdeling is een planningsaanname. Budget verschuift alleen naar regio&apos;s die aantoonbaar afspraken, offertes en verkopen opleveren.</p>
           </div>
 
           <div className="growth-map-visual" aria-label="Interactieve groeikaart Nederland, Duitsland, België en Luxemburg">
@@ -93,7 +93,7 @@ export function GrowthChoroplethCard() {
             <div className="growth-map-legend">
               {markets.map((market) => (
                 <button key={market.id} type="button" className={activeId === market.id ? "is-active" : undefined} onClick={() => setActiveId(market.id)}>
-                  <span>{market.share}%</span><span><strong>{market.label}</strong><small>{market.status}</small></span>
+                  <span>{market.share > 0 ? `${market.share}%` : "—"}</span><span><strong>{market.label}</strong><small>{market.status}</small></span>
                 </button>
               ))}
             </div>
