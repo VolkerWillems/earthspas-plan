@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Check, X } from "@/lib/phosphor-icons";
 import { cn } from "@/lib/utils";
+import "./hero-mockup-gallery.module.css";
 
 export type HeroMockupItem = {
   id: string;
