@@ -42,6 +42,10 @@ Door `output: "export"` staat de statische uitvoer daarna in de map `out/`.
 3. Importeer de repository in Vercel.
 4. Zet eventueel Vercel Deployment Protection aan, omdat deze pagina alleen voor Jeroen bedoeld is.
 
+## Visuele baseline
+
+De productie-interface staat vast op de laatst gecontroleerde visuele baseline. Grote wijzigingen aan globale CSS, typografie, spacing of componenttokens worden niet meer gecombineerd met inhoudelijke of componentwijzigingen.
+
 ## Belangrijke afbakening
 
 De operationele calculator telt software, hosting, AI/API, contentreserve en advertenties op. De vergoeding of tegenprestatie voor Volkers inzet staat bewust niet in het model. Marktwaardes van maatwerk zijn indicatieve externe vergelijkingsbedragen en worden niet bij het operationele budget opgeteld.
