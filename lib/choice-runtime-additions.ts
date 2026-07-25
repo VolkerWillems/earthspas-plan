@@ -1,4 +1,4 @@
-import { choiceGroups } from "@/lib/choice-data";
+import { checklistItems, choiceGroups } from "@/lib/choice-data";
 
 const automationGroup = choiceGroups.find((group) => group.id === "automation");
 
@@ -12,4 +12,10 @@ if (automationGroup && !automationGroup.options.some((option) => option.id === "
     logoSlug: "make",
     icon: "flow",
   });
+}
+
+const automationTask = checklistItems.find((item) => item.id === "automation");
+if (automationTask) {
+  automationTask.title = "Automatiseringsplatform onder Earth Spas-beheer plaatsen";
+  automationTask.description = "Het gekozen platform, workflows, credentials, meldingen en kritieke flows onder een eigen Earth Spas-account inrichten en testen.";
 }
