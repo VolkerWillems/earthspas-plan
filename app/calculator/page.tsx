@@ -10,7 +10,7 @@ import {
 } from "@/lib/phosphor-icons";
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
-import { choiceGroups } from "@/lib/choice-data";
+import { choiceGroups, pricingReview } from "@/lib/choice-data";
 import { euro, number } from "@/lib/utils";
 import {
   NumberField,
@@ -125,7 +125,11 @@ export default function CalculatorPage() {
       <section className="section-block theme-primary">
         <div className="content-shell">
           <SectionHeader eyebrow="Accounts en providers" title="Selecteer één route per onderdeel" text="De aanbevolen keuze staat als eerste of is gemarkeerd. Geen optie is vergrendeld. De maand- en jaarbedragen veranderen direct zodra een andere oplossing wordt geselecteerd." />
-          <div className="mt-9 overflow-hidden rounded-lg border border-[var(--section-accent)]/35 bg-card">
+          <Panel className="mt-5 p-4 sm:p-5">
+            <p className="text-sm uppercase tracking-[0.13em] text-[var(--section-accent)]">Prijscontrole · {pricingReview.reviewedAt}</p>
+            <p className="mt-2 text-sm leading-6 text-white/68">{pricingReview.note}</p>
+          </Panel>
+          <div className="mt-6 overflow-hidden rounded-[5px] border border-[var(--section-accent)]/35 bg-card">
             <div className="hidden grid-cols-[1fr_1.25fr_.55fr] gap-4 border-b border-border bg-white/[.025] px-5 py-3 text-xs uppercase tracking-[0.13em] text-[var(--section-accent)] md:grid"><span>Onderdeel</span><span>Gekozen oplossing</span><span>Per maand</span></div>
             {choiceGroups.map((group) => {
               const selected = group.options.find((option) => option.id === state.toolChoices[group.id]) ?? group.options[0];
