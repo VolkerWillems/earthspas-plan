@@ -13,6 +13,7 @@ import { calculateSiteModel } from "@/lib/site-model";
 import { choiceGroups } from "@/lib/choice-data";
 import { euro, number } from "@/lib/utils";
 import {
+  NumberField,
   PageIntro,
   Panel,
   PrimaryLink,
@@ -35,7 +36,7 @@ export default function CalculatorPage() {
     setState((previous) => ({ ...previous, toolChoices: { ...previous.toolChoices, [groupId]: optionId } }));
   };
 
-  const summary = `Earth Spas totaalkeuze\n\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nUitvoeringsvorm: ${state.involvement === "structured" ? `${state.hoursPerWeek} uur structurele capaciteit per week` : "flexibel en incidenteel"}.`;
+  const summary = `Earth Spas totaalkeuze\n\nHuidige jaaromzet: ${euro.format(model.currentRevenue)}.\nHuidige verkopen: ${number.format(model.currentUnitsYear)} spa's per jaar.\nAfgeleide gemiddelde verkoopprijs: ${euro.format(model.averageSalePrice)}.\nAccounts en tools: ${euro.format(model.platformMonthly)} per maand.\nAdvertenties: ${euro.format(model.adsMonthly)} per maand.\nAI-credits: ${euro.format(model.aiMonthly)} per maand.\nTotaal extern: ${euro.format(model.totalMonthly)} per maand / ${euro.format(model.annualOperating)} per jaar.\nVerwacht: ${number.format(model.baseExtraSales)} extra spa's en ${euro.format(model.baseExtraRevenue)} extra omzet.\nOmzetgroei: ${number.format(model.growthPct)}%.\nBreak-even: ${number.format(model.breakEvenSales)} extra spa's.\nSoftwaremarktwaarde: ${euro.format(model.marketBuildLow)}–${euro.format(model.marketBuildHigh)}.\nUitvoeringsvorm: ${state.involvement === "structured" ? `${state.hoursPerWeek} uur structurele capaciteit per week` : "flexibel en incidenteel"}.`;
 
   const copySummary = async () => {
     await navigator.clipboard.writeText(summary);
@@ -63,8 +64,8 @@ export default function CalculatorPage() {
     <main>
       <PageIntro
         eyebrow="04 · keuzes en totaalcalculator"
-        title="Alle accounts, budgetten en aannames in één beslisoverzicht"
-        text="Deze pagina vormt de centrale invullijst. Iedere wijziging in provider, advertentiebudget, verkoopprijs, marge of uitvoeringscapaciteit wordt direct verwerkt in de overige pagina's en in het totale scenario."
+        title="Alle accounts, budgetten en bedrijfsgegevens in één beslisoverzicht"
+        text="Deze pagina vormt de centrale invullijst. De feitelijke jaaromzet en het aantal verkochte spa's bepalen de commerciële basis. Wijzigingen in providers, budgetten, marge of uitvoeringscapaciteit worden direct verwerkt in alle berekeningen."
         accent="primary"
         image="/earth-spas-special-features-1920x1080.jpg"
         imageAlt="Earth Spas productdetails en speciale functies"
@@ -78,23 +79,46 @@ export default function CalculatorPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Basisaannames" title="De commerciële uitgangspunten" text="Het startscenario gebruikt twee verkochte spa's per week en een gemiddelde verkoopprijs van €6.000 inclusief btw. Pas de waarden aan wanneer actuele bedrijfsgegevens een realistischer uitgangspunt geven." />
-          <div className="mt-9 grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
+          <SectionHeader eyebrow="Bedrijfsbasis" title="Vul de werkelijke omzet- en verkoopcijfers in" text="De jaaromzet en het aantal verkochte spa's zijn de leidende invoer. De calculator leidt daar automatisch de gemiddelde verkoopprijs en gemiddelde weekverkoop uit af, zodat de basisgegevens onderling blijven kloppen." />
+          <div className="mt-9 grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
             <Panel className="p-6 sm:p-8">
-              <div className="grid gap-8 md:grid-cols-2">
-                <RangeField label="Spa's per week" helper="Huidige organische verkoop" value={state.currentSalesPerWeek} min={0.5} max={8} step={0.5} display={number.format(state.currentSalesPerWeek)} onChange={(value) => update("currentSalesPerWeek", value)} />
-                <RangeField label="Gemiddelde verkoopprijs" helper="Inclusief btw" value={state.averageSalePrice} min={3500} max={15000} step={250} display={euro.format(state.averageSalePrice)} onChange={(value) => update("averageSalePrice", value)} />
-                <RangeField label="Brutomarge" helper="Na inkoopprijs van de spa" value={state.grossMargin} min={20} max={60} step={1} display={`${state.grossMargin}%`} onChange={(value) => update("grossMargin", value)} />
-                <RangeField label="Acquisitiekosten per extra verkoop" helper="Marketing- en groeibudget, niet de inkoopprijs" value={state.acquisitionCostPerSale} min={250} max={4000} step={50} display={euro.format(state.acquisitionCostPerSale)} onChange={(value) => update("acquisitionCostPerSale", value)} />
-                <RangeField label="Extra uitvoeringskosten per spa" helper="Aanvullende administratie of ondersteuning; mag €0 zijn" value={state.incrementalCostPerSale} min={0} max={1500} step={25} display={euro.format(state.incrementalCostPerSale)} onChange={(value) => update("incrementalCostPerSale", value)} />
+              <div className="grid gap-6 md:grid-cols-2">
+                <NumberField
+                  label="Huidige jaaromzet"
+                  helper="Totale gerealiseerde omzet inclusief btw over een representatief jaar"
+                  value={state.currentAnnualRevenue}
+                  onChange={(value) => update("currentAnnualRevenue", value)}
+                  prefix="€"
+                  suffix="per jaar"
+                  step={1000}
+                />
+                <NumberField
+                  label="Verkochte spa's per jaar"
+                  helper="Aantal daadwerkelijk verkochte spa's in dezelfde periode"
+                  value={state.currentAnnualSales}
+                  onChange={(value) => update("currentAnnualSales", value)}
+                  suffix="spa's"
+                  step={1}
+                />
+                <RangeField label="Brutomarge" helper="Marge na inkoopprijs van de spa" value={state.grossMargin} min={20} max={60} step={1} display={`${state.grossMargin}%`} onChange={(value) => update("grossMargin", value)} />
+                <RangeField label="Acquisitiekosten per extra verkoop" helper="Marketing- en groeibudget per extra gerealiseerde verkoop" value={state.acquisitionCostPerSale} min={250} max={4000} step={50} display={euro.format(state.acquisitionCostPerSale)} onChange={(value) => update("acquisitionCostPerSale", value)} />
+                <div className="md:col-span-2">
+                  <RangeField label="Extra uitvoeringskosten per spa" helper="Aanvullende administratie, levering of ondersteuning; mag €0 zijn" value={state.incrementalCostPerSale} min={0} max={1500} step={25} display={euro.format(state.incrementalCostPerSale)} onChange={(value) => update("incrementalCostPerSale", value)} />
+                </div>
               </div>
             </Panel>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-              <StatCard label="Huidige jaaromzet" value={euro.format(model.currentRevenue)} detail={`${number.format(model.currentUnitsYear)} spa's per jaar`} />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <StatCard label="Gemiddelde verkoopprijs" value={euro.format(model.averageSalePrice)} detail="automatisch uit omzet ÷ verkopen" />
+              <StatCard label="Gemiddelde weekverkoop" value={`${number.format(model.currentSalesPerWeek)} spa's`} detail={`${number.format(model.currentUnitsYear)} per jaar`} />
               <StatCard label="Brutobijdrage per extra spa" value={euro.format(model.grossProfitPerSale)} detail={`na ${euro.format(state.incrementalCostPerSale)} extra uitvoeringskosten`} />
               <StatCard label="Break-even" value={`${number.format(model.breakEvenSales)} extra spa's`} detail="voor het volledige externe jaarbudget" />
             </div>
           </div>
+          {state.currentAnnualSales === 0 && (
+            <Panel className="mt-5 border-amber-300/35 p-5">
+              <p className="text-base leading-7 text-white/75">Vul minimaal één verkoop in. Zonder verkoopaantal kan geen gemiddelde verkoopprijs, omzetgroei of bijdrage per extra verkoop worden berekend.</p>
+            </Panel>
+          )}
         </div>
       </section>
 
@@ -172,7 +196,7 @@ export default function CalculatorPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Totaalcalculator · alle keuzes worden automatisch op de andere pagina's gebruikt</footer>
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Totaalcalculator · bedrijfsgegevens en keuzes worden automatisch op de andere pagina's gebruikt</footer>
     </main>
   );
 }
