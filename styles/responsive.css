@@ -9,7 +9,11 @@
   --fluid-viewport-max: 120rem;
 
   /* Fluid typography */
-  --fluid-text-2xs: clamp(0.64rem, 0.615rem + 0.08vw, 0.72rem);
+  --fluid-text-2xs: clamp(
+    0.64rem,
+    0.615rem + 0.08vw,
+    0.72rem
+  ); /* 10.24px - 11.52px */
   --fluid-text-xs: clamp(0.72rem, 0.685rem + 0.11vw, 0.82rem);
   --fluid-text-sm: clamp(0.8rem, 0.755rem + 0.14vw, 0.92rem);
   --fluid-text-body: clamp(0.91rem, 0.855rem + 0.18vw, 1.05rem);

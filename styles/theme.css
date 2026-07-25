@@ -121,10 +121,11 @@
   --line-height-heading: 1.12;
   --line-height-body: 1.6;
   --line-height-compact: 1.4;
-  --tracking-tight: 0.012em;
-  --tracking-normal: 0.015em;
-  --tracking-label: 0.12em;
-  --tracking-eyebrow: 0.17em;
+  --tracking-tight: 0.25px;
+  --tracking-normal: 1px;
+  --tracking-wide: 2px;
+  --tracking-label: 0.5px;
+  --tracking-eyebrow: 0.25px;
 
   /* Fluid spacing scale */
   --space-1: clamp(0.25rem, 0.22rem + 0.08vw, 0.32rem);
@@ -160,20 +161,22 @@
   /* Geometry */
   --border-width: 1.5px;
   --border-width-subtle: 1px;
-  --radius-xs: 3px;
-  --radius-sm: 5px;
+  --radius-xs: 1px;
+  --radius-sm: 3px;
   --radius-md: 5px;
-  --radius-lg: 5px;
-  --radius-xl: 5px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
   --radius: var(--radius-md);
-  --radius-round: 999px;
-
-  /* Shadows and depth */
-  --shadow-xs: 0 1px 2px color-mix(in srgb, var(--palette-black) 28%, transparent);
-  --shadow-sm: 0 0.4rem 1.2rem color-mix(in srgb, var(--palette-black) 22%, transparent);
-  --shadow-card: 0 0.9rem 2.8rem color-mix(in srgb, var(--palette-black) 28%, transparent);
-  --shadow-raised: 0 1.6rem 4.5rem color-mix(in srgb, var(--palette-black) 38%, transparent);
-  --shadow-overlay: 0 2.5rem 7.5rem color-mix(in srgb, var(--palette-black) 68%, transparent);
+  --radius-round: 50% /* Shadows and depth */ --shadow-xs: 0 1px 2px
+    color-mix(in srgb, var(--palette-black) 28%, transparent);
+  --shadow-sm: 0 0.4rem 1.2rem
+    color-mix(in srgb, var(--palette-black) 22%, transparent);
+  --shadow-card: 0 0.9rem 2.8rem
+    color-mix(in srgb, var(--palette-black) 28%, transparent);
+  --shadow-raised: 0 1.6rem 4.5rem
+    color-mix(in srgb, var(--palette-black) 38%, transparent);
+  --shadow-overlay: 0 2.5rem 7.5rem
+    color-mix(in srgb, var(--palette-black) 68%, transparent);
   --shadow-inset: inset 0 1px 0 var(--highlight-soft);
   --shadow-focus: 0 0 0 3px var(--focus-ring);
 
