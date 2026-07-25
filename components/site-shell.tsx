@@ -11,6 +11,7 @@ import {
   FadersHorizontal,
   List,
   MagicWand,
+  Target,
   X,
 } from "@/lib/phosphor-icons";
 import { MotionController } from "@/components/motion-controller";
@@ -20,6 +21,7 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { href: "/", label: "Stand van zaken", short: "Overzicht", icon: ChartBar },
+  { href: "/strategie", label: "Merk- en groeistrategie", short: "Strategie", icon: Target },
   { href: "/marketing", label: "Marketingplan", short: "Marketing", icon: MagicWand },
   { href: "/software", label: "Softwareplan", short: "Software", icon: Code },
   { href: "/calculator", label: "Keuzes & calculator", short: "Calculator", icon: FadersHorizontal },
