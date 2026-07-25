@@ -15,8 +15,6 @@ export type FlowConnector = {
   delay?: number;
   duration?: number;
   accent?: string;
-  reverse?: boolean;
-  showPacket?: boolean;
 };
 
 export type FlowMobileStep = {
@@ -62,10 +60,10 @@ export function FlowStage({ label, children, mobileSteps, className }: FlowStage
             <React.Fragment key={`${step.number}-${step.title}`}>
               <motion.li
                 className="flow-mobile-step"
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.42, delay: index * 0.035 }}
+                transition={{ duration: 0.36, delay: index * 0.03 }}
               >
                 <span className="flow-mobile-step-icon"><Icon aria-hidden weight="duotone" /></span>
                 <span className="flow-mobile-step-copy">
@@ -106,11 +104,11 @@ export function FlowNode({
       <div className="flow-node-position" style={positionStyle}>
         <motion.div
           className="flow-hub"
-          initial={reducedMotion ? false : { opacity: 0, scale: 0.88 }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.55 }}
-          transition={{ duration: 0.42, delay, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={reducedMotion ? undefined : { y: -3, scale: 1.012 }}
+          transition={{ duration: 0.38, delay, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={reducedMotion ? undefined : { y: -2, scale: 1.008 }}
         >
           <span className="flow-hub-orb"><Icon aria-hidden weight="duotone" /></span>
           {eyebrow && <span className="flow-hub-eyebrow">{eyebrow}</span>}
@@ -125,11 +123,11 @@ export function FlowNode({
     <div className="flow-node-position" style={positionStyle}>
       <motion.article
         className={["flow-node-card", variant === "output" ? "flow-node-output" : ""].filter(Boolean).join(" ")}
-        initial={reducedMotion ? false : { opacity: 0, y: 12, scale: 0.985 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        initial={reducedMotion ? false : { opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: 0.46, delay, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={reducedMotion ? undefined : { y: -4, rotateX: 0.8, scale: 1.006 }}
+        transition={{ duration: 0.38, delay, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={reducedMotion ? undefined : { y: -2, rotateX: 0.35 }}
       >
         <span className="flow-node-icon"><Icon aria-hidden weight="duotone" /></span>
         <span className="flow-node-copy">
@@ -149,8 +147,7 @@ export function AnimatedConnectorLayer({ connectors, viewBox = "0 0 1000 620" }:
     <svg className="flow-connector-layer" viewBox={viewBox} preserveAspectRatio="none" aria-hidden="true">
       {connectors.map((connector, index) => {
         const accent = connector.accent ?? "var(--brand-primary)";
-        const duration = connector.duration ?? 0.95;
-        const dashOffset = connector.reverse ? 360 : -360;
+        const duration = connector.duration ?? 0.72;
 
         return (
           <g key={connector.id}>
@@ -162,31 +159,12 @@ export function AnimatedConnectorLayer({ connectors, viewBox = "0 0 1000 620" }:
               stroke={accent}
               strokeLinecap="square"
               strokeLinejoin="round"
-              strokeWidth="1.6"
+              strokeWidth="1.25"
               initial={reducedMotion ? false : { pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.78 }}
+              whileInView={{ pathLength: 1, opacity: 0.62 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration, delay: connector.delay ?? index * 0.03, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration, delay: connector.delay ?? index * 0.025, ease: [0.22, 1, 0.36, 1] }}
             />
-            {!reducedMotion && (
-              <motion.path
-                className="flow-connector-active"
-                d={connector.path}
-                fill="none"
-                stroke={accent}
-                strokeDasharray="72 420"
-                strokeLinecap="square"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                initial={{ strokeDashoffset: 0, opacity: 0 }}
-                whileInView={{ opacity: 0.46 }}
-                animate={{ strokeDashoffset: dashOffset }}
-                transition={{
-                  opacity: { duration: 0.3, delay: (connector.delay ?? 0) + 0.25 },
-                  strokeDashoffset: { duration: 5.2, ease: "linear", repeat: Infinity },
-                }}
-              />
-            )}
           </g>
         );
       })}
