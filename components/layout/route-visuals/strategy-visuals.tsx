@@ -1,6 +1,6 @@
 "use client";
 
-import { GrowthChoroplethCard } from "@/components/blocks";
+import { GrowthChoroplethCard } from "@/components/blocks/growth-choropleth-card";
 import { OfficialBudgetGrowthChart } from "@/components/blocks/official-budget-growth-chart";
 
 export function StrategyRouteVisuals() {
