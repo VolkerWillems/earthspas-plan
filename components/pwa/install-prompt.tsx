@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowDown, Check, DeviceMobile, ShareNetwork, X } from "@/lib/phosphor-icons";
+import { ArrowRight, Check, DownloadSimple, X } from "@/lib/phosphor-icons";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -29,7 +29,7 @@ export function InstallPrompt() {
   React.useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {
-        // Offline support is useful, but a failed registration must never block the plan site.
+        // A failed registration must never block access to the decision site.
       });
     }
 
@@ -92,7 +92,7 @@ export function InstallPrompt() {
       <button type="button" className="install-prompt-backdrop" onClick={dismiss} aria-label="Installatiemelding sluiten" />
       <div className="install-prompt-card">
         <button type="button" className="install-prompt-close" onClick={dismiss} aria-label="Sluiten"><X aria-hidden="true" /></button>
-        <span className="install-prompt-icon">{installed ? <Check aria-hidden="true" /> : <DeviceMobile aria-hidden="true" />}</span>
+        <span className="install-prompt-icon">{installed ? <Check aria-hidden="true" /> : <DownloadSimple aria-hidden="true" />}</span>
         <div>
           <p className="eyebrow">Earth Spas op je telefoon</p>
           <h2 id="install-prompt-title">{installed ? "App geïnstalleerd" : "Installeer deze keuzehulp als app"}</h2>
@@ -108,7 +108,7 @@ export function InstallPrompt() {
         {!installed && (
           <div className="install-prompt-actions">
             {ios ? (
-              <div className="install-prompt-ios-step"><ShareNetwork aria-hidden="true" /><span>Tik op delen</span><ArrowDown aria-hidden="true" /><strong>Zet op beginscherm</strong></div>
+              <div className="install-prompt-ios-step"><DownloadSimple aria-hidden="true" /><span>Open het deelmenu</span><ArrowRight aria-hidden="true" /><strong>Zet op beginscherm</strong></div>
             ) : installEvent ? (
               <button type="button" className="install-prompt-primary" onClick={install}>Nu installeren</button>
             ) : (
