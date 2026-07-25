@@ -95,8 +95,7 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="Opgebouwde digitale basis"
             title="Software status en development uren per onderdeel"
-            text="Dit overzicht toont uitsluitend aantoonbaar uitgevoerd werk. De onderdelen wisselen automatisch en laten per ontwikkelgebied zien wat is opgeleverd, hoeveel geregistreerde uren daarin zitten en welke groeikans daardoor beschikbaar is."
-          />
+            text="Dit overzicht is puur om te laten zien wat er allemaal al gebouwd is en hoeveel tijd het gekost heeft om dit te ontwikkelen. Dit geeft dan ook een indicatie van de mogelijkheden en eventueel ook extra groeikansen voor Earth Spas."
           <DevelopmentShowcase />
         </div>
       </section>
