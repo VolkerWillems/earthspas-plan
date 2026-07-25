@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./motion.css";
+import "./asset-polish.css";
 import { SiteShell } from "@/components/site-shell";
 import { SiteStateProvider } from "@/components/site-state";
 
