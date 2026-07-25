@@ -138,6 +138,195 @@
   padding: 1.15rem 0 0 !important;
 }
 
+/* Replace page-specific footer lines with one shared totals footer. */
+.route-transition > main > footer {
+  display: none;
+}
+
+.global-plan-footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  font-size: .875rem;
+  color: rgba(255, 255, 255, .45);
+}
+
+/* Compact action page: keep context, replace four large task sections with one table. */
+.checklist-route > main > section:nth-of-type(3),
+.checklist-route > main > section:nth-of-type(4),
+.checklist-route > main > section:nth-of-type(5),
+.checklist-route > main > section:nth-of-type(6) {
+  display: none;
+}
+
+.summary-progress-card {
+  min-width: 10rem;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 42%, var(--border));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--section-accent) 8%, var(--card));
+  padding: 1rem 1.25rem;
+  text-align: right;
+}
+
+.summary-progress-card span {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--section-accent);
+}
+
+.summary-progress-card small {
+  display: block;
+  margin-top: .25rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.summary-metrics > div {
+  min-height: 8.5rem;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 36%, var(--border));
+  border-radius: 5px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--section-accent) 8%, var(--card)), var(--card));
+  padding: 1.35rem;
+  box-shadow: inset 0 3px 0 color-mix(in srgb, var(--section-accent) 46%, transparent);
+}
+
+.summary-metrics span,
+.summary-footnote span {
+  display: block;
+  margin-bottom: .55rem;
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .52);
+}
+
+.summary-metrics strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--section-accent);
+}
+
+.summary-table table,
+.compact-checklist-table table {
+  font-size: .94rem;
+}
+
+.summary-table th,
+.compact-checklist-table th {
+  padding: .9rem 1rem;
+  background: color-mix(in srgb, var(--section-accent) 8%, transparent);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--section-accent);
+}
+
+.summary-table td,
+.compact-checklist-table td {
+  padding: .9rem 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  color: rgba(255, 255, 255, .76);
+}
+
+.summary-table td:first-child {
+  color: #fff;
+}
+
+.summary-table td:nth-child(2),
+.summary-table td:nth-child(3) {
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, .92);
+}
+
+.summary-total-row {
+  background: color-mix(in srgb, var(--section-accent) 10%, transparent);
+}
+
+.summary-total-row td {
+  color: var(--section-accent) !important;
+}
+
+.summary-footnote p {
+  min-height: 5.7rem;
+  border: 1px solid color-mix(in srgb, var(--section-accent) 24%, var(--border));
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .018);
+  padding: 1rem;
+  color: rgba(255, 255, 255, .82);
+}
+
+.compact-checklist-group td {
+  padding: .7rem 1rem;
+  background: rgba(255, 255, 255, .035);
+  color: var(--section-accent);
+}
+
+.compact-checklist-group td span {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.compact-checklist-group td small {
+  margin-left: .75rem;
+  color: rgba(255, 255, 255, .5);
+}
+
+.compact-check {
+  display: grid;
+  width: 1.6rem;
+  height: 1.6rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .32);
+  border-radius: 4px;
+  color: var(--background);
+  transition: .2s ease;
+}
+
+.compact-check:hover {
+  border-color: var(--section-accent);
+}
+
+.compact-check-active {
+  border-color: var(--section-accent);
+  background: var(--section-accent);
+}
+
+.compact-checklist-title {
+  color: #fff;
+  text-align: left;
+}
+
+.compact-checklist-title:hover {
+  color: var(--section-accent);
+}
+
+.compact-checklist-complete {
+  opacity: .55;
+}
+
+.compact-checklist-complete .compact-checklist-title {
+  text-decoration: line-through;
+}
+
+.compact-priority {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 999px;
+  padding: .28rem .55rem;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .62);
+}
+
 @media (min-width: 1024px) {
   .site-header,
   .site-header-inner {
@@ -181,5 +370,14 @@
 
   .hero-mockup .hero-mockup-stage-mobile .hero-mockup-canvas img {
     max-width: 76% !important;
+  }
+
+  .summary-progress-card {
+    width: 100%;
+    text-align: left;
+  }
+
+  .summary-metrics > div {
+    min-height: 0;
   }
 }
