@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { RouteVisualSections } from "@/components/layout/route-visual-sections";
 import { MotionController } from "@/components/motion-controller";
 import { MobileNavigation } from "@/components/navigation/site-navigation";
-import { PageBottomSummary } from "@/components/page-bottom-summary";
+import { PageBottomSummaryOptimized } from "@/components/page-bottom-summary-optimized";
 import { useSiteState } from "@/components/site-state";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -56,7 +56,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         {children}
         <RouteVisualSections pathname={pathname} />
         {pathname === "/checklist" && <PrepaidDelegationBanner />}
-        <PageBottomSummary />
+        <PageBottomSummaryOptimized />
       </div>
     </>
   );
