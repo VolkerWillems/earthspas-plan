@@ -71,10 +71,12 @@ execFileSync(
   ["--yes", "shadcn@latest", "add", ...items, "-y"],
   {
     cwd: root,
-    stdio: "inherit",
+    input: "n\n".repeat(200),
+    stdio: ["pipe", "inherit", "inherit"],
     shell: process.platform === "win32",
     env: {
       ...process.env,
+      CI: "true",
       npm_config_ignore_scripts: "true",
     },
   },
