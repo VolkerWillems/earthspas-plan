@@ -4,6 +4,7 @@ import { join, relative } from "node:path";
 
 const root = process.cwd();
 const expectedWorldCard = join(root, "components", "stat-card-choropleth.tsx");
+const tsconfigPath = join(root, "tsconfig.json");
 
 if (existsSync(expectedWorldCard)) {
   console.log("Official registry components already exist; skipping installation.");
@@ -42,7 +43,6 @@ const integrationBlock = await findFirstRegistryItem(
   numberedCandidates(["integrations", "integration"]),
   "7Ovr integrations block",
 );
-
 const howItWorksBlock = await findFirstRegistryItem(
   "https://7ovr.com/r",
   numberedCandidates(["how-it-works"]),
@@ -66,21 +66,22 @@ console.log("Installing official registry items:");
 for (const item of items) console.log(`  - ${item}`);
 console.log("ChartBrush ships with @bklit/line-chart and is not a separate registry item.");
 
-execFileSync(
-  "npx",
-  ["--yes", "shadcn@latest", "add", ...items, "-y"],
-  {
-    cwd: root,
-    input: "n\n".repeat(200),
-    stdio: ["pipe", "inherit", "inherit"],
-    shell: process.platform === "win32",
-    env: {
-      ...process.env,
-      CI: "true",
-      npm_config_ignore_scripts: "true",
-    },
+const originalTsconfig = readFileSync(tsconfigPath, "utf8");
+
+execFileSync("npx", ["--yes", "shadcn@latest", "add", ...items, "-y"], {
+  cwd: root,
+  input: "n\n".repeat(200),
+  stdio: ["pipe", "inherit", "inherit"],
+  shell: process.platform === "win32",
+  env: {
+    ...process.env,
+    CI: "true",
+    npm_config_ignore_scripts: "true",
   },
-);
+});
+
+writeFileSync(tsconfigPath, originalTsconfig);
+console.log("Restored the Earth Spas TypeScript aliases after registry installation.");
 
 const trendBadgePath = join(root, "components", "trend-badge.tsx");
 if (existsSync(trendBadgePath)) {
