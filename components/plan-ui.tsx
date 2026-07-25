@@ -47,26 +47,58 @@ const sectionTitleOverrides: Record<string, string> = {
   "Geregistreerde projectinzet en opgeleverde digitale basis": "Projectinzet en waarde",
   "De huidige geselecteerde digitale stack": "Geselecteerde digitale stack",
   "Vier pagina's met ieder één duidelijke functie": "Vervolgonderdelen",
-  "Rustig premium, persoonlijk en aantoonbaar deskundig": "Premium en persoonlijk",
-  "Niet alleen bereik inkopen, maar verkoopkansen opbouwen": "Verkoopkansen opbouwen",
+  "Rustig premium, persoonlijk en aantoonbaar deskundig": "Premium merkpositie",
+  "Eerst Nederland en NRW bewijzen, daarna pas breder uitbreiden": "Nederland en NRW eerst",
+  "Waar Earth Spas voordeel heeft en waar eerst discipline nodig is": "Sterktes en risico's",
+  "Gebruik ieder kanaal voor een duidelijke functie": "Rol per kanaal",
+  "Laat echte projecten, expertise en zekerheid het verkoopwerk doen": "Echte projecten verkopen",
+  "Bouw eerst bewijs, schaal daarna alleen wat verkoopt": "Bewijs voor schaal",
+  "Een transparante scenario-calculatie zonder verborgen groeifactoren": "Budget naar omzet",
+  "Niet alleen bereik inkopen, maar verkoopkansen opbouwen": "Van bereik naar verkoop",
   "Bepaal per kanaal hoeveel structureel beschikbaar is": "Budget per kanaal",
   "Drie scenario's op basis van expliciete aannames": "Drie groeiscenario's",
-  "Concrete campagnes met vaste meet- en opvolgpunten": "Meetbare campagnes",
+  "Concrete campagnes met vaste meet- en opvolgpunten": "Campagnes en meetpunten",
+  "Advertenties, content en AI afzonderlijk instellen": "Budget per groeilaag",
   "De aanbevolen technische opbouw": "Technische opbouw",
   "Vier bouwfasen met duidelijke afhankelijkheden": "Vier bouwfasen",
   "De voorkeurskeuze staat voorop; alternatieven blijven beschikbaar": "Voorkeurskeuzes",
   "De acties met prioriteit ‘Nu’": "Directe acties",
-  "Vier risico's die momenteel onnodig zijn geconcentreerd": "Vier overdrachtsrisico's",
-  "Persoonlijke accounts pas als laatste loskoppelen": "Veilige eindvolgorde",
+  "Vier risico's die momenteel onnodig zijn geconcentreerd": "Vier directe risico's",
+  "Persoonlijke accounts pas als laatste loskoppelen": "Accounts als laatste",
 };
 
 function compactSectionTitle(title: string) {
   const override = sectionTitleOverrides[title];
   if (override) return override;
 
-  const firstClause = title.split(/[;:]/)[0]?.split(",")[0]?.trim() || title;
+  const firstClause = title.split(/[;:]/)[0]?.trim() || title;
   const words = firstClause.split(/\s+/);
-  return words.length > 8 ? words.slice(0, 8).join(" ") : firstClause;
+  return words.length > 6 ? words.slice(0, 6).join(" ") : firstClause;
+}
+
+function getNodeText(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(getNodeText).join(" ");
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) return getNodeText(node.props.children);
+  return "";
+}
+
+function compactPremiumStatement(node: React.ReactNode): React.ReactNode {
+  return React.Children.map(node, (child) => {
+    if (!React.isValidElement<{ children?: React.ReactNode; className?: string }>(child)) return child;
+
+    const isStatement = child.type === "blockquote";
+    const nextChildren = isStatement
+      ? "Premium advies. Betrouwbare installatie. Blijvende service."
+      : compactPremiumStatement(child.props.children);
+
+    return React.cloneElement(child, {
+      children: nextChildren,
+      className: isStatement
+        ? cn(child.props.className, "max-w-[25ch] !text-[clamp(1.55rem,2.5vw,2.35rem)] !leading-[1.08]")
+        : child.props.className,
+    });
+  });
 }
 
 const marketingMockups: HeroMockupItem[] = [
@@ -193,7 +225,27 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
 }
 
 export function Panel({ className, children }: { className?: string; children: React.ReactNode }) {
-  return <div className={cn("panel motion-card", className)} data-reveal="up" data-motion-card>{children}</div>;
+  const isPremiumStatement = getNodeText(children).includes("Positioneringszin");
+  const displayChildren = isPremiumStatement ? compactPremiumStatement(children) : children;
+  const premiumStyle: React.CSSProperties | undefined = isPremiumStatement
+    ? {
+        backgroundImage: "linear-gradient(110deg, rgba(7,16,23,.97), rgba(7,16,23,.74)), url('/cards/card-bg.png')",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }
+    : undefined;
+
+  return (
+    <div
+      className={cn("panel motion-card", isPremiumStatement && "premium-statement-card", className)}
+      style={premiumStyle}
+      data-reveal="up"
+      data-motion-card
+    >
+      {displayChildren}
+    </div>
+  );
 }
 
 export function StatCard({ label, value, detail }: { label: string; value: string; detail?: string; accent?: Accent }) {
