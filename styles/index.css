@@ -1,5 +1,5 @@
 /* Canonical Earth Spas stylesheet entrypoint.
-   Foundations load first; this file only defines the shared visual contract. */
+   Theme tokens remain the single source of truth for color, type, spacing and geometry. */
 
 @import "./components.css";
 @import "./responsive.css";
@@ -9,137 +9,149 @@
 
 :root,
 .dark {
-  --radius-base: 0.75rem;
-  --radius-soft: 1rem;
-  --radius-pill: 999px;
-  --radius-sm: var(--radius-base);
-  --radius-md: var(--radius-base);
-  --radius-lg: var(--radius-soft);
-  --radius-xl: var(--radius-soft);
+  --radius-base: var(--radius);
+  --radius-soft: var(--radius);
+  --radius-pill: var(--radius);
+  --radius-round: var(--radius);
+  --metric-gold: var(--brand-secondary);
+}
 
-  --font-size-body: clamp(1.05rem, 1rem + 0.18vw, 1.18rem);
-  --font-size-sm: clamp(0.9rem, 0.86rem + 0.14vw, 1rem);
-  --font-size-card-title: clamp(1.12rem, 1.02rem + 0.28vw, 1.32rem);
-
-  --card-blue-1: #0b1f2b;
-  --card-blue-2: #081721;
-  --card-blue-3: #050e15;
-  --card-blue-raised: #102a38;
-  --card-border: #294651;
-  --card-border-hover: #668d9d;
-  --metric-gold: #d8c78f;
-
-  --surface-card: var(--card-blue-2);
-  --surface-card-alt: var(--card-blue-1);
-  --surface-raised: var(--card-blue-raised);
-  --border-default: var(--card-border);
-  --border-hover: var(--card-border-hover);
-  --text-secondary: #d0d8dc;
-  --text-muted: #9babb3;
-  --card-padding: clamp(1.3rem, 1rem + 0.85vw, 2rem);
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   font-size: var(--font-size-body);
-  line-height: 1.65;
+  line-height: var(--line-height-body);
+}
+
+:where(
+  [class*="rounded-"],
+  [data-slot="button"],
+  [data-slot="card"],
+  [data-slot="badge"],
+  button,
+  input,
+  select,
+  textarea,
+  .panel,
+  .page-intro-visual,
+  .page-summary-card,
+  .summary-progress-card,
+  .budget-test-strategy,
+  .prepaid-delegation-card,
+  .task-execution-panel,
+  .compact-checklist-table,
+  .install-prompt-card,
+  .timeline-marker,
+  .timeline-block,
+  .registry-flow-stack > *
+) {
+  border-radius: var(--radius) !important;
+}
+
+:where(.section-block, .route-visual-chart-section) {
+  padding-block: var(--section-space-compact);
+  border-bottom: var(--border-width-subtle) solid var(--border-default);
+  background: var(--background);
+}
+
+:where(.section-header, .route-visual-chart-heading) {
+  width: 100%;
+  max-width: var(--reading-max);
+  margin-bottom: var(--space-6);
 }
 
 :where(.page-intro-subtitle, .section-header > p:last-child, .route-visual-chart-heading > p:last-child) {
   color: var(--text-secondary);
   font-size: var(--font-size-body);
-  line-height: 1.65;
-  letter-spacing: 0.005em;
+  line-height: var(--line-height-body);
+  letter-spacing: var(--tracking-normal);
 }
 
-:where(.eyebrow, .badge-label, .card-eyebrow) {
-  letter-spacing: 0.12em;
+:where(.eyebrow, .badge-label, .card-eyebrow, .page-summary-label) {
+  color: var(--section-accent);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-compact);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
 }
 
 :where(.panel h3, [data-slot="card-title"], .heading-card) {
-  letter-spacing: 0.006em;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-card-title);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-tight);
 }
 
-/* Shared card surface */
-
-:where(.panel:not(.premium-statement-card), [data-slot="card"]) {
-  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, var(--card-border));
-  border-radius: var(--radius-soft);
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--section-accent) 5%, var(--card-blue-1)) 0%,
-      var(--card-blue-2) 54%,
-      var(--card-blue-3) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.055),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 1.25rem 3.4rem rgba(0, 0, 0, 0.34);
+:where(
+  .panel:not(.premium-statement-card),
+  [data-slot="card"],
+  .page-summary-card,
+  .summary-progress-card,
+  .budget-test-strategy,
+  .prepaid-delegation-card,
+  .task-execution-panel,
+  .compact-checklist-table,
+  .install-prompt-card,
+  .budget-growth-chart,
+  .registry-flow-stack > *
+) {
+  border: var(--border-width) solid var(--border-default) !important;
+  background: var(--surface-card) !important;
+  box-shadow: var(--shadow-card), var(--shadow-inset) !important;
 }
 
-@media (hover: hover) {
-  :where(.panel:not(.premium-statement-card), [data-slot="card"]):hover {
-    border-color: color-mix(in srgb, var(--section-accent) 58%, var(--card-border-hover));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
-      0 1.65rem 4.2rem rgba(0, 0, 0, 0.4),
-      0 0 0 1px color-mix(in srgb, var(--section-accent) 8%, transparent);
-  }
+:where(.panel, [data-slot="card"], .registry-flow-stack > *):hover {
+  border-color: var(--border-hover) !important;
+  background: var(--surface-card-alt) !important;
+  box-shadow: var(--shadow-card), var(--shadow-inset) !important;
+  transform: none !important;
 }
 
-.panel::before,
-.panel::after,
+:where(.panel, [data-slot="card"]) :where(.panel, [data-slot="card"]) {
+  background: var(--surface-card-alt) !important;
+  box-shadow: none !important;
+}
+
+.motion-card,
+.registry-flow-stack :where([data-slot="card"], article),
+.software-flow-node,
+.flow-node-card,
+.flow-mobile-step {
+  transform: none !important;
+  transform-style: flat !important;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    background-color var(--motion-duration-fast) var(--motion-ease-standard) !important;
+}
+
+.motion-card::before,
+.motion-card::after,
 .metric-panel::before,
 .metric-panel::after,
 .stat-card::before,
-.stat-card::after {
-  pointer-events: none;
+.stat-card::after,
+.registry-flow-stack :where([data-slot="card"], article)::before,
+.registry-flow-stack :where([data-slot="card"], article)::after {
+  display: none !important;
+  content: none !important;
 }
-
-.metric-panel.motion-card::before,
-.metric-panel.motion-card::after,
-.stat-card.motion-card::before,
-.stat-card.motion-card::after {
-  display: none;
-  content: none;
-}
-
-/* Metric cards */
 
 .metric-panel,
 .stat-card {
   position: relative;
-  min-height: clamp(11.5rem, 13vw, 14rem);
-  padding: var(--card-padding);
-  padding-right: clamp(4.75rem, 5vw, 6rem);
-}
-
-.panel-metric-icon {
-  position: absolute;
-  top: clamp(1.15rem, 1vw, 1.5rem);
-  right: clamp(1.15rem, 1vw, 1.5rem);
-  z-index: 2;
-  display: grid;
-  width: clamp(2.65rem, 2.3rem + 0.7vw, 3.25rem);
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--section-accent) 44%, var(--card-border));
-  border-radius: var(--radius-base);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--section-accent) 18%, var(--card-blue-raised)),
-    var(--card-blue-2)
-  );
-  color: var(--section-accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 0.8rem 1.7rem rgba(0, 0, 0, 0.24);
-}
-
-.panel-metric-icon svg {
-  width: 1.35rem;
-  height: 1.35rem;
-  color: inherit;
+  min-height: 0;
+  padding: var(--card-padding) !important;
+  padding-right: calc(var(--card-padding) + var(--icon-box) + var(--space-3)) !important;
 }
 
 .stat-card {
@@ -148,13 +160,34 @@ body {
   justify-content: center;
 }
 
+.panel-metric-icon {
+  position: absolute;
+  top: var(--card-padding);
+  right: var(--card-padding);
+  z-index: 2;
+  display: grid;
+  width: var(--icon-box);
+  height: var(--icon-box);
+  place-items: center;
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--section-accent);
+  box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+.panel-metric-icon svg {
+  width: var(--font-size-icon);
+  height: var(--font-size-icon);
+  color: inherit;
+}
+
 .stat-card > p:first-of-type {
   color: var(--text-muted);
   font-family: var(--font-sans);
-  font-size: 0.88rem;
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: 0.095em;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-compact);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -163,107 +196,58 @@ body {
 .metric-panel:not(.stat-card) > p:first-of-type:not(.eyebrow) {
   color: var(--metric-gold);
   font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 1.9rem + 1vw, 3.2rem);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: 0;
+  font-size: var(--font-size-metric-sm);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
 }
 
 .stat-card .value-change,
 .stat-card .metric-value {
-  margin-top: 0.8rem;
+  margin-top: var(--space-3);
 }
 
-.stat-card > p:last-of-type:not(:first-of-type) {
-  margin-top: 0.9rem;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-.metric-panel:not(.stat-card) > h3 {
-  margin-top: 0.9rem;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: clamp(0.95rem, 0.9rem + 0.16vw, 1.08rem);
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: 0.035em;
-}
-
-.metric-panel:not(.stat-card) > p:last-of-type:not(:first-of-type) {
-  margin-top: 0.75rem;
-  color: var(--text-secondary);
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
+.stat-card > p:last-of-type:not(:first-of-type),
+.metric-panel:not(.stat-card) > p:last-of-type:not(:first-of-type),
 :where(.panel > p:not(.eyebrow):not(.value-change), .panel li) {
-  line-height: 1.6;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
 }
 
-/* Buttons and links */
-
-[data-slot="button"] {
-  border-radius: var(--radius-base);
-}
-
-.action-link {
-  min-height: 3.2rem;
-  border: 1px solid color-mix(in srgb, var(--section-accent) 82%, white 8%);
-  border-radius: 0.9rem;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--section-accent) 90%, white 10%),
-    color-mix(in srgb, var(--section-accent) 82%, #a88f4c)
-  );
-  color: #061017;
-  padding-inline: 1.35rem;
+.action-link,
+.button,
+.task-execute-button,
+.task-execution-links a,
+.install-prompt-primary,
+.install-prompt-secondary {
+  min-height: var(--control-height);
+  border: var(--border-width) solid var(--section-accent);
+  border-radius: var(--radius) !important;
+  background: var(--section-accent);
+  color: var(--primary-foreground);
+  padding-inline: var(--space-4);
   font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.005em;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 0.85rem 2rem color-mix(in srgb, var(--section-accent) 18%, transparent);
-}
-
-.action-link > span,
-.action-link > svg {
-  position: relative;
-  z-index: 1;
-  color: inherit;
-  opacity: 1;
-}
-
-.action-link > svg {
-  width: 1.05rem;
-  height: 1.05rem;
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  box-shadow: none;
+  transform: none !important;
 }
 
 .action-group .action-link:nth-child(n + 2),
-.action-link + .action-link {
-  border-color: color-mix(in srgb, var(--section-accent) 48%, var(--card-border));
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--section-accent) 7%, var(--card-blue-1)),
-    var(--card-blue-3)
-  );
+.action-link + .action-link,
+.install-prompt-secondary {
+  border-color: var(--border-hover);
+  background: var(--surface-card);
   color: var(--section-accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0.75rem 1.8rem rgba(0, 0, 0, 0.25);
 }
 
-@media (hover: hover) {
-  .action-link:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--section-accent) 78%, white 8%);
-    filter: brightness(1.06);
-  }
+:where(.action-link, .button, .task-execute-button, .task-execution-links a):hover {
+  border-color: var(--section-accent);
+  background: var(--surface-card-alt);
+  color: var(--section-accent);
+  filter: none;
+  transform: none !important;
 }
-
-/* Route-specific visual sections */
 
 .route-visual-slot,
 .route-visual-restoration {
@@ -278,23 +262,8 @@ body {
   transform: none;
 }
 
-.route-visual-restoration .growth-map-section,
-.route-visual-restoration .software-flow-section,
-.route-visual-restoration .agent-flow-section {
-  display: block;
-}
-
 .route-visual-chart-section {
-  padding-block: var(--section-space);
-  border-block: 1px solid var(--border-default);
-  background:
-    radial-gradient(circle at 75% 10%, color-mix(in srgb, var(--section-accent) 7%, transparent), transparent 34%),
-    var(--background);
-}
-
-.route-visual-chart-heading {
-  max-width: 66rem;
-  margin-bottom: var(--space-6);
+  border-block: var(--border-width-subtle) solid var(--border-default);
 }
 
 .route-visual-chart-heading h2 {
@@ -302,96 +271,40 @@ body {
   color: var(--section-accent);
   font-size: var(--font-size-section);
   line-height: var(--line-height-heading);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--tracking-tight);
   text-transform: uppercase;
 }
 
-:where(
-  .growth-map-card,
-  .budget-growth-chart,
-  .software-flow-canvas,
-  .software-flow-principle,
-  .software-flow-node,
-  .software-flow-automation,
-  .agent-flow-canvas,
-  .flow-stage,
-  .registry-flow-stack > *
-) {
-  border-radius: var(--radius-soft);
-  border-color: color-mix(in srgb, var(--section-accent) 30%, var(--card-border));
-  background-color: var(--card-blue-2);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 1.5rem 4rem rgba(0, 0, 0, 0.34);
+.registry-flow-stack {
+  display: grid;
+  width: 100%;
+  gap: var(--space-6);
 }
 
-.growth-map-card {
-  overflow: hidden;
-  background: linear-gradient(135deg, #0c2230 0%, #081721 46%, #050e15 100%);
+.registry-flow-stack > * {
+  width: 100%;
+  max-width: none;
 }
 
-.growth-map-metrics > div,
-.growth-map-legend button {
-  border-radius: var(--radius-base);
-  background: linear-gradient(145deg, #0e2633, #07131c);
-}
-
-.growth-map-metrics strong,
-.growth-map-legend button > span:first-child,
-.budget-growth-chart__result strong {
-  color: var(--metric-gold);
-}
-
-.growth-map-icon,
-.software-flow-automation-icon,
-.flow-node-icon,
-.flow-hub-icon {
-  border-radius: var(--radius-base);
-  color: var(--section-accent);
-}
-
-.growth-map-visual {
-  background:
-    radial-gradient(circle at 58% 42%, color-mix(in srgb, var(--metric-gold) 10%, transparent), transparent 34%),
-    linear-gradient(145deg, #07141d, #030a0f);
-}
-
-.growth-map-region path {
-  fill: #0b202c;
-  stroke: color-mix(in srgb, var(--brand-primary) 72%, #9fc0cc);
-  stroke-width: 1.6;
-}
-
-.growth-map-region.is-active path {
-  fill: color-mix(in srgb, var(--metric-gold) 24%, #0b202c);
-  stroke: var(--metric-gold);
-}
-
-.growth-map-legend button.is-active {
-  border-color: color-mix(in srgb, var(--metric-gold) 62%, var(--card-border));
-  background: linear-gradient(145deg, color-mix(in srgb, var(--metric-gold) 9%, #0d2029), #07131b);
+.timeline-block {
+  width: 100%;
+  max-width: none;
 }
 
 :where(.software-flow-node, .flow-node-card, .flow-mobile-step) svg,
-:where(.agent-flow-section, .registry-flow-stack) svg {
+:where(.registry-flow-stack) svg {
   color: var(--section-accent);
 }
 
 @media (max-width: 48rem) {
-  :where(.panel, [data-slot="card"]) {
-    border-radius: var(--radius-base);
-  }
-
   .metric-panel,
   .stat-card {
-    min-height: auto;
-    padding-right: 4.5rem;
+    padding-right: calc(var(--card-padding) + var(--icon-box-sm) + var(--space-3)) !important;
   }
 
   .panel-metric-icon {
-    top: 1rem;
-    right: 1rem;
-    width: 2.5rem;
+    width: var(--icon-box-sm);
+    height: var(--icon-box-sm);
   }
 
   .action-group {
@@ -404,10 +317,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .action-link,
-  .panel,
-  [data-motion-card] {
-    transition: none;
-    transform: none;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
