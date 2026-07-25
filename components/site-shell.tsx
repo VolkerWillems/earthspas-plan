@@ -25,12 +25,12 @@ import { brandAssets } from "@/lib/brand-assets";
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { href: "/", label: "Stand van zaken", short: "Overzicht", icon: ChartBar },
-  { href: "/strategie", label: "Merk- en groeistrategie", short: "Strategie", icon: Target },
-  { href: "/marketing", label: "Marketingplan", short: "Marketing", icon: MagicWand },
-  { href: "/software", label: "Softwareplan", short: "Software", icon: Code },
-  { href: "/calculator", label: "Keuzes & calculator", short: "Calculator", icon: FadersHorizontal },
-  { href: "/checklist", label: "Actielijst", short: "Acties", icon: Check },
+  { href: "/", label: "Overzicht", short: "Overzicht", icon: ChartBar },
+  { href: "/strategie", label: "Strategie", short: "Strategie", icon: Target },
+  { href: "/marketing", label: "Marketing", short: "Marketing", icon: MagicWand },
+  { href: "/software", label: "Software", short: "Software", icon: Code },
+  { href: "/calculator", label: "Calculator", short: "Calculator", icon: FadersHorizontal },
+  { href: "/checklist", label: "Acties", short: "Acties", icon: Check },
 ];
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -63,7 +63,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="site-progress" aria-hidden="true" />
         <div className="content-shell site-header-inner">
           <Link href="/" className="site-brand" aria-label="Earth Spas homepage">
-            <img src={brandAssets.fullLogo} alt="Earth Spas" />
+            <img src={brandAssets.goldLogo} alt="Earth Spas" />
           </Link>
 
           <nav className="desktop-nav" aria-label="Hoofdnavigatie">
@@ -141,7 +141,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <button onClick={reset} tabIndex={open ? 0 : -1} className="mobile-nav-link mobile-reset-button">
               <span className="mobile-nav-number">R</span>
               <ArrowClockwise className="h-6 w-6" />
-              <span className="flex-1">Alle keuzes resetten</span>
+              <span className="flex-1">Reset keuzes</span>
             </button>
           </nav>
         </div>
