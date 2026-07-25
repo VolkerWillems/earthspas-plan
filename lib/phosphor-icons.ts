@@ -1,13 +1,57 @@
 import * as React from "react";
-import * as Icons from "@phosphor-icons/react/ssr";
-
-const phosphor = Icons as Record<string, any>;
+import {
+  Archive as ArchiveIcon,
+  ArrowClockwise as ArrowClockwiseIcon,
+  ArrowRight as ArrowRightIcon,
+  Briefcase as BriefcaseIcon,
+  CalendarBlank as CalendarBlankIcon,
+  CaretRight as CaretRightIcon,
+  ChartBar as ChartBarIcon,
+  ChartLine as ChartLineIcon,
+  ChatText as ChatTextIcon,
+  Check as CheckIcon,
+  ClipboardText as ClipboardTextIcon,
+  Cloud as CloudIcon,
+  Code as CodeIcon,
+  CreditCard as CreditCardIcon,
+  CurrencyEur as CurrencyEurIcon,
+  Database as DatabaseIcon,
+  DownloadSimple as DownloadSimpleIcon,
+  EnvelopeSimple as EnvelopeSimpleIcon,
+  FadersHorizontal as FadersHorizontalIcon,
+  FileText as FileTextIcon,
+  FloppyDisk as FloppyDiskIcon,
+  FlowArrow as FlowArrowIcon,
+  Gauge as GaugeIcon,
+  GitBranch as GitBranchIcon,
+  Globe as GlobeIcon,
+  HardDrives as HardDrivesIcon,
+  Headphones as HeadphonesIcon,
+  Image as ImageIcon,
+  Info as InfoIcon,
+  Key as KeyIcon,
+  Layout as LayoutIcon,
+  List as ListIcon,
+  MagicWand as MagicWandIcon,
+  Pause as PauseIcon,
+  Pulse as PulseIcon,
+  Robot as RobotIcon,
+  RocketLaunch as RocketLaunchIcon,
+  ShieldCheck as ShieldCheckIcon,
+  Sparkle as SparkleIcon,
+  Target as TargetIcon,
+  Users as UsersIcon,
+  Video as VideoIcon,
+  Wallet as WalletIcon,
+  Warning as WarningIcon,
+  X as XIcon,
+} from "@phosphor-icons/react/ssr";
 
 type PhosphorProps = Record<string, unknown> & {
   weight?: string;
 };
 
-function filled(Icon: any) {
+function filled(Icon: React.ElementType) {
   const FilledIcon = React.forwardRef<SVGSVGElement, PhosphorProps>((props, ref) =>
     React.createElement(Icon, {
       ...props,
@@ -16,52 +60,52 @@ function filled(Icon: any) {
     }),
   );
 
-  FilledIcon.displayName = `Filled${Icon?.displayName ?? Icon?.name ?? "PhosphorIcon"}`;
+  FilledIcon.displayName = `Filled${Icon.displayName ?? Icon.name ?? "PhosphorIcon"}`;
   return FilledIcon;
 }
 
-export const Activity = filled(phosphor.PulseIcon ?? phosphor.Pulse);
-export const ArchiveBox = filled(phosphor.ArchiveIcon ?? phosphor.Archive);
-export const ArrowClockwise = filled(phosphor.ArrowClockwiseIcon ?? phosphor.ArrowClockwise);
-export const ArrowRight = filled(phosphor.ArrowRightIcon ?? phosphor.ArrowRight);
-export const Briefcase = filled(phosphor.BriefcaseIcon ?? phosphor.Briefcase);
-export const CalendarBlank = filled(phosphor.CalendarBlankIcon ?? phosphor.CalendarBlank);
-export const CaretRight = filled(phosphor.CaretRightIcon ?? phosphor.CaretRight);
-export const ChartBar = filled(phosphor.ChartBarIcon ?? phosphor.ChartBar);
-export const ChartLine = filled(phosphor.ChartLineIcon ?? phosphor.ChartLine);
-export const ChatText = filled(phosphor.ChatTextIcon ?? phosphor.ChatText);
-export const Check = filled(phosphor.CheckIcon ?? phosphor.Check);
-export const ClipboardText = filled(phosphor.ClipboardTextIcon ?? phosphor.ClipboardText);
-export const Cloud = filled(phosphor.CloudIcon ?? phosphor.Cloud);
-export const Code = filled(phosphor.CodeIcon ?? phosphor.Code);
-export const CreditCard = filled(phosphor.CreditCardIcon ?? phosphor.CreditCard);
-export const CurrencyEur = filled(phosphor.CurrencyEurIcon ?? phosphor.CurrencyEur);
-export const Database = filled(phosphor.DatabaseIcon ?? phosphor.Database);
-export const DownloadSimple = filled(phosphor.DownloadSimpleIcon ?? phosphor.DownloadSimple);
-export const EnvelopeSimple = filled(phosphor.EnvelopeSimpleIcon ?? phosphor.EnvelopeSimple);
-export const FileText = filled(phosphor.FileTextIcon ?? phosphor.FileText);
-export const FloppyDisk = filled(phosphor.FloppyDiskIcon ?? phosphor.FloppyDisk);
-export const FlowArrow = filled(phosphor.FlowArrowIcon ?? phosphor.FlowArrow);
-export const FadersHorizontal = filled(phosphor.FadersHorizontalIcon ?? phosphor.FadersHorizontal);
-export const Gauge = filled(phosphor.GaugeIcon ?? phosphor.Gauge);
-export const GitBranch = filled(phosphor.GitBranchIcon ?? phosphor.GitBranch);
-export const Globe = filled(phosphor.GlobeIcon ?? phosphor.Globe);
-export const Server = filled(phosphor.HardDrivesIcon ?? phosphor.HardDrives);
-export const Headphones = filled(phosphor.HeadphonesIcon ?? phosphor.Headphones);
-export const Image = filled(phosphor.ImageIcon ?? phosphor.Image);
-export const Info = filled(phosphor.InfoIcon ?? phosphor.Info);
-export const Key = filled(phosphor.KeyIcon ?? phosphor.Key);
-export const Layout = filled(phosphor.LayoutIcon ?? phosphor.Layout);
-export const List = filled(phosphor.ListIcon ?? phosphor.List);
-export const MagicWand = filled(phosphor.MagicWandIcon ?? phosphor.MagicWand);
-export const Pause = filled(phosphor.PauseIcon ?? phosphor.Pause);
-export const Robot = filled(phosphor.RobotIcon ?? phosphor.Robot);
-export const RocketLaunch = filled(phosphor.RocketLaunchIcon ?? phosphor.RocketLaunch);
-export const ShieldCheck = filled(phosphor.ShieldCheckIcon ?? phosphor.ShieldCheck);
-export const Sparkle = filled(phosphor.SparkleIcon ?? phosphor.Sparkle);
-export const Target = filled(phosphor.TargetIcon ?? phosphor.Target);
-export const Users = filled(phosphor.UsersIcon ?? phosphor.Users);
-export const Video = filled(phosphor.VideoIcon ?? phosphor.Video);
-export const Wallet = filled(phosphor.WalletIcon ?? phosphor.Wallet);
-export const Warning = filled(phosphor.WarningIcon ?? phosphor.Warning);
-export const X = filled(phosphor.XIcon ?? phosphor.X);
+export const Activity = filled(PulseIcon);
+export const ArchiveBox = filled(ArchiveIcon);
+export const ArrowClockwise = filled(ArrowClockwiseIcon);
+export const ArrowRight = filled(ArrowRightIcon);
+export const Briefcase = filled(BriefcaseIcon);
+export const CalendarBlank = filled(CalendarBlankIcon);
+export const CaretRight = filled(CaretRightIcon);
+export const ChartBar = filled(ChartBarIcon);
+export const ChartLine = filled(ChartLineIcon);
+export const ChatText = filled(ChatTextIcon);
+export const Check = filled(CheckIcon);
+export const ClipboardText = filled(ClipboardTextIcon);
+export const Cloud = filled(CloudIcon);
+export const Code = filled(CodeIcon);
+export const CreditCard = filled(CreditCardIcon);
+export const CurrencyEur = filled(CurrencyEurIcon);
+export const Database = filled(DatabaseIcon);
+export const DownloadSimple = filled(DownloadSimpleIcon);
+export const EnvelopeSimple = filled(EnvelopeSimpleIcon);
+export const FileText = filled(FileTextIcon);
+export const FloppyDisk = filled(FloppyDiskIcon);
+export const FlowArrow = filled(FlowArrowIcon);
+export const FadersHorizontal = filled(FadersHorizontalIcon);
+export const Gauge = filled(GaugeIcon);
+export const GitBranch = filled(GitBranchIcon);
+export const Globe = filled(GlobeIcon);
+export const Server = filled(HardDrivesIcon);
+export const Headphones = filled(HeadphonesIcon);
+export const Image = filled(ImageIcon);
+export const Info = filled(InfoIcon);
+export const Key = filled(KeyIcon);
+export const Layout = filled(LayoutIcon);
+export const List = filled(ListIcon);
+export const MagicWand = filled(MagicWandIcon);
+export const Pause = filled(PauseIcon);
+export const Robot = filled(RobotIcon);
+export const RocketLaunch = filled(RocketLaunchIcon);
+export const ShieldCheck = filled(ShieldCheckIcon);
+export const Sparkle = filled(SparkleIcon);
+export const Target = filled(TargetIcon);
+export const Users = filled(UsersIcon);
+export const Video = filled(VideoIcon);
+export const Wallet = filled(WalletIcon);
+export const Warning = filled(WarningIcon);
+export const X = filled(XIcon);
