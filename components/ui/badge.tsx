@@ -18,6 +18,8 @@ export const badgeVariants = cva(
           "border-[var(--success)]/45 bg-[color-mix(in_srgb,var(--success)_12%,var(--surface-card))] text-[var(--success)]",
         warning:
           "border-[var(--warning)]/45 bg-[color-mix(in_srgb,var(--warning)_12%,var(--surface-card))] text-[var(--warning)]",
+        destructive:
+          "border-[var(--destructive)]/45 bg-[color-mix(in_srgb,var(--destructive)_12%,var(--surface-card))] text-[var(--destructive)]",
       },
     },
     defaultVariants: {
