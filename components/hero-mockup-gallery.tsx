@@ -42,11 +42,11 @@ export function HeroMockupGallery({
   if (!active) return null;
 
   return (
-    <div className={cn(styles.root, "hero-mockup")} aria-label={eyebrow}>
+    <div className={cn(styles.root, "hero-mockup")} aria-label={eyebrow} data-motion-card>
       <div className="hero-mockup-heading">
         <div>
           <p className="hero-mockup-eyebrow">{eyebrow}</p>
-          <p className="hero-mockup-note"><Check className="h-4 w-4" /> Functioneel concept, branding en gegevens worden aangepast aan Earth Spas.</p>
+          <p className="hero-mockup-note"><Check className="h-4 w-4" /> Premium conceptvisualisatie; functies en gegevens worden afgestemd op Earth Spas.</p>
         </div>
         {items.length > 1 && (
           <div className="hero-mockup-tabs" role="tablist" aria-label="Mockup kiezen">
@@ -75,15 +75,15 @@ export function HeroMockupGallery({
       >
         <span className="hero-mockup-toolbar" aria-hidden="true">
           <span /><span /><span />
-          <span className="hero-mockup-toolbar-label">Concept preview</span>
+          <span className="hero-mockup-toolbar-label">Earth Spas concept</span>
         </span>
         <span className="hero-mockup-canvas">
           <img src={active.image} alt={active.imageAlt} loading="eager" />
         </span>
-        <span className="hero-mockup-expand">Klik voor groot beeld</span>
+        <span className="hero-mockup-expand">Bekijk groter</span>
       </button>
 
-      <div key={`${active.id}-copy`} className="hero-mockup-copy">
+      <div key={`${active.id}-copy`} className="hero-mockup-copy" aria-live="polite">
         <p className="hero-mockup-title">{active.title}</p>
         <p>{active.description}</p>
       </div>
@@ -100,7 +100,7 @@ export function HeroMockupGallery({
               <button type="button" className="mockup-lightbox-close" onClick={() => setExpanded(false)} aria-label="Mockup sluiten"><X className="h-5 w-5" /></button>
             </div>
             <div className="mockup-lightbox-image"><img src={active.image} alt={active.imageAlt} /></div>
-            <p className="mockup-lightbox-caption">{active.description} De getoonde namen, cijfers en Nexora-branding zijn uitsluitend illustratief.</p>
+            <p className="mockup-lightbox-caption">{active.description} De uiteindelijke inhoud, cijfers en functies worden afgestemd op de gekozen Earth Spas-oplossing.</p>
           </div>
         </div>
       )}
