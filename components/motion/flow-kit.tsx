@@ -68,7 +68,7 @@ export function FlowStage({ label, children, mobileSteps, className }: FlowStage
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.48, delay: index * 0.04 }}
               >
-                <span className={styles.mobileStepIcon}><Icon aria-hidden="true" weight="duotone" /></span>
+                <span className={styles.mobileStepIcon}><Icon aria-hidden weight="duotone" /></span>
                 <span className={styles.mobileStepCopy}>
                   <span>{step.number}</span>
                   <strong>{step.title}</strong>
@@ -112,7 +112,7 @@ export function FlowNode({
           transition={{ type: "spring", stiffness: 180, damping: 18, delay }}
           whileHover={{ y: -5, scale: 1.025 }}
         >
-          <span className={styles.hubOrb}><Icon aria-hidden="true" weight="duotone" /></span>
+          <span className={styles.hubOrb}><Icon aria-hidden weight="duotone" /></span>
           {eyebrow && <span className={styles.hubEyebrow}>{eyebrow}</span>}
           <strong>{title}</strong>
           {text && <small>{text}</small>}
@@ -131,7 +131,7 @@ export function FlowNode({
         transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ y: -7, scale: 1.012 }}
       >
-        <span className={styles.nodeIcon}><Icon aria-hidden="true" weight="duotone" /></span>
+        <span className={styles.nodeIcon}><Icon aria-hidden weight="duotone" /></span>
         <span className={styles.nodeCopy}>
           {eyebrow && <span>{eyebrow}</span>}
           <strong>{title}</strong>
