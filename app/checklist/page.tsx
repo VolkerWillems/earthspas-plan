@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Check,
   CreditCard,
   Key,
   ShieldCheck,
@@ -9,8 +8,7 @@ import {
 } from "@/lib/phosphor-icons";
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
-import { checklistItems, choiceGroups } from "@/lib/choice-data";
-import { getBusinessOwnerLabel, getBusinessTaskTitle } from "@/lib/presentation-copy";
+import { checklistItems } from "@/lib/choice-data";
 import { euro } from "@/lib/utils";
 import {
   PageIntro,
@@ -21,39 +19,9 @@ import {
   StatCard,
 } from "@/components/plan-ui";
 
-const groupCopy = {
-  Eigenaarschap: {
-    title: "Accounts, betaling en toegang",
-    text: "Deze taken voorkomen dat essentiële onderdelen aan persoonlijke accounts, betaalmiddelen of herstelmethoden gekoppeld blijven.",
-  },
-  Techniek: {
-    title: "Server, data en systemen",
-    text: "Back-ups, secrets, domeinen, databases en deployments moeten aantoonbaar beheersbaar, overdraagbaar en herstelbaar zijn.",
-  },
-  Marketing: {
-    title: "Kanalen, billing en meting",
-    text: "Advertentieaccounts en socialkanalen krijgen minimaal twee beheerders, correcte billing en betrouwbare conversiemeting.",
-  },
-  Afronding: {
-    title: "Acceptatie en veilige overdracht",
-    text: "Persoonlijke toegang wordt pas verwijderd nadat alle kritieke functies zijn getest en door een tweede beheerder kunnen worden hersteld.",
-  },
-};
-
 export default function ChecklistPage() {
-  const { state, setState } = useSiteState();
+  const { state } = useSiteState();
   const model = calculateSiteModel(state);
-
-  const toggleTask = (taskId: string) => {
-    setState((previous) => ({ ...previous, checklist: { ...previous.checklist, [taskId]: !previous.checklist[taskId] } }));
-  };
-
-  const selectedOption = (choiceGroupId?: string) => {
-    if (!choiceGroupId) return null;
-    const group = choiceGroups.find((item) => item.id === choiceGroupId);
-    return group?.options.find((option) => option.id === state.toolChoices[choiceGroupId]) ?? group?.options[0] ?? null;
-  };
-
   const nowTasks = checklistItems.filter((item) => item.priority === "Nu");
   const nowCompleted = nowTasks.filter((item) => state.checklist[item.id]).length;
 
@@ -101,37 +69,6 @@ export default function ChecklistPage() {
         </div>
       </section>
 
-      {(["Eigenaarschap", "Techniek", "Marketing", "Afronding"] as const).map((group, groupIndex) => {
-        const tasks = checklistItems.filter((item) => item.group === group);
-        const completed = tasks.filter((item) => state.checklist[item.id]).length;
-        const accentClass = groupIndex % 2 === 0 ? "theme-primary" : "theme-secondary";
-        return (
-          <section key={group} className={`section-block ${accentClass}`}>
-            <div className="content-shell">
-              <SectionHeader eyebrow={group} title={groupCopy[group].title} text={groupCopy[group].text} />
-              <div className="mt-6 flex items-center gap-4"><span className="text-3xl text-[var(--section-accent)]">{completed}/{tasks.length}</span><div className="max-w-sm flex-1"><ProgressBar value={tasks.length ? completed / tasks.length * 100 : 0} /></div></div>
-              <div className="mt-8 grid gap-4 xl:grid-cols-2">
-                {tasks.map((task) => {
-                  const checked = state.checklist[task.id];
-                  const option = selectedOption(task.choiceGroupId);
-                  return (
-                    <button key={task.id} onClick={() => toggleTask(task.id)} className={`panel flex w-full gap-4 p-5 text-left transition ${checked ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)]" : "hover:border-white/35"}`}>
-                      <span className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-sm border-2 ${checked ? "border-[var(--section-accent)] bg-[var(--section-accent)] text-background" : "border-white/40"}`}>{checked && <Check className="h-4 w-4" />}</span>
-                      <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-start justify-between gap-2"><span className={`text-lg ${checked ? "text-[var(--section-accent)]" : "text-white"}`}>{getBusinessTaskTitle(task)}</span><span className="rounded-full border border-white/15 px-2 py-1 text-xs uppercase tracking-[0.1em] text-white/55">{task.priority}</span></span>
-                        {option && <span className="mt-2 flex flex-wrap items-center gap-2 text-sm"><span className="uppercase tracking-[0.1em] text-[var(--section-accent)]">Gekozen</span><span className="text-white/78">{option.name}</span><span className="text-white/45">· {option.monthly === 0 ? "€0" : `${euro.format(option.monthly)} p/m`}</span></span>}
-                        <span className="mt-3 block text-base leading-7 text-white/68">{task.description}</span>
-                        <span className="mt-3 block text-sm uppercase tracking-[0.11em] text-white/45">Verantwoordelijk: {getBusinessOwnerLabel(task.owner)}</span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        );
-      })}
-
       <section className="section-block theme-secondary">
         <div className="content-shell grid gap-6 lg:grid-cols-[1fr_.8fr]">
           <div>
@@ -151,8 +88,6 @@ export default function ChecklistPage() {
           </Panel>
         </div>
       </section>
-
-      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Actielijst · de overdracht blijft noodzakelijk, ook wanneer marketing en software voorlopig niet worden uitgebreid</footer>
     </main>
   );
 }
