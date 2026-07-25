@@ -10,22 +10,73 @@ import { HeroMockupGallery, type HeroMockupItem } from "@/components/hero-mockup
 type Accent = "primary" | "secondary";
 
 const routeHeaderCopy: Record<string, { title: string; kicker: string }> = {
-  "/": { title: "Digitale basis en groeiplan", kicker: "Huidige stand, resultaat en vervolgstappen" },
-  "/strategie": { title: "Premium groei vanuit Venlo", kicker: "Positionering, markten en fasering" },
-  "/marketing": { title: "Meetbaar groeien", kicker: "Campagnes, content en commerciële opvolging" },
-  "/software": { title: "Eén platform voor verkoop en service", kicker: "Eigenaarschap, data en automatisering" },
-  "/calculator": { title: "Keuzes en groeiscenario's", kicker: "Kosten, capaciteit en resultaatbandbreedtes" },
-  "/checklist": { title: "Overdracht en uitvoering", kicker: "Accounts, eigenaarschap en acceptatie" },
+  "/": { title: "Digitale basis", kicker: "Status en groei" },
+  "/strategie": { title: "Premium groeistrategie", kicker: "Positionering en markten" },
+  "/marketing": { title: "Meetbare groei", kicker: "Campagnes en opvolging" },
+  "/software": { title: "Verkoop- en serviceplatform", kicker: "Data en automatisering" },
+  "/calculator": { title: "Kosten en scenario's", kicker: "Keuzes en resultaat" },
+  "/checklist": { title: "Veilige overdracht", kicker: "Accounts en eigenaarschap" },
 };
+
+const routeHeroAssets: Record<string, { image: string; alt: string; position?: string }> = {
+  "/": {
+    image: "/showroom-building.jpeg",
+    alt: "Earth Spas showroom in Venlo",
+    position: "center",
+  },
+  "/strategie": {
+    image: "/showroom-building.jpeg",
+    alt: "Earth Spas showroom als basis voor regionale groei",
+    position: "center",
+  },
+  "/calculator": {
+    image: "/cards/calculator-card.png",
+    alt: "Earth Spas kosten- en scenariocalculator",
+    position: "center",
+  },
+  "/checklist": {
+    image: "/cards/actielijst-card.png",
+    alt: "Earth Spas overdrachts- en actielijst",
+    position: "center",
+  },
+};
+
+const sectionTitleOverrides: Record<string, string> = {
+  "Software status en development uren per onderdeel": "Gebouwde digitale basis",
+  "De bestaande basis levert aantoonbaar bereik, verkeer en vertrouwen": "Bereik en vertrouwen",
+  "Geregistreerde projectinzet en opgeleverde digitale basis": "Projectinzet en waarde",
+  "De huidige geselecteerde digitale stack": "Geselecteerde digitale stack",
+  "Vier pagina's met ieder één duidelijke functie": "Vervolgonderdelen",
+  "Rustig premium, persoonlijk en aantoonbaar deskundig": "Premium en persoonlijk",
+  "Niet alleen bereik inkopen, maar verkoopkansen opbouwen": "Verkoopkansen opbouwen",
+  "Bepaal per kanaal hoeveel structureel beschikbaar is": "Budget per kanaal",
+  "Drie scenario's op basis van expliciete aannames": "Drie groeiscenario's",
+  "Concrete campagnes met vaste meet- en opvolgpunten": "Meetbare campagnes",
+  "De aanbevolen technische opbouw": "Technische opbouw",
+  "Vier bouwfasen met duidelijke afhankelijkheden": "Vier bouwfasen",
+  "De voorkeurskeuze staat voorop; alternatieven blijven beschikbaar": "Voorkeurskeuzes",
+  "De acties met prioriteit ‘Nu’": "Directe acties",
+  "Vier risico's die momenteel onnodig zijn geconcentreerd": "Vier overdrachtsrisico's",
+  "Persoonlijke accounts pas als laatste loskoppelen": "Veilige eindvolgorde",
+};
+
+function compactSectionTitle(title: string) {
+  const override = sectionTitleOverrides[title];
+  if (override) return override;
+
+  const firstClause = title.split(/[;:]/)[0]?.split(",")[0]?.trim() || title;
+  const words = firstClause.split(/\s+/);
+  return words.length > 8 ? words.slice(0, 8).join(" ") : firstClause;
+}
 
 const marketingMockups: HeroMockupItem[] = [
   {
     id: "marketing",
     label: "Marketing",
-    title: "Centrale marketingsturing",
-    description: "Campagnes, kanaalprestaties, advertentiebudget, leads en omzetresultaten worden samengebracht in één helder managementoverzicht.",
+    title: "Marketingdashboard",
+    description: "Campagnes, kanaalprestaties, budget, leads en omzetresultaten in één managementoverzicht.",
     image: "/mockup/marketing.png",
-    imageAlt: "Canva-concept van een premium Earth Spas marketingdashboard",
+    imageAlt: "Earth Spas marketingdashboard",
   },
 ];
 
@@ -33,26 +84,26 @@ const softwareMockups: HeroMockupItem[] = [
   {
     id: "crm",
     label: "CRM",
-    title: "CRM en commerciële pipeline",
-    description: "Leads, contacten, afspraken, offertes, kansen en omzet worden zichtbaar in het commerciële dashboard van dezelfde Earth Spas-app.",
+    title: "CRM en pipeline",
+    description: "Leads, afspraken, offertes, kansen en omzet in één commercieel dashboard.",
     image: "/mockup/crm.png",
-    imageAlt: "Canva-concept van een premium CRM- en verkoopdashboard",
+    imageAlt: "Earth Spas CRM- en verkoopdashboard",
   },
   {
     id: "support",
     label: "Support",
-    title: "Service- en supportdashboard",
-    description: "Tickets, kennisbank, klantstatus, servicegeschiedenis en AI-ondersteuning worden beheerd in het supportdashboard van dezelfde app.",
+    title: "Service en support",
+    description: "Tickets, klantstatus, servicehistorie en AI-ondersteuning in één dashboard.",
     image: "/mockup/support.png",
-    imageAlt: "Canva-concept van een premium support- en servicedashboard",
+    imageAlt: "Earth Spas support- en servicedashboard",
   },
   {
     id: "management",
     label: "Management",
     title: "Managementdashboard",
-    description: "Kerncijfers, meldingen, teamoverzicht en commerciële voortgang blijven in het managementdashboard van dezelfde app direct inzichtelijk, ook mobiel.",
+    description: "Kerncijfers, meldingen en commerciële voortgang, ook mobiel.",
     image: "/mockup/App2.png",
-    imageAlt: "Canva-concept van het mobiele Earth Spas managementdashboard",
+    imageAlt: "Earth Spas mobiel managementdashboard",
   },
 ];
 
@@ -77,15 +128,19 @@ export function PageIntro({
 }) {
   const pathname = usePathname();
   const headerCopy = routeHeaderCopy[pathname];
+  const routeHero = routeHeroAssets[pathname];
+  const resolvedImage = routeHero?.image ?? image;
+  const resolvedImageAlt = routeHero?.alt ?? imageAlt;
+  const resolvedImagePosition = routeHero?.position ?? imagePosition;
   const mockupConfig = pathname === "/marketing"
-    ? { eyebrow: "Concept · centrale marketingsturing", items: marketingMockups }
+    ? { eyebrow: "Marketingconcept", items: marketingMockups }
     : pathname === "/software"
-      ? { eyebrow: "Concept · één app, drie dashboards", items: softwareMockups }
+      ? { eyebrow: "Softwareconcept", items: softwareMockups }
       : null;
 
   return (
     <section className={cn("page-intro", accent === "primary" ? "theme-primary" : "theme-secondary")}>
-      <div className={cn("content-shell page-intro-inner", (image || mockupConfig) && "page-intro-split")}>
+      <div className={cn("content-shell page-intro-inner", (resolvedImage || mockupConfig) && "page-intro-split")}>
         <div className="page-intro-copy" data-reveal="up">
           <p className="eyebrow">{eyebrow}</p>
           <p className="page-intro-kicker">{headerCopy?.kicker ?? title}</p>
@@ -97,9 +152,9 @@ export function PageIntro({
           <div data-reveal="scale" data-reveal-delay="90">
             <HeroMockupGallery eyebrow={mockupConfig.eyebrow} items={mockupConfig.items} />
           </div>
-        ) : image ? (
-          <div className="page-intro-visual motion-border" data-reveal="scale" data-reveal-delay="90" data-motion-card aria-hidden={imageAlt ? undefined : true}>
-            <img src={image} alt={imageAlt} style={{ objectPosition: imagePosition }} />
+        ) : resolvedImage ? (
+          <div className="page-intro-visual motion-border" data-reveal="scale" data-reveal-delay="90" data-motion-card aria-hidden={resolvedImageAlt ? undefined : true}>
+            <img src={resolvedImage} alt={resolvedImageAlt} style={{ objectPosition: resolvedImagePosition }} />
             <div className="page-intro-visual-shade" />
           </div>
         ) : null}
@@ -110,25 +165,26 @@ export function PageIntro({
 
 export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string; accent?: Accent }) {
   const showBudgetStrategy = title === "Advertenties, content en AI afzonderlijk instellen";
+  const displayTitle = compactSectionTitle(title);
 
   return (
     <div className="section-header" data-reveal="up">
       <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
+      <h2 title={title}>{displayTitle}</h2>
       {text && <p>{text}</p>}
       {showBudgetStrategy && (
         <div className="budget-test-strategy">
           <div className="budget-test-intro">
             <Info className="h-6 w-6 shrink-0" />
             <div>
-              <strong>Eerst voorzichtig testen, daarna pas opschalen</strong>
-              <p>De bedragen hieronder zijn werkbudgetten en maximale kaders, geen opdracht om op dag één alles uit te geven. We starten met kleine, duidelijke tests en meten niet alleen klikken, maar vooral leadkwaliteit, showroomafspraken, offertes en verkopen. Alleen aantoonbaar goed presterende campagnes krijgen extra budget.</p>
+              <strong>Eerst testen, dan opschalen</strong>
+              <p>Start klein en meet leadkwaliteit, afspraken, offertes en verkopen. Alleen bewezen campagnes krijgen extra budget.</p>
             </div>
           </div>
           <div className="budget-test-steps">
-            <div><span>01</span><strong>Kleine test</strong><p>Beperkt budget, één doelgroep en één duidelijke boodschap per test.</p></div>
-            <div><span>02</span><strong>Resultaat meten</strong><p>Kosten per serieuze lead, afspraak, offerte en verkoop worden gevolgd.</p></div>
-            <div><span>03</span><strong>Bewust opschalen</strong><p>Winnaars krijgen meer budget; zwakke tests worden aangepast of gestopt.</p></div>
+            <div><span>01</span><strong>Kleine test</strong><p>Beperkt budget, één doelgroep en één boodschap.</p></div>
+            <div><span>02</span><strong>Resultaat meten</strong><p>Volg kosten per lead, afspraak, offerte en verkoop.</p></div>
+            <div><span>03</span><strong>Opschalen</strong><p>Vergroot winnaars en stop zwakke tests.</p></div>
           </div>
         </div>
       )}
