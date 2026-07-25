@@ -25,8 +25,8 @@ export type SiteState = {
   aiApiBudget: number;
   aiDevelopmentBudget: number;
   aiMediaBudget: number;
-  currentSalesPerWeek: number;
-  averageSalePrice: number;
+  currentAnnualRevenue: number;
+  currentAnnualSales: number;
   grossMargin: number;
   acquisitionCostPerSale: number;
   incrementalCostPerSale: number;
@@ -47,14 +47,14 @@ export const defaultSiteState: SiteState = {
   aiApiBudget: 250,
   aiDevelopmentBudget: 150,
   aiMediaBudget: 150,
-  currentSalesPerWeek: 2,
-  averageSalePrice: 6000,
+  currentAnnualRevenue: 624000,
+  currentAnnualSales: 104,
   grossMargin: 38,
   acquisitionCostPerSale: 1500,
   incrementalCostPerSale: 150,
   involvement: "structured",
   hoursPerWeek: 10,
-  clientName: "Jeroen",
+  clientName: "",
   notes: "",
   workedHours: {
     website: 0,
@@ -79,8 +79,12 @@ export function calculateSiteModel(state: SiteState) {
   const aiMonthly = state.aiApiBudget + state.aiDevelopmentBudget + state.aiMediaBudget;
   const totalMonthly = platformMonthly + adsMonthly + state.contentBudget + aiMonthly;
   const annualOperating = totalMonthly * 12;
-  const currentUnitsYear = state.currentSalesPerWeek * 52;
-  const currentRevenue = currentUnitsYear * state.averageSalePrice;
+
+  const currentUnitsYear = Math.max(0, state.currentAnnualSales);
+  const currentRevenue = Math.max(0, state.currentAnnualRevenue);
+  const averageSalePrice = currentUnitsYear > 0 ? currentRevenue / currentUnitsYear : 0;
+  const currentSalesPerWeek = currentUnitsYear / 52;
+
   const readiness = Math.min(
     1.18,
     0.62 + selectedFeatures.length * 0.035 + (state.involvement === "structured" ? Math.min(state.hoursPerWeek, 20) * 0.018 : 0.02),
@@ -97,13 +101,13 @@ export function calculateSiteModel(state: SiteState) {
     : 0;
   const lowExtraSales = baseExtraSales * 0.65;
   const highExtraSales = baseExtraSales * 1.35;
-  const baseExtraRevenue = baseExtraSales * state.averageSalePrice;
-  const lowExtraRevenue = lowExtraSales * state.averageSalePrice;
-  const highExtraRevenue = highExtraSales * state.averageSalePrice;
+  const baseExtraRevenue = baseExtraSales * averageSalePrice;
+  const lowExtraRevenue = lowExtraSales * averageSalePrice;
+  const highExtraRevenue = highExtraSales * averageSalePrice;
   const growthPct = currentRevenue ? baseExtraRevenue / currentRevenue * 100 : 0;
   const grossProfitPerSale = Math.max(
     0,
-    state.averageSalePrice / 1.2 * state.grossMargin / 100 - state.incrementalCostPerSale,
+    averageSalePrice / 1.2 * state.grossMargin / 100 - state.incrementalCostPerSale,
   );
   const breakEvenSales = grossProfitPerSale ? annualOperating / grossProfitPerSale : 0;
   const expectedContribution = baseExtraSales * grossProfitPerSale - annualOperating;
@@ -127,6 +131,8 @@ export function calculateSiteModel(state: SiteState) {
     annualOperating,
     currentUnitsYear,
     currentRevenue,
+    averageSalePrice,
+    currentSalesPerWeek,
     lowExtraSales,
     baseExtraSales,
     highExtraSales,
