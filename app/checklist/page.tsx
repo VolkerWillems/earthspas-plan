@@ -10,6 +10,7 @@ import {
 import { useSiteState } from "@/components/site-state";
 import { calculateSiteModel } from "@/lib/site-model";
 import { checklistItems, choiceGroups } from "@/lib/choice-data";
+import { getBusinessOwnerLabel, getBusinessTaskTitle } from "@/lib/presentation-copy";
 import { euro } from "@/lib/utils";
 import {
   PageIntro,
@@ -23,19 +24,19 @@ import {
 const groupCopy = {
   Eigenaarschap: {
     title: "Accounts, betaling en toegang",
-    text: "Deze taken voorkomen dat essentiële onderdelen aan persoonlijke accounts, kaarten of herstelmethoden blijven hangen.",
+    text: "Deze taken voorkomen dat essentiële onderdelen aan persoonlijke accounts, betaalmiddelen of herstelmethoden gekoppeld blijven.",
   },
   Techniek: {
     title: "Server, data en systemen",
-    text: "Back-ups, secrets, domeinen, databases en deployments moeten aantoonbaar beheersbaar en herstelbaar worden.",
+    text: "Back-ups, secrets, domeinen, databases en deployments moeten aantoonbaar beheersbaar, overdraagbaar en herstelbaar zijn.",
   },
   Marketing: {
     title: "Kanalen, billing en meting",
-    text: "Advertentieaccounts en socialkanalen moeten twee beheerders, correcte billing en betrouwbare conversiemeting krijgen.",
+    text: "Advertentieaccounts en socialkanalen krijgen minimaal twee beheerders, correcte billing en betrouwbare conversiemeting.",
   },
   Afronding: {
     title: "Acceptatie en veilige overdracht",
-    text: "Persoonlijke toegang verdwijnt pas nadat alles getest, teruggezet en door een tweede beheerder bereikbaar is.",
+    text: "Persoonlijke toegang wordt pas verwijderd nadat alle kritieke functies zijn getest en door een tweede beheerder kunnen worden hersteld.",
   },
 };
 
@@ -60,17 +61,17 @@ export default function ChecklistPage() {
     <main>
       <PageIntro
         eyebrow="05 · noodzakelijke actielijst"
-        title="Wat zo snel mogelijk geregeld moet worden, ongeacht het groeiplan"
-        text="Deze pagina staat bewust los van de keuze om meer marketing of software te bouwen. Accounts, betaalmethoden, eigenaarschap, back-ups en hersteltoegang moeten sowieso op orde. Anders blijft Earth Spas afhankelijk van Volkers kaarten, accounts en geheugen. Dat laatste is niet eens kritiek op Volker; menselijke geheugens zijn gewoon beroerde infrastructuur."
+        title="Wat zo snel mogelijk moet worden geregeld, ongeacht het groeiplan"
+        text="Deze pagina staat los van de keuze om extra marketing of software te ontwikkelen. Accounts, betaalmethoden, eigenaarschap, back-ups en hersteltoegang moeten in alle scenario's op orde zijn. Daarmee wordt de digitale omgeving onafhankelijker, veiliger en beter overdraagbaar."
         accent="secondary"
         image="/earth-spas-collage-b-glacier-1920x1080.jpg"
         imageAlt="Earth Spas in een rustige bergomgeving"
-        actions={<><PrimaryLink href="/calculator">Controleer gemaakte keuzes</PrimaryLink><PrimaryLink href="/">Terug naar dashboard</PrimaryLink></>}
+        actions={<><PrimaryLink href="/calculator">Controleer gemaakte keuzes</PrimaryLink><PrimaryLink href="/">Terug naar overzicht</PrimaryLink></>}
       />
 
       <section className="section-block theme-primary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Direct regelen" title="De acties met prioriteit ‘Nu’" text="Deze lijst is de minimale overdracht. Niet alles hoeft vandaag technisch af te zijn, maar eigenaars, betaalroutes en migratiekeuzes moeten wel worden vastgelegd." />
+          <SectionHeader eyebrow="Direct regelen" title="De acties met prioriteit ‘Nu’" text="Deze lijst vormt de minimale overdrachtsbasis. Niet ieder technisch onderdeel hoeft direct volledig te zijn afgerond, maar eigenaarschap, betaalroutes, toegang en migratiekeuzes moeten wel worden vastgelegd." />
           <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard label="Alle acties" value={`${model.completedTasks}/${checklistItems.length}`} detail={`${model.checklistProgress}% afgerond`} />
             <StatCard label="Prioriteit Nu" value={`${nowCompleted}/${nowTasks.length}`} detail="directe beslissingen en overdracht" />
@@ -81,7 +82,7 @@ export default function ChecklistPage() {
           <Panel className="mt-6 p-6 sm:p-8">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div><p className="eyebrow">Totale voortgang</p><p className="mt-2 text-4xl text-[var(--section-accent)]">{model.checklistProgress}%</p></div>
-              <p className="max-w-xl text-base leading-7 text-white/65">De status wordt lokaal in deze browser opgeslagen en wordt ook op het dashboard gebruikt.</p>
+              <p className="max-w-xl text-base leading-7 text-white/65">De status wordt lokaal in deze browser opgeslagen en automatisch verwerkt in het centrale overzicht.</p>
             </div>
             <div className="mt-5"><ProgressBar value={model.checklistProgress} /></div>
           </Panel>
@@ -90,12 +91,12 @@ export default function ChecklistPage() {
 
       <section className="section-block theme-secondary">
         <div className="content-shell">
-          <SectionHeader eyebrow="Waarom dit eerst moet" title="Vier risico's die nu onnodig bij één persoon liggen" />
+          <SectionHeader eyebrow="Waarom dit eerst moet" title="Vier risico's die momenteel onnodig zijn geconcentreerd" />
           <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Panel className="p-6"><CreditCard className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Persoonlijke billing</h3><p className="mt-3 leading-7 text-white/70">Kosten zijn moeilijk toe te wijzen en diensten kunnen stoppen wanneer een persoonlijke kaart wordt vervangen of geblokkeerd.</p></Panel>
-            <Panel className="p-6"><Key className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eén herstelroute</h3><p className="mt-3 leading-7 text-white/70">Zonder tweede beheerder en herstelcodes kan een verloren telefoon een complete bedrijfsomgeving gijzelen.</p></Panel>
-            <Panel className="p-6"><ShieldCheck className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Onduidelijk eigendom</h3><p className="mt-3 leading-7 text-white/70">Broncode, data, domeinen en advertentieaccounts moeten aantoonbaar onder Earth Spas vallen.</p></Panel>
-            <Panel className="p-6"><Warning className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Geen rollback</h3><p className="mt-3 leading-7 text-white/70">Migraties zonder export, back-up en hersteltest veranderen een kleine fout in een volledige werkdag vloeken.</p></Panel>
+            <Panel className="p-6"><Key className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Eén herstelroute</h3><p className="mt-3 leading-7 text-white/70">Zonder tweede beheerder en herstelcodes kan verlies van één apparaat toegang tot meerdere bedrijfsdiensten blokkeren.</p></Panel>
+            <Panel className="p-6"><ShieldCheck className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Onduidelijk eigendom</h3><p className="mt-3 leading-7 text-white/70">Broncode, data, domeinen, advertentieaccounts en contracten moeten aantoonbaar onder Earth Spas vallen.</p></Panel>
+            <Panel className="p-6"><Warning className="h-7 w-7 text-[var(--section-accent)]" /><h3 className="mt-4 text-xl uppercase text-[var(--section-accent)]">Ontbrekende rollback</h3><p className="mt-3 leading-7 text-white/70">Migraties zonder export, back-up en hersteltest vergroten het risico op uitval, gegevensverlies en onnodige hersteltijd.</p></Panel>
           </div>
         </div>
       </section>
@@ -117,10 +118,10 @@ export default function ChecklistPage() {
                     <button key={task.id} onClick={() => toggleTask(task.id)} className={`panel flex w-full gap-4 p-5 text-left transition ${checked ? "border-[var(--section-accent)]/70 bg-[color-mix(in_srgb,var(--section-accent)_8%,transparent)]" : "hover:border-white/35"}`}>
                       <span className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-sm border-2 ${checked ? "border-[var(--section-accent)] bg-[var(--section-accent)] text-background" : "border-white/40"}`}>{checked && <Check className="h-4 w-4" />}</span>
                       <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-start justify-between gap-2"><span className={`text-lg ${checked ? "text-[var(--section-accent)]" : "text-white"}`}>{task.title}</span><span className="rounded-full border border-white/15 px-2 py-1 text-xs uppercase tracking-[0.1em] text-white/55">{task.priority}</span></span>
+                        <span className="flex flex-wrap items-start justify-between gap-2"><span className={`text-lg ${checked ? "text-[var(--section-accent)]" : "text-white"}`}>{getBusinessTaskTitle(task)}</span><span className="rounded-full border border-white/15 px-2 py-1 text-xs uppercase tracking-[0.1em] text-white/55">{task.priority}</span></span>
                         {option && <span className="mt-2 flex flex-wrap items-center gap-2 text-sm"><span className="uppercase tracking-[0.1em] text-[var(--section-accent)]">Gekozen</span><span className="text-white/78">{option.name}</span><span className="text-white/45">· {option.monthly === 0 ? "€0" : `${euro.format(option.monthly)} p/m`}</span></span>}
                         <span className="mt-3 block text-base leading-7 text-white/68">{task.description}</span>
-                        <span className="mt-3 block text-sm uppercase tracking-[0.11em] text-white/45">Eigenaar: {task.owner}</span>
+                        <span className="mt-3 block text-sm uppercase tracking-[0.11em] text-white/45">Verantwoordelijk: {getBusinessOwnerLabel(task.owner)}</span>
                       </span>
                     </button>
                   );
@@ -142,13 +143,13 @@ export default function ChecklistPage() {
           <Panel className="h-fit p-6 sm:p-8">
             <p className="eyebrow">Vaste kosten na overdracht</p>
             <p className="mt-3 text-4xl text-[var(--section-accent)]">{euro.format(model.platformMonthly)} p/m</p>
-            <p className="mt-3 text-base leading-7 text-white/65">Dit is alleen de huidige selectie van accounts, tools en hosting. Marketingbudget en AI-verbruik staan hier bewust buiten.</p>
+            <p className="mt-3 text-base leading-7 text-white/65">Dit bedrag betreft alleen de actuele selectie van accounts, tools en hosting. Marketingbudget en variabel AI-verbruik staan hier bewust buiten.</p>
             <div className="mt-6"><PrimaryLink href="/calculator">Controleer alle providerkeuzes</PrimaryLink></div>
           </Panel>
         </div>
       </section>
 
-      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Actielijst · deze overdracht blijft noodzakelijk, ook wanneer marketing en software voorlopig niet worden uitgebreid</footer>
+      <footer className="border-t border-border py-10 text-center text-sm text-white/45">Actielijst · de overdracht blijft noodzakelijk, ook wanneer marketing en software voorlopig niet worden uitgebreid</footer>
     </main>
   );
 }
