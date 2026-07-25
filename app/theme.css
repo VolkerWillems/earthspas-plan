@@ -1,0 +1,237 @@
+/* Earth Spas theme contract.
+   All visual constants live here. Components consume semantic variables only. */
+
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* Brand and neutral palette */
+  --palette-canvas: #000305;
+  --palette-canvas-soft: #03080c;
+  --palette-surface: #071017;
+  --palette-surface-alt: #09151e;
+  --palette-surface-raised: #0b1a24;
+  --palette-surface-hover: #10232e;
+  --palette-border: #2e333b;
+  --palette-border-hover: #456878;
+  --palette-border-strong: #5b7c8a;
+  --palette-text: #f7f9fa;
+  --palette-text-soft: #c8d1d6;
+  --palette-text-muted: #91a0a8;
+  --palette-text-faint: #62737c;
+  --palette-cyan: #37a3bf;
+  --palette-cyan-light: #77c8dc;
+  --palette-cyan-dark: #24788f;
+  --palette-gold: #d0bf8c;
+  --palette-gold-dark: #978757;
+  --palette-success: #53c995;
+  --palette-warning: #e0b86d;
+  --palette-danger: #ec7e7e;
+  --palette-white: #ffffff;
+  --palette-black: #000000;
+  --palette-print-bg: #ffffff;
+  --palette-print-text: #111111;
+  --palette-print-border: #cccccc;
+
+  /* Semantic color roles */
+  --background: var(--palette-canvas);
+  --foreground: var(--palette-text);
+  --surface-canvas: var(--palette-canvas);
+  --surface-subtle: var(--palette-canvas-soft);
+  --surface-card: var(--palette-surface);
+  --surface-card-alt: var(--palette-surface-alt);
+  --surface-raised: var(--palette-surface-raised);
+  --surface-interactive: var(--palette-surface-hover);
+  --card: var(--surface-card);
+  --card-alt: var(--surface-card-alt);
+  --card-soft: var(--surface-raised);
+  --card-foreground: var(--palette-text);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--palette-text);
+  --muted: var(--surface-subtle);
+  --muted-foreground: var(--palette-text-muted);
+  --accent: var(--surface-raised);
+  --accent-foreground: var(--palette-text);
+  --input: var(--surface-raised);
+  --text-primary: var(--palette-text);
+  --text-secondary: var(--palette-text-soft);
+  --text-muted: var(--palette-text-muted);
+  --text-faint: var(--palette-text-faint);
+  --brand-primary: var(--palette-cyan);
+  --brand-primary-light: var(--palette-cyan-light);
+  --brand-primary-dark: var(--palette-cyan-dark);
+  --brand-secondary: var(--palette-gold);
+  --brand-secondary-dark: var(--palette-gold-dark);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--palette-canvas);
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: var(--palette-canvas);
+  --destructive: var(--palette-danger);
+  --destructive-foreground: var(--palette-text);
+  --success: var(--palette-success);
+  --warning: var(--palette-warning);
+  --border: var(--palette-border);
+  --border-default: var(--palette-border);
+  --border-hover: var(--palette-border-hover);
+  --border-strong: var(--palette-border-strong);
+  --ring: var(--brand-primary);
+  --focus-ring: color-mix(in srgb, var(--ring) 42%, transparent);
+  --overlay-soft: color-mix(in srgb, var(--palette-black) 34%, transparent);
+  --overlay-medium: color-mix(in srgb, var(--palette-black) 58%, transparent);
+  --overlay-strong: color-mix(in srgb, var(--palette-black) 82%, transparent);
+  --highlight-soft: color-mix(in srgb, var(--palette-white) 4%, transparent);
+  --highlight-medium: color-mix(in srgb, var(--palette-white) 9%, transparent);
+  --highlight-strong: color-mix(in srgb, var(--palette-white) 16%, transparent);
+
+  /* Chart palette */
+  --chart-1: var(--palette-cyan);
+  --chart-2: var(--palette-cyan-light);
+  --chart-3: var(--palette-gold);
+  --chart-4: var(--palette-gold-dark);
+  --chart-5: var(--palette-text-muted);
+  --chart-grid: color-mix(in srgb, var(--border-default) 72%, transparent);
+  --chart-land: var(--surface-raised);
+  --chart-ocean: var(--surface-subtle);
+
+  /* Fonts */
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Barlow Semi Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+
+  /* Fluid typography */
+  --font-size-2xs: clamp(0.64rem, 0.62rem + 0.08vw, 0.72rem);
+  --font-size-xs: clamp(0.72rem, 0.69rem + 0.1vw, 0.8rem);
+  --font-size-sm: clamp(0.82rem, 0.79rem + 0.12vw, 0.91rem);
+  --font-size-body: clamp(0.94rem, 0.89rem + 0.18vw, 1.06rem);
+  --font-size-body-lg: clamp(1rem, 0.94rem + 0.22vw, 1.14rem);
+  --font-size-card-title: clamp(0.98rem, 0.9rem + 0.28vw, 1.15rem);
+  --font-size-subtitle: clamp(1.1rem, 0.98rem + 0.42vw, 1.35rem);
+  --font-size-section: clamp(1.65rem, 1.22rem + 1.35vw, 2.55rem);
+  --font-size-page: clamp(2rem, 1.36rem + 2.05vw, 3.55rem);
+  --font-size-display: clamp(2.4rem, 1.55rem + 3.1vw, 4.8rem);
+  --font-size-metric-sm: clamp(1.55rem, 1.25rem + 0.8vw, 2.15rem);
+  --font-size-metric: clamp(2rem, 1.45rem + 1.45vw, 3.2rem);
+  --font-size-icon-sm: clamp(0.9rem, 0.82rem + 0.2vw, 1.05rem);
+  --font-size-icon: clamp(1.1rem, 0.96rem + 0.38vw, 1.4rem);
+  --font-size-icon-lg: clamp(1.35rem, 1.08rem + 0.65vw, 1.8rem);
+
+  --line-height-tight: 1.05;
+  --line-height-heading: 1.12;
+  --line-height-body: 1.6;
+  --line-height-compact: 1.4;
+  --tracking-tight: 0.012em;
+  --tracking-normal: 0.015em;
+  --tracking-label: 0.12em;
+  --tracking-eyebrow: 0.17em;
+
+  /* Fluid spacing scale */
+  --space-1: clamp(0.25rem, 0.22rem + 0.08vw, 0.32rem);
+  --space-2: clamp(0.45rem, 0.4rem + 0.14vw, 0.58rem);
+  --space-3: clamp(0.68rem, 0.59rem + 0.22vw, 0.84rem);
+  --space-4: clamp(0.9rem, 0.78rem + 0.3vw, 1.12rem);
+  --space-5: clamp(1.15rem, 0.96rem + 0.46vw, 1.48rem);
+  --space-6: clamp(1.4rem, 1.13rem + 0.72vw, 1.95rem);
+  --space-8: clamp(1.9rem, 1.45rem + 1.2vw, 2.8rem);
+  --space-10: clamp(2.45rem, 1.75rem + 1.85vw, 3.8rem);
+  --space-12: clamp(3rem, 2rem + 2.7vw, 5rem);
+  --space-16: clamp(4rem, 2.6rem + 3.8vw, 7rem);
+  --section-space: clamp(3.4rem, 2.25rem + 3.2vw, 6rem);
+  --section-space-compact: clamp(2.5rem, 1.75rem + 2.1vw, 4.25rem);
+  --content-gutter: clamp(1rem, 0.45rem + 2.2vw, 3rem);
+  --card-padding: clamp(1rem, 0.78rem + 0.72vw, 1.55rem);
+  --control-gap: clamp(0.45rem, 0.35rem + 0.25vw, 0.7rem);
+
+  /* Fluid sizing */
+  --content-max: 112.5rem;
+  --reading-max: 66rem;
+  --header-height: clamp(4.5rem, 3.95rem + 1.5vw, 5.15rem);
+  --control-height-sm: clamp(2rem, 1.84rem + 0.4vw, 2.3rem);
+  --control-height: clamp(2.55rem, 2.32rem + 0.58vw, 2.9rem);
+  --control-height-lg: clamp(2.9rem, 2.62rem + 0.72vw, 3.35rem);
+  --icon-box-sm: clamp(2rem, 1.82rem + 0.44vw, 2.35rem);
+  --icon-box: clamp(2.5rem, 2.2rem + 0.75vw, 3rem);
+  --icon-box-lg: clamp(3rem, 2.55rem + 1vw, 3.75rem);
+  --checkbox-size: clamp(0.92rem, 0.86rem + 0.15vw, 1rem);
+  --flow-stage-height: clamp(34rem, 42vw, 45rem);
+  --visual-min-height: clamp(15rem, 24vw, 24rem);
+
+  /* Geometry */
+  --border-width: 1.5px;
+  --border-width-subtle: 1px;
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 5px;
+  --radius-lg: 5px;
+  --radius-xl: 5px;
+  --radius: var(--radius-md);
+  --radius-round: 999px;
+
+  /* Shadows and depth */
+  --shadow-xs: 0 1px 2px color-mix(in srgb, var(--palette-black) 28%, transparent);
+  --shadow-sm: 0 0.4rem 1.2rem color-mix(in srgb, var(--palette-black) 22%, transparent);
+  --shadow-card: 0 0.9rem 2.8rem color-mix(in srgb, var(--palette-black) 28%, transparent);
+  --shadow-raised: 0 1.6rem 4.5rem color-mix(in srgb, var(--palette-black) 38%, transparent);
+  --shadow-overlay: 0 2.5rem 7.5rem color-mix(in srgb, var(--palette-black) 68%, transparent);
+  --shadow-inset: inset 0 1px 0 var(--highlight-soft);
+  --shadow-focus: 0 0 0 3px var(--focus-ring);
+
+  --page-progress: 0;
+  --section-accent: var(--brand-primary);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+}
+
+.theme-primary {
+  --section-accent: var(--brand-primary);
+  --primary: var(--brand-primary);
+  --secondary: var(--brand-primary);
+  --ring: var(--brand-primary);
+  --chart-1: var(--palette-cyan);
+  --chart-2: var(--palette-cyan-light);
+  --chart-3: var(--palette-cyan-dark);
+  --chart-4: var(--palette-text-muted);
+}
+
+.theme-secondary {
+  --section-accent: var(--brand-secondary);
+  --primary: var(--brand-secondary);
+  --secondary: var(--brand-secondary);
+  --ring: var(--brand-secondary);
+  --chart-1: var(--palette-gold);
+  --chart-2: var(--palette-gold-dark);
+  --chart-3: var(--palette-cyan);
+  --chart-4: var(--palette-text-muted);
+}
