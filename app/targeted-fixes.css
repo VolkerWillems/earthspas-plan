@@ -1,0 +1,29 @@
+/* Small corrections layered on top of the approved Earth Spas design. */
+
+.nav-link::after {
+  display: none !important;
+  content: none !important;
+}
+
+.hero-mockup .hero-mockup-heading {
+  flex-wrap: wrap;
+}
+
+.hero-mockup .hero-mockup-tabs {
+  width: 100%;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+.hero-mockup .hero-mockup-tab {
+  flex: 1 1 7rem;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .hero-mockup .hero-mockup-tab {
+    flex-basis: calc(33.333% - .35rem);
+    padding-inline: .4rem;
+  }
+}
