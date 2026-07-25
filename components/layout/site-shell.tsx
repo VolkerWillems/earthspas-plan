@@ -3,12 +3,12 @@
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
-import { PrepaidDelegationBanner } from "@/components/blocks";
 import { SiteHeader } from "@/components/layout/site-header";
 import { RouteVisualSections } from "@/components/layout/route-visual-sections";
 import { MotionController } from "@/components/motion-controller";
 import { MobileNavigation } from "@/components/navigation/site-navigation";
 import { PageBottomSummaryOptimized } from "@/components/page-bottom-summary-optimized";
+import { PrepaidDelegationBanner } from "@/components/prepaid-delegation-banner";
 import { useSiteState } from "@/components/site-state";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
