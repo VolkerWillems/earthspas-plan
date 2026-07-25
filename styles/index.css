@@ -1,0 +1,7 @@
+/* Canonical Earth Spas stylesheet entrypoint.
+   Keep framework imports and style-layer ordering in one place. */
+
+@import "./global.css";
+@import "./responsive.css";
+@import "./flows.css";
+@import "./charts.css";
