@@ -3,8 +3,8 @@
 import * as React from "react";
 import { defaultSiteState, type SiteState } from "@/lib/site-model";
 
-const STORAGE_KEY = "earth-spas-multipage-plan-v2";
-const LEGACY_KEYS = ["earth-spas-multipage-plan-v1", "earth-spas-choice-guide-v5"];
+const STORAGE_KEY = "earth-spas-multipage-plan-v3";
+const LEGACY_KEYS = ["earth-spas-multipage-plan-v2", "earth-spas-multipage-plan-v1", "earth-spas-choice-guide-v5"];
 
 type SiteStateContextValue = {
   state: SiteState;
