@@ -33,7 +33,7 @@ export function PageIntro({
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="mt-4 max-w-5xl text-4xl uppercase leading-[1.02] sm:text-5xl lg:text-6xl">{title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 sm:text-xl">{text}</p>
-          {actions && <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>}
+          {actions && <div className="action-group mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>}
         </div>
         {image && (
           <div className="page-intro-visual" aria-hidden={imageAlt ? undefined : true}>
@@ -80,6 +80,8 @@ export function PrimaryLink({ href, children }: { href: string; children: React.
 }
 
 export function RangeField({ label, helper, value, min, max, step, display, onChange }: { label: string; helper?: string; value: number; min: number; max: number; step: number; display: string; onChange: (value: number) => void; accent?: Accent }) {
+  const progress = max === min ? 0 : Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+
   return (
     <label className="block">
       <div className="mb-3 flex items-start justify-between gap-4">
@@ -95,8 +97,11 @@ export function RangeField({ label, helper, value, min, max, step, display, onCh
         min={min}
         max={max}
         step={step}
+        aria-label={label}
+        aria-valuetext={display}
         onChange={(event) => onChange(Number(event.target.value))}
         className="site-range"
+        style={{ "--range-progress": `${progress}%` } as React.CSSProperties}
       />
     </label>
   );
