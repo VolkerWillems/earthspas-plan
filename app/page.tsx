@@ -121,8 +121,8 @@ export default function HomePage() {
                 <p className="eyebrow">Meta websiteverkeer-test</p>
                 <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
-                    <h3 className="text-2xl uppercase text-[var(--section-accent)]">€35,90 leverde 287 landingspaginaweergaven op</h3>
-                    <p className="mt-2 max-w-3xl text-base leading-7 text-white/72">De campagne kwam uit op 9.013 vertoningen, 7.008 uniek bereik en gemiddeld €0,13 per landingspaginaweergave.</p>
+                    <h3 className="text-2xl uppercase text-[var(--section-accent)]">€35,90 leverde 287 page views op</h3>
+                    <p className="mt-2 max-w-3xl text-base leading-7 text-white/72">De campagne kwam uit op 9.013 vertoningen, 7.008 uniek bereik en gemiddeld €0,13 per page view.</p>
                   </div>
                   <div className="shrink-0 rounded-[5px] border border-[var(--section-accent)]/45 bg-[color-mix(in_srgb,var(--section-accent)_9%,transparent)] px-4 py-3 text-right">
                     <p className="text-xs uppercase tracking-[0.13em] text-white/58">beste variant</p>
